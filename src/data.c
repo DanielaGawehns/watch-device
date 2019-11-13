@@ -1,0 +1,397 @@
+/*
+ * This code is an alteration on the by Tizen Studio Provided sample code used in their sample apps.
+ * All code from the original file is distributed under the license specified underneath this statement.
+ * Some alterations to this file have been made, these do not fall under the same license.
+ * TODO: copyright?
+ *
+ *
+ *
+ * ------------------------------------------------------------------------------------
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ */
+
+#include <Eina.h>
+#include <app_preference.h>
+#include <linux/limits.h>
+#include <stdlib.h>
+#include <app_common.h>//for app_get_data_path
+#include <stdio.h>
+#include <math.h>
+#include <sensor.h>
+#include <tizen.h>
+#include "data.h"
+//#include "view_defines.h"
+//#include <Ecore_Common.h> //ecore
+#include <Ecore.h> //ecore
+#include <dlog.h>
+
+
+#define MAX_GYRO_VALUE 571.0
+#define MAX_HRM_VALUE 220.0
+#define LISTENER_TIMEOUT 0
+#define LISTENER_TIMEOUT_FINAL ((LISTENER_TIMEOUT != 0) ? LISTENER_TIMEOUT : 100)
+
+
+/**
+ * String names for sensor_type_e values
+ */
+const char *sensor_strings[SENSOR_COUNT] = {
+	"ACCELEROMETER",
+	"GRAVITY",
+	"LINEAR ACCELERATION",
+	"MAGNETIC",
+	"ROTATION VECTOR",
+	"ORIENTATION",
+	"GYROSCOPE",
+	"LIGHT",
+	"PROXIMITY",
+	"PRESSURE",
+	"ULTRAVIOLET",
+	"TEMPERATURE",
+	"HUMIDITY",
+	"HRM",
+};
+//-----------------------------------
+
+
+typedef struct _sensor_data {
+	sensor_h handle;
+	sensor_listener_h listener;
+} sensor_data_t;
+
+static struct data_info {
+	sensor_type_e current_sensor;
+	bool sensor_activity[SENSOR_COUNT];		//custom: for checking which sensors are active
+	sensor_data_t sensors[SENSOR_COUNT];
+	unsigned int sensor_interval_ms[SENSOR_COUNT]; 	//custom: interval for sensor checking
+	Update_Sensor_Values_Cb sensor_update_cb;	//callback function that is called when a sensor reads new data, set when initializing this class at (data_initialize)
+	Ecore_Timer *timer;
+} s_info = {
+	.sensors = { {0}, },
+	.sensor_activity = { false, }, //custom: initialize sensors on inactive
+	.sensor_interval_ms = { 0, },
+	.current_sensor = 0,
+	.sensor_update_cb = NULL,
+	.timer = NULL,
+};
+
+
+//predefenitions
+static void _initialize_sensors(void);
+static void _sensor_event_cb(sensor_h sensor, sensor_event_s *event, void *data);
+static void _timer_stop(void);
+static void _timer_start(int value);
+static void _set_hrm_values(sensor_event_s *event);
+
+/**
+ * TODO: the functions hereafter are custom added, handy web: https://developer.tizen.org/dev-guide/2.3.1/org.tizen.tutorials/html/native/system/sensor_tutorial_n.htm
+ */
+
+/** CUSTOM
+ * @brief sets a sensors activity, given the id and new activity (if sensor is available and status is not already the given status)
+ * @param the sensor NR/id
+ * @param new status of this sensor
+ */
+void data_set_sensor_activity(sensor_type_e sensorNr, bool activity){
+	if(!activity){	//if sensor should be stopped
+		int ret = sensor_listener_stop(s_info.sensors[sensorNr].listener);
+		if (ret != SENSOR_ERROR_NONE) {
+			dlog_print(DLOG_ERROR, LOG_TAG, "[%s:%d] sensor_listener_stop() %s error: %s", __FILE__, __LINE__,  sensor_strings[sensorNr], get_error_message(ret));
+			return;
+		}
+	}else{	//if sensor should be started
+		int ret = sensor_listener_start(s_info.sensors[sensorNr].listener);	//start sensor
+		if (ret != SENSOR_ERROR_NONE) { //if an error occured while starting the sensor
+			dlog_print(DLOG_ERROR, LOG_TAG, "[%s:%d] sensor_listener_start() %s error: %s", __FILE__, __LINE__,  sensor_strings[sensorNr], get_error_message(ret));
+			return;
+		}
+	}
+	s_info.sensor_activity[sensorNr] = activity; //set new activity
+
+	dlog_print(DLOG_INFO, LOG_TAG, "Set activity of sensor: %s to %i", sensor_strings[sensorNr], activity);
+}
+
+/** CUSTOM
+ * @brief sets a new check interval for a sensor
+ * @param the sensor nr/enum/id
+ * @param the new interval at which the sensor should be checked
+ */
+void data_set_sensor_interval(sensor_type_e sensorNr, unsigned int sensorIntervalMs){
+
+	int ret = sensor_listener_set_interval(s_info.sensors[sensorNr].listener, sensorIntervalMs);
+
+	if (ret != SENSOR_ERROR_NONE) { //if an error occured when setting the interval
+		dlog_print(DLOG_ERROR, LOG_TAG, "[%s:%d] set_sensor_interval error: %s", __FILE__, __LINE__, get_error_message(ret));
+		return;
+	}
+
+	dlog_print(DLOG_INFO, LOG_TAG, "Set sensor interval of sensor: %s to: %i", sensor_strings[sensorNr], sensorIntervalMs);
+
+	s_info.sensor_interval_ms[sensorNr] = sensorIntervalMs;
+}
+
+/**
+ * @brief Function that initializes the data module.
+ * @param sensor_update_cb Callback used to update the data displayed in the data view.
+ * @return True on success or false on error.
+ */
+
+bool data_initialize(Update_Sensor_Values_Cb sensor_update_cb)
+{
+	_initialize_sensors();
+	s_info.sensor_update_cb = sensor_update_cb;
+	//temp_func(); //for debugging/testing purposes - TODO: delete
+
+	dlog_print(DLOG_ERROR, LOG_TAG, "Initialized data", __FILE__, __LINE__);
+	return true;
+}
+
+
+/**
+ * @brief Function used to destroy the sensor listeners. Should be invoked when the app is terminated.
+ */
+void data_finalize(void)
+{
+	int ret = SENSOR_ERROR_NONE;
+	int i;
+
+	for (i = 0; i < SENSOR_COUNT; ++i) {
+		ret = sensor_destroy_listener(s_info.sensors[i].listener);
+		if (ret != SENSOR_ERROR_NONE) {
+			dlog_print(DLOG_ERROR, LOG_TAG, "[%s:%d] sensor_get_default_sensor() error: %s", __FILE__, __LINE__, get_error_message(ret));
+			continue;
+		}
+	}
+}
+
+/**
+ * @brief Checks if the given sensor type is supported by the device.
+ * @param type The sensor's type.
+ * @return true - sensor is supported, false - sensor is not supported.
+ */
+bool data_get_sensor_support(sensor_type_e type)
+{
+	bool supported = false;
+	int ret;
+
+	ret = sensor_is_supported(type, &supported);
+	if (ret != SENSOR_ERROR_NONE) {
+		dlog_print(DLOG_ERROR, LOG_TAG, "[%s:%d] sensor_is_supported() error: %s", __FILE__, __LINE__, get_error_message(ret));
+		return false;
+	}
+
+	return supported;
+}
+
+/**
+ * @brief Checks the minimal and maximal values that the given sensor supports.
+ * @param type The sensor type.
+ * @param[out] min The minimal value.
+ * @param[out] max The maximal value.
+ */
+void data_get_sensor_range(sensor_type_e type, float *min, float *max)
+{
+	*min = 0;
+	*max = 0;
+
+	//TODO: Check why these are special cased
+	if (type == SENSOR_GYROSCOPE) {
+		*min = -MAX_GYRO_VALUE;
+		*max = MAX_GYRO_VALUE;
+		return;
+	} else if (type == SENSOR_HRM) {
+		*min = 0.0;
+		*max = MAX_HRM_VALUE;
+		return;
+	}
+
+	int ret = sensor_get_min_range(s_info.sensors[type].handle, min);
+	if (ret != SENSOR_ERROR_NONE) {
+		dlog_print(DLOG_ERROR, LOG_TAG, "[%s:%d] sensor_get_min_range() error: %s", __FILE__, __LINE__, get_error_message(ret));
+		return;
+	}
+
+	ret = sensor_get_max_range(s_info.sensors[type].handle, max);
+	if (ret != SENSOR_ERROR_NONE) {
+		dlog_print(DLOG_ERROR, LOG_TAG, "[%s:%d] sensor_get_min_range() error: %s", __FILE__, __LINE__, get_error_message(ret));
+		return;
+	}
+}
+
+/**
+ * @brief Checks the sensor's resolution.
+ * @param type The sensor type.
+ * @return The sensor's resolution.
+ */
+float data_get_sensor_resolution(sensor_type_e type)
+{
+	int ret;
+	float resolution = 0.0;
+
+	ret = sensor_get_resolution(s_info.sensors[type].handle, &resolution);
+	if (ret != SENSOR_ERROR_NONE) {
+		dlog_print(DLOG_ERROR, LOG_TAG, "[%s:%d] sensor_get_resolution() error: %s", __FILE__, __LINE__, get_error_message(ret));
+		return 0.0;
+	}
+
+	return resolution;
+}
+
+/**
+ * @brief Checks the sensor's vendor.
+ * @param type The sensor type.
+ * @return The sensor's vendor (the returned value should be freed).
+ */
+char *data_get_sensor_vendor(sensor_type_e type)
+{
+	int ret;
+	char *vendor = NULL;
+
+	ret = sensor_get_vendor(s_info.sensors[type].handle, &vendor);
+	if (ret != SENSOR_ERROR_NONE) {
+		dlog_print(DLOG_ERROR, LOG_TAG, "[%s:%d] sensor_get_vendor() error: %s", __FILE__, __LINE__, get_error_message(ret));
+		return strdup("");
+	}
+
+	return vendor;
+}
+
+
+
+/**
+ * @brief A ecore timer callback used when the proximity timer is the current one. This is needed because the proximity sensor works differently than most of the other sensors.
+ * @param data
+ * @return
+ */
+static Eina_Bool _proximity_timer_cb(void *data)
+{
+
+	float value = (int)data;
+	//TODO: s_info.sensor_update_cb(1, &value, SENSOR_PROXIMITY);
+
+	return ECORE_CALLBACK_RENEW;
+}
+
+/**
+ * @brief Function used to delete the proximity timer.
+ */
+static void _timer_stop(void)
+{
+	if (s_info.timer) {
+		ecore_timer_del(s_info.timer);
+		s_info.timer = NULL;
+	}
+}
+
+/**
+ * @brief Function used to create the proximity timer.
+ * @param value Value provided by the proximity sensor.
+ */
+static void _timer_start(int value)
+{
+	s_info.timer = ecore_timer_add(LISTENER_TIMEOUT_FINAL / 1000.0, _proximity_timer_cb, (void *)value);
+}
+
+/**
+ * @brief Function used when the hrm sensor is the current one. The hrm sensor works differently than most of the other sensors.
+ * @param event The event object storing the sensor data.
+ */
+static void _set_hrm_values(sensor_event_s *event)
+{
+	static int timeout = 0;
+	static int draw_phase = 0;
+	float min = 0;
+	float max = 0;
+
+	data_get_sensor_range(SENSOR_HRM, &min, &max);
+
+	event->value_count = 2;
+
+	if (timeout >= (int)event->values[2]) {
+		timeout = 0;
+		draw_phase = 2;
+	} else {
+		timeout += LISTENER_TIMEOUT_FINAL;
+	}
+
+	if (draw_phase == 2) {
+		event->values[1] = max;
+		draw_phase--;
+	} else if (draw_phase == 1) {
+		event->values[1] = (max + min) / 4.0;
+		draw_phase--;
+	} else {
+		event->values[1] = (max + min) / 2.0;
+	}
+}
+
+
+/**
+ * @brief Callback invoked by a sensor's listener.
+ * @param sensor The sensor's handle.
+ * @param event The event data.
+ * @param data The user data.
+ */
+static void _sensor_event_cb(sensor_h sensor, sensor_event_s *event, void *data)	//TODO: seperate data storing from this function?
+{
+
+	sensor_type_e type = (sensor_type_e) data;
+
+	_timer_stop();
+	if (type == SENSOR_HRM)
+		_set_hrm_values(event);
+	else if (type == SENSOR_PRESSURE)
+		event->value_count = 1;
+	else if (type == SENSOR_PROXIMITY)
+		_timer_start((int)event->values[0]); /* Why? */
+
+	s_info.sensor_update_cb( type, event );		//call the "all sensors"-callback function, (the function that was set to handle all sensor data updates at data_initialize)
+
+}
+
+/**
+ * @brief Initializes the sensors. The function sets the handles and creates a listener for each of the sensors.
+ */
+static void _initialize_sensors(void)
+{
+	int ret;
+	int i;
+	for (i = 0; i < SENSOR_COUNT; ++i) {
+
+		/* Request a handle to the sensor */
+		ret = sensor_get_default_sensor(i, &s_info.sensors[i].handle);	//get a handle to the sensor
+		if (ret != SENSOR_ERROR_NONE) {
+			dlog_print(DLOG_ERROR, LOG_TAG, "[%s:%d] sensor_get_default_sensor() error %s: %s", __FILE__, __LINE__, sensor_strings[i], get_error_message(ret));
+			continue;
+		}
+
+		ret = sensor_create_listener(s_info.sensors[i].handle, &s_info.sensors[i].listener);	//link the appropriate listener to the sensor using the sensor handle
+		if (ret != SENSOR_ERROR_NONE) {
+			dlog_print(DLOG_ERROR, LOG_TAG, "[%s:%d] sensor_create_listener() error %s: %s", __FILE__, __LINE__, sensor_strings[i], get_error_message(ret));
+			continue;
+		} else {
+			sensor_listener_set_option (s_info.sensors[i].listener, SENSOR_OPTION_ALWAYS_ON); //keep sensors on
+			///sensor_listener_set_option (s_info.sensors[i].listener, SENSOR_OPTION_ON_IN_SCREEN_OFF); //keep sensors on when screen is off
+		} //TODO: make sure this option is not reverted when sensor is turned off then on again
+
+		ret = sensor_listener_set_event_cb(s_info.sensors[i].listener, LISTENER_TIMEOUT, _sensor_event_cb, (void *)i); //set the callback on the sensor listener TODO: set listener_timeout
+		if (ret != SENSOR_ERROR_NONE) {
+			dlog_print(DLOG_ERROR, LOG_TAG, "[%s:%d] sensor_listener_set_event_cb() error %s: %s", __FILE__, __LINE__, sensor_strings[i], get_error_message(ret));
+			continue;
+		}
+	}
+}
