@@ -1,0 +1,863 @@
+Increasing size
+Increasing size
+Increasing size
+--------------------------------------------------------------------------------
+
+2 < 100 Executing unit with Timestamp: 2      ID: 458     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 458 --> 372 
+4 < 100 Executing unit with Timestamp: 4      ID: 372     Target:PROXIMITY     Action:0 
+Item at i was id: 372 --> 316 
+9 < 100 Executing unit with Timestamp: 9      ID: 316     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 316 --> 96 
+12 < 100 Executing unit with Timestamp: 12      ID: 96     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 96 --> 146 
+19 < 100 Executing unit with Timestamp: 19      ID: 146     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 146 --> 398 
+21 < 100 Executing unit with Timestamp: 21      ID: 398     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 398 --> 33 
+22 < 100 Executing unit with Timestamp: 22      ID: 33     Target:LIGHT     Action:1 
+Item at i was id: 33 --> 12 
+27 < 100 Executing unit with Timestamp: 27      ID: 12     Target:PROXIMITY     Action:0 
+Item at i was id: 12 --> 448 
+27 < 100 Executing unit with Timestamp: 27      ID: 448     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 448 --> 447 
+28 < 100 Executing unit with Timestamp: 28      ID: 447     Target:MAGNETIC     Action:1 
+Item at i was id: 447 --> 191 
+29 < 100 Executing unit with Timestamp: 29      ID: 191     Target:PRESSURE     Action:1 
+Item at i was id: 191 --> 123 
+31 < 100 Executing unit with Timestamp: 31      ID: 123     Target:LIGHT     Action:1 
+Item at i was id: 123 --> 272 
+36 < 100 Executing unit with Timestamp: 36      ID: 272     Target:PROXIMITY     Action:0 
+Item at i was id: 272 --> 407 
+36 < 100 Executing unit with Timestamp: 36      ID: 407     Target:MAGNETIC     Action:1 
+Item at i was id: 407 --> 40 
+42 < 100 Executing unit with Timestamp: 42      ID: 40     Target:ACCELEROMETER     Action:0 
+Item at i was id: 40 --> 358 
+42 < 100 Executing unit with Timestamp: 42      ID: 358     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 358 --> 79 
+43 < 100 Executing unit with Timestamp: 43      ID: 79     Target:GRAVITY     Action:1 
+Item at i was id: 79 --> 422 
+46 < 100 Executing unit with Timestamp: 46      ID: 422     Target:PROXIMITY     Action:0 
+Item at i was id: 422 --> 475 
+49 < 100 Executing unit with Timestamp: 49      ID: 475     Target:ORIENTATION     Action:1 
+Item at i was id: 475 --> 449 
+50 < 100 Executing unit with Timestamp: 50      ID: 449     Target:GRAVITY     Action:1 
+Item at i was id: 449 --> 14 
+59 < 100 Executing unit with Timestamp: 59      ID: 14     Target:GYROSCOPE     Action:0 
+Item at i was id: 14 --> 269 
+62 < 100 Executing unit with Timestamp: 62      ID: 269     Target:GRAVITY     Action:1 
+Item at i was id: 269 --> 29 
+67 < 100 Executing unit with Timestamp: 67      ID: 29     Target:GRAVITY     Action:1 
+Item at i was id: 29 --> 278 
+71 < 100 Executing unit with Timestamp: 71      ID: 278     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 278 --> 346 
+81 < 100 Executing unit with Timestamp: 81      ID: 346     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 346 --> 232 
+82 < 100 Executing unit with Timestamp: 82      ID: 232     Target:PROXIMITY     Action:0 
+Item at i was id: 232 --> 348 
+84 < 100 Executing unit with Timestamp: 84      ID: 348     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 348 --> 301 
+90 < 100 Executing unit with Timestamp: 90      ID: 301     Target:PRESSURE     Action:1 
+Item at i was id: 301 --> 53 
+91 < 100 Executing unit with Timestamp: 91      ID: 53     Target:LIGHT     Action:1 
+Item at i was id: 53 --> 99 
+94 < 100 Executing unit with Timestamp: 94      ID: 99     Target:GRAVITY     Action:1 
+Item at i was id: 99 --> 107 
+97 < 100 Executing unit with Timestamp: 97      ID: 107     Target:MAGNETIC     Action:1 
+Item at i was id: 107 --> 125 
+97 < 100 Executing unit with Timestamp: 97      ID: 125     Target:ORIENTATION     Action:1 
+Item at i was id: 125 --> 124 
+
+117 < 200 Executing unit with Timestamp: 117      ID: 124     Target:GYROSCOPE     Action:0 
+Item at i was id: 124 --> 188 
+121 < 200 Executing unit with Timestamp: 121      ID: 188     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 188 --> 71 
+124 < 200 Executing unit with Timestamp: 124      ID: 71     Target:PRESSURE     Action:1 
+Item at i was id: 71 --> 171 
+124 < 200 Executing unit with Timestamp: 124      ID: 171     Target:PRESSURE     Action:1 
+Item at i was id: 171 --> 472 
+127 < 200 Executing unit with Timestamp: 127      ID: 472     Target:PROXIMITY     Action:0 
+Item at i was id: 472 --> 413 
+133 < 200 Executing unit with Timestamp: 133      ID: 413     Target:LIGHT     Action:1 
+Item at i was id: 413 --> 468 
+134 < 200 Executing unit with Timestamp: 134      ID: 468     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 468 --> 228 
+139 < 200 Executing unit with Timestamp: 139      ID: 228     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 228 --> 380 
+142 < 200 Executing unit with Timestamp: 142      ID: 380     Target:ACCELEROMETER     Action:0 
+Item at i was id: 380 --> 197 
+143 < 200 Executing unit with Timestamp: 143      ID: 197     Target:MAGNETIC     Action:1 
+Item at i was id: 197 --> 152 
+149 < 200 Executing unit with Timestamp: 149      ID: 152     Target:PROXIMITY     Action:0 
+Item at i was id: 152 --> 465 
+159 < 200 Executing unit with Timestamp: 159      ID: 465     Target:ORIENTATION     Action:1 
+Item at i was id: 465 --> 286 
+163 < 200 Executing unit with Timestamp: 163      ID: 286     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 286 --> 36 
+167 < 200 Executing unit with Timestamp: 167      ID: 36     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 36 --> 314 
+172 < 200 Executing unit with Timestamp: 172      ID: 314     Target:GYROSCOPE     Action:0 
+Item at i was id: 314 --> 220 
+183 < 200 Executing unit with Timestamp: 183      ID: 220     Target:ACCELEROMETER     Action:0 
+Item at i was id: 220 --> 362 
+190 < 200 Executing unit with Timestamp: 190      ID: 362     Target:PROXIMITY     Action:0 
+Item at i was id: 362 --> 235 
+197 < 200 Executing unit with Timestamp: 197      ID: 235     Target:ORIENTATION     Action:1 
+Item at i was id: 235 --> 394 
+
+202 < 300 Executing unit with Timestamp: 202      ID: 394     Target:GYROSCOPE     Action:0 
+Item at i was id: 394 --> 321 
+206 < 300 Executing unit with Timestamp: 206      ID: 321     Target:PRESSURE     Action:1 
+Item at i was id: 321 --> 365 
+209 < 300 Executing unit with Timestamp: 209      ID: 365     Target:ORIENTATION     Action:1 
+Item at i was id: 365 --> 471 
+215 < 300 Executing unit with Timestamp: 215      ID: 471     Target:PRESSURE     Action:1 
+Item at i was id: 471 --> 139 
+219 < 300 Executing unit with Timestamp: 219      ID: 139     Target:GRAVITY     Action:1 
+Item at i was id: 139 --> 97 
+226 < 300 Executing unit with Timestamp: 226      ID: 97     Target:MAGNETIC     Action:1 
+Item at i was id: 97 --> 177 
+227 < 300 Executing unit with Timestamp: 227      ID: 177     Target:MAGNETIC     Action:1 
+Item at i was id: 177 --> 164 
+228 < 300 Executing unit with Timestamp: 228      ID: 164     Target:GYROSCOPE     Action:0 
+Item at i was id: 164 --> 336 
+228 < 300 Executing unit with Timestamp: 228      ID: 336     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 336 --> 41 
+229 < 300 Executing unit with Timestamp: 229      ID: 41     Target:PRESSURE     Action:1 
+Item at i was id: 41 --> 500 
+232 < 300 Executing unit with Timestamp: 232      ID: 500     Target:ACCELEROMETER     Action:0 
+Item at i was id: 500 --> 193 
+235 < 300 Executing unit with Timestamp: 235      ID: 193     Target:LIGHT     Action:1 
+Item at i was id: 193 --> 156 
+245 < 300 Executing unit with Timestamp: 245      ID: 156     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 156 --> 410 
+248 < 300 Executing unit with Timestamp: 248      ID: 410     Target:ACCELEROMETER     Action:0 
+Item at i was id: 410 --> 425 
+249 < 300 Executing unit with Timestamp: 249      ID: 425     Target:ORIENTATION     Action:1 
+Item at i was id: 425 --> 431 
+253 < 300 Executing unit with Timestamp: 253      ID: 431     Target:PRESSURE     Action:1 
+Item at i was id: 431 --> 392 
+259 < 300 Executing unit with Timestamp: 259      ID: 392     Target:PROXIMITY     Action:0 
+Item at i was id: 392 --> 147 
+270 < 300 Executing unit with Timestamp: 270      ID: 147     Target:MAGNETIC     Action:1 
+Item at i was id: 147 --> 114 
+280 < 300 Executing unit with Timestamp: 280      ID: 114     Target:GYROSCOPE     Action:0 
+Item at i was id: 114 --> 265 
+282 < 300 Executing unit with Timestamp: 282      ID: 265     Target:ORIENTATION     Action:1 
+Item at i was id: 265 --> 477 
+285 < 300 Executing unit with Timestamp: 285      ID: 477     Target:MAGNETIC     Action:1 
+Item at i was id: 477 --> 115 
+286 < 300 Executing unit with Timestamp: 286      ID: 115     Target:ORIENTATION     Action:1 
+Item at i was id: 115 --> 486 
+289 < 300 Executing unit with Timestamp: 289      ID: 486     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 486 --> 489 
+292 < 300 Executing unit with Timestamp: 292      ID: 489     Target:GRAVITY     Action:1 
+Item at i was id: 489 --> 361 
+298 < 300 Executing unit with Timestamp: 298      ID: 361     Target:PRESSURE     Action:1 
+Item at i was id: 361 --> 446 
+
+304 < 400 Executing unit with Timestamp: 304      ID: 446     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 446 --> 61 
+305 < 400 Executing unit with Timestamp: 305      ID: 61     Target:PRESSURE     Action:1 
+Item at i was id: 61 --> 49 
+315 < 400 Executing unit with Timestamp: 315      ID: 49     Target:GRAVITY     Action:1 
+Item at i was id: 49 --> 48 
+324 < 400 Executing unit with Timestamp: 324      ID: 48     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 48 --> 64 
+327 < 400 Executing unit with Timestamp: 327      ID: 64     Target:GYROSCOPE     Action:0 
+Item at i was id: 64 --> 6 
+335 < 400 Executing unit with Timestamp: 335      ID: 6     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 6 --> 480 
+335 < 400 Executing unit with Timestamp: 335      ID: 480     Target:ACCELEROMETER     Action:0 
+Item at i was id: 480 --> 65 
+336 < 400 Executing unit with Timestamp: 336      ID: 65     Target:ORIENTATION     Action:1 
+Item at i was id: 65 --> 317 
+336 < 400 Executing unit with Timestamp: 336      ID: 317     Target:MAGNETIC     Action:1 
+Item at i was id: 317 --> 469 
+339 < 400 Executing unit with Timestamp: 339      ID: 469     Target:GRAVITY     Action:1 
+Item at i was id: 469 --> 151 
+340 < 400 Executing unit with Timestamp: 340      ID: 151     Target:PRESSURE     Action:1 
+Item at i was id: 151 --> 247 
+340 < 400 Executing unit with Timestamp: 340      ID: 247     Target:MAGNETIC     Action:1 
+Item at i was id: 247 --> 319 
+342 < 400 Executing unit with Timestamp: 342      ID: 319     Target:GRAVITY     Action:1 
+Item at i was id: 319 --> 239 
+348 < 400 Executing unit with Timestamp: 348      ID: 239     Target:GRAVITY     Action:1 
+Item at i was id: 239 --> 166 
+350 < 400 Executing unit with Timestamp: 350      ID: 166     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 166 --> 134 
+353 < 400 Executing unit with Timestamp: 353      ID: 134     Target:GYROSCOPE     Action:0 
+Item at i was id: 134 --> 11 
+362 < 400 Executing unit with Timestamp: 362      ID: 11     Target:PRESSURE     Action:1 
+Item at i was id: 11 --> 78 
+364 < 400 Executing unit with Timestamp: 364      ID: 78     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 78 --> 178 
+365 < 400 Executing unit with Timestamp: 365      ID: 178     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 178 --> 419 
+368 < 400 Executing unit with Timestamp: 368      ID: 419     Target:GRAVITY     Action:1 
+Item at i was id: 419 --> 50 
+370 < 400 Executing unit with Timestamp: 370      ID: 50     Target:ACCELEROMETER     Action:0 
+Item at i was id: 50 --> 104 
+378 < 400 Executing unit with Timestamp: 378      ID: 104     Target:GYROSCOPE     Action:0 
+Item at i was id: 104 --> 161 
+379 < 400 Executing unit with Timestamp: 379      ID: 161     Target:PRESSURE     Action:1 
+Item at i was id: 161 --> 373 
+379 < 400 Executing unit with Timestamp: 379      ID: 373     Target:LIGHT     Action:1 
+Item at i was id: 373 --> 494 
+390 < 400 Executing unit with Timestamp: 390      ID: 494     Target:GYROSCOPE     Action:0 
+Item at i was id: 494 --> 190 
+395 < 400 Executing unit with Timestamp: 395      ID: 190     Target:ACCELEROMETER     Action:0 
+Item at i was id: 190 --> 90 
+399 < 400 Executing unit with Timestamp: 399      ID: 90     Target:ACCELEROMETER     Action:0 
+Item at i was id: 90 --> 460 
+
+403 < 500 Executing unit with Timestamp: 403      ID: 460     Target:ACCELEROMETER     Action:0 
+Item at i was id: 460 --> 202 
+404 < 500 Executing unit with Timestamp: 404      ID: 202     Target:PROXIMITY     Action:0 
+Item at i was id: 202 --> 51 
+413 < 500 Executing unit with Timestamp: 413      ID: 51     Target:PRESSURE     Action:1 
+Item at i was id: 51 --> 310 
+418 < 500 Executing unit with Timestamp: 418      ID: 310     Target:ACCELEROMETER     Action:0 
+Item at i was id: 310 --> 43 
+421 < 500 Executing unit with Timestamp: 421      ID: 43     Target:LIGHT     Action:1 
+Item at i was id: 43 --> 343 
+422 < 500 Executing unit with Timestamp: 422      ID: 343     Target:LIGHT     Action:1 
+Item at i was id: 343 --> 196 
+428 < 500 Executing unit with Timestamp: 428      ID: 196     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 196 --> 459 
+428 < 500 Executing unit with Timestamp: 428      ID: 459     Target:GRAVITY     Action:1 
+Item at i was id: 459 --> 24 
+429 < 500 Executing unit with Timestamp: 429      ID: 24     Target:GYROSCOPE     Action:0 
+Item at i was id: 24 --> 478 
+429 < 500 Executing unit with Timestamp: 429      ID: 478     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 478 --> 183 
+437 < 500 Executing unit with Timestamp: 437      ID: 183     Target:LIGHT     Action:1 
+Item at i was id: 183 --> 121 
+440 < 500 Executing unit with Timestamp: 440      ID: 121     Target:PRESSURE     Action:1 
+Item at i was id: 121 --> 203 
+443 < 500 Executing unit with Timestamp: 443      ID: 203     Target:LIGHT     Action:1 
+Item at i was id: 203 --> 119 
+444 < 500 Executing unit with Timestamp: 444      ID: 119     Target:GRAVITY     Action:1 
+Item at i was id: 119 --> 38 
+456 < 500 Executing unit with Timestamp: 456      ID: 38     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 38 --> 442 
+460 < 500 Executing unit with Timestamp: 460      ID: 442     Target:PROXIMITY     Action:0 
+Item at i was id: 442 --> 445 
+460 < 500 Executing unit with Timestamp: 460      ID: 445     Target:ORIENTATION     Action:1 
+Item at i was id: 445 --> 234 
+464 < 500 Executing unit with Timestamp: 464      ID: 234     Target:GYROSCOPE     Action:0 
+Item at i was id: 234 --> 298 
+466 < 500 Executing unit with Timestamp: 466      ID: 298     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 298 --> 127 
+481 < 500 Executing unit with Timestamp: 481      ID: 127     Target:MAGNETIC     Action:1 
+Item at i was id: 127 --> 221 
+490 < 500 Executing unit with Timestamp: 490      ID: 221     Target:PRESSURE     Action:1 
+Item at i was id: 221 --> 176 
+491 < 500 Executing unit with Timestamp: 491      ID: 176     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 176 --> 8 
+492 < 500 Executing unit with Timestamp: 492      ID: 8     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 8 --> 110 
+492 < 500 Executing unit with Timestamp: 492      ID: 110     Target:ACCELEROMETER     Action:0 
+Item at i was id: 110 --> 430 
+497 < 500 Executing unit with Timestamp: 497      ID: 430     Target:ACCELEROMETER     Action:0 
+Item at i was id: 430 --> 406 
+498 < 500 Executing unit with Timestamp: 498      ID: 406     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 406 --> 421 
+
+500 < 600 Executing unit with Timestamp: 500      ID: 421     Target:PRESSURE     Action:1 
+Item at i was id: 421 --> 461 
+500 < 600 Executing unit with Timestamp: 500      ID: 461     Target:PRESSURE     Action:1 
+Item at i was id: 461 --> 387 
+504 < 600 Executing unit with Timestamp: 504      ID: 387     Target:MAGNETIC     Action:1 
+Item at i was id: 387 --> 473 
+504 < 600 Executing unit with Timestamp: 504      ID: 473     Target:LIGHT     Action:1 
+Item at i was id: 473 --> 66 
+505 < 600 Executing unit with Timestamp: 505      ID: 66     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 66 --> 261 
+522 < 600 Executing unit with Timestamp: 522      ID: 261     Target:PRESSURE     Action:1 
+Item at i was id: 261 --> 363 
+524 < 600 Executing unit with Timestamp: 524      ID: 363     Target:LIGHT     Action:1 
+Item at i was id: 363 --> 467 
+535 < 600 Executing unit with Timestamp: 535      ID: 467     Target:MAGNETIC     Action:1 
+Item at i was id: 467 --> 46 
+537 < 600 Executing unit with Timestamp: 537      ID: 46     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 46 --> 206 
+538 < 600 Executing unit with Timestamp: 538      ID: 206     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 206 --> 464 
+538 < 600 Executing unit with Timestamp: 538      ID: 464     Target:GYROSCOPE     Action:0 
+Item at i was id: 464 --> 17 
+540 < 600 Executing unit with Timestamp: 540      ID: 17     Target:MAGNETIC     Action:1 
+Item at i was id: 17 --> 233 
+542 < 600 Executing unit with Timestamp: 542      ID: 233     Target:LIGHT     Action:1 
+Item at i was id: 233 --> 74 
+545 < 600 Executing unit with Timestamp: 545      ID: 74     Target:GYROSCOPE     Action:0 
+Item at i was id: 74 --> 182 
+551 < 600 Executing unit with Timestamp: 551      ID: 182     Target:PROXIMITY     Action:0 
+Item at i was id: 182 --> 23 
+567 < 600 Executing unit with Timestamp: 567      ID: 23     Target:LIGHT     Action:1 
+Item at i was id: 23 --> 131 
+567 < 600 Executing unit with Timestamp: 567      ID: 131     Target:PRESSURE     Action:1 
+Item at i was id: 131 --> 498 
+569 < 600 Executing unit with Timestamp: 569      ID: 498     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 498 --> 102 
+570 < 600 Executing unit with Timestamp: 570      ID: 102     Target:PROXIMITY     Action:0 
+Item at i was id: 102 --> 366 
+581 < 600 Executing unit with Timestamp: 581      ID: 366     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 366 --> 98 
+586 < 600 Executing unit with Timestamp: 586      ID: 98     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 98 --> 135 
+586 < 600 Executing unit with Timestamp: 586      ID: 135     Target:ORIENTATION     Action:1 
+Item at i was id: 135 --> 364 
+590 < 600 Executing unit with Timestamp: 590      ID: 364     Target:GYROSCOPE     Action:0 
+Item at i was id: 364 --> 328 
+599 < 600 Executing unit with Timestamp: 599      ID: 328     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 328 --> 271 
+
+600 < 700 Executing unit with Timestamp: 600      ID: 271     Target:PRESSURE     Action:1 
+Item at i was id: 271 --> 106 
+601 < 700 Executing unit with Timestamp: 601      ID: 106     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 106 --> 207 
+606 < 700 Executing unit with Timestamp: 606      ID: 207     Target:MAGNETIC     Action:1 
+Item at i was id: 207 --> 240 
+611 < 700 Executing unit with Timestamp: 611      ID: 240     Target:ACCELEROMETER     Action:0 
+Item at i was id: 240 --> 205 
+613 < 700 Executing unit with Timestamp: 613      ID: 205     Target:ORIENTATION     Action:1 
+Item at i was id: 205 --> 388 
+613 < 700 Executing unit with Timestamp: 613      ID: 388     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 388 --> 155 
+618 < 700 Executing unit with Timestamp: 618      ID: 155     Target:ORIENTATION     Action:1 
+Item at i was id: 155 --> 120 
+619 < 700 Executing unit with Timestamp: 619      ID: 120     Target:ACCELEROMETER     Action:0 
+Item at i was id: 120 --> 140 
+624 < 700 Executing unit with Timestamp: 624      ID: 140     Target:ACCELEROMETER     Action:0 
+Item at i was id: 140 --> 260 
+626 < 700 Executing unit with Timestamp: 626      ID: 260     Target:ACCELEROMETER     Action:0 
+Item at i was id: 260 --> 357 
+640 < 700 Executing unit with Timestamp: 640      ID: 357     Target:MAGNETIC     Action:1 
+Item at i was id: 357 --> 9 
+649 < 700 Executing unit with Timestamp: 649      ID: 9     Target:GRAVITY     Action:1 
+Item at i was id: 9 --> 88 
+651 < 700 Executing unit with Timestamp: 651      ID: 88     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 88 --> 111 
+652 < 700 Executing unit with Timestamp: 652      ID: 111     Target:PRESSURE     Action:1 
+Item at i was id: 111 --> 340 
+658 < 700 Executing unit with Timestamp: 658      ID: 340     Target:ACCELEROMETER     Action:0 
+Item at i was id: 340 --> 285 
+660 < 700 Executing unit with Timestamp: 660      ID: 285     Target:ORIENTATION     Action:1 
+Item at i was id: 285 --> 128 
+675 < 700 Executing unit with Timestamp: 675      ID: 128     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 128 --> 462 
+681 < 700 Executing unit with Timestamp: 681      ID: 462     Target:PROXIMITY     Action:0 
+Item at i was id: 462 --> 138 
+683 < 700 Executing unit with Timestamp: 683      ID: 138     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 138 --> 212 
+688 < 700 Executing unit with Timestamp: 688      ID: 212     Target:PROXIMITY     Action:0 
+Item at i was id: 212 --> 13 
+690 < 700 Executing unit with Timestamp: 690      ID: 13     Target:LIGHT     Action:1 
+Item at i was id: 13 --> 455 
+699 < 700 Executing unit with Timestamp: 699      ID: 455     Target:ORIENTATION     Action:1 
+Item at i was id: 455 --> 263 
+
+708 < 800 Executing unit with Timestamp: 708      ID: 263     Target:LIGHT     Action:1 
+Item at i was id: 263 --> 129 
+709 < 800 Executing unit with Timestamp: 709      ID: 129     Target:GRAVITY     Action:1 
+Item at i was id: 129 --> 360 
+713 < 800 Executing unit with Timestamp: 713      ID: 360     Target:ACCELEROMETER     Action:0 
+Item at i was id: 360 --> 150 
+715 < 800 Executing unit with Timestamp: 715      ID: 150     Target:ACCELEROMETER     Action:0 
+Item at i was id: 150 --> 154 
+723 < 800 Executing unit with Timestamp: 723      ID: 154     Target:GYROSCOPE     Action:0 
+Item at i was id: 154 --> 224 
+725 < 800 Executing unit with Timestamp: 725      ID: 224     Target:GYROSCOPE     Action:0 
+Item at i was id: 224 --> 122 
+729 < 800 Executing unit with Timestamp: 729      ID: 122     Target:PROXIMITY     Action:0 
+Item at i was id: 122 --> 258 
+736 < 800 Executing unit with Timestamp: 736      ID: 258     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 258 --> 491 
+743 < 800 Executing unit with Timestamp: 743      ID: 491     Target:PRESSURE     Action:1 
+Item at i was id: 491 --> 450 
+748 < 800 Executing unit with Timestamp: 748      ID: 450     Target:ACCELEROMETER     Action:0 
+Item at i was id: 450 --> 89 
+754 < 800 Executing unit with Timestamp: 754      ID: 89     Target:GRAVITY     Action:1 
+Item at i was id: 89 --> 390 
+754 < 800 Executing unit with Timestamp: 754      ID: 390     Target:ACCELEROMETER     Action:0 
+Item at i was id: 390 --> 112 
+756 < 800 Executing unit with Timestamp: 756      ID: 112     Target:PROXIMITY     Action:0 
+Item at i was id: 112 --> 374 
+769 < 800 Executing unit with Timestamp: 769      ID: 374     Target:GYROSCOPE     Action:0 
+Item at i was id: 374 --> 201 
+776 < 800 Executing unit with Timestamp: 776      ID: 201     Target:PRESSURE     Action:1 
+Item at i was id: 201 --> 3 
+777 < 800 Executing unit with Timestamp: 777      ID: 3     Target:LIGHT     Action:1 
+Item at i was id: 3 --> 397 
+784 < 800 Executing unit with Timestamp: 784      ID: 397     Target:MAGNETIC     Action:1 
+Item at i was id: 397 --> 453 
+794 < 800 Executing unit with Timestamp: 794      ID: 453     Target:LIGHT     Action:1 
+Item at i was id: 453 --> 101 
+795 < 800 Executing unit with Timestamp: 795      ID: 101     Target:PRESSURE     Action:1 
+Item at i was id: 101 --> 238 
+
+804 < 900 Executing unit with Timestamp: 804      ID: 238     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 238 --> 82 
+808 < 900 Executing unit with Timestamp: 808      ID: 82     Target:PROXIMITY     Action:0 
+Item at i was id: 82 --> 408 
+808 < 900 Executing unit with Timestamp: 808      ID: 408     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 408 --> 293 
+813 < 900 Executing unit with Timestamp: 813      ID: 293     Target:LIGHT     Action:1 
+Item at i was id: 293 --> 75 
+814 < 900 Executing unit with Timestamp: 814      ID: 75     Target:ORIENTATION     Action:1 
+Item at i was id: 75 --> 210 
+818 < 900 Executing unit with Timestamp: 818      ID: 210     Target:ACCELEROMETER     Action:0 
+Item at i was id: 210 --> 327 
+819 < 900 Executing unit with Timestamp: 819      ID: 327     Target:MAGNETIC     Action:1 
+Item at i was id: 327 --> 367 
+819 < 900 Executing unit with Timestamp: 819      ID: 367     Target:MAGNETIC     Action:1 
+Item at i was id: 367 --> 144 
+829 < 900 Executing unit with Timestamp: 829      ID: 144     Target:GYROSCOPE     Action:0 
+Item at i was id: 144 --> 493 
+829 < 900 Executing unit with Timestamp: 829      ID: 493     Target:LIGHT     Action:1 
+Item at i was id: 493 --> 208 
+840 < 900 Executing unit with Timestamp: 840      ID: 208     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 208 --> 399 
+842 < 900 Executing unit with Timestamp: 842      ID: 399     Target:GRAVITY     Action:1 
+Item at i was id: 399 --> 67 
+846 < 900 Executing unit with Timestamp: 846      ID: 67     Target:MAGNETIC     Action:1 
+Item at i was id: 67 --> 157 
+846 < 900 Executing unit with Timestamp: 846      ID: 157     Target:MAGNETIC     Action:1 
+Item at i was id: 157 --> 377 
+850 < 900 Executing unit with Timestamp: 850      ID: 377     Target:MAGNETIC     Action:1 
+Item at i was id: 377 --> 189 
+858 < 900 Executing unit with Timestamp: 858      ID: 189     Target:GRAVITY     Action:1 
+Item at i was id: 189 --> 27 
+862 < 900 Executing unit with Timestamp: 862      ID: 27     Target:MAGNETIC     Action:1 
+Item at i was id: 27 --> 57 
+862 < 900 Executing unit with Timestamp: 862      ID: 57     Target:MAGNETIC     Action:1 
+Item at i was id: 57 --> 400 
+868 < 900 Executing unit with Timestamp: 868      ID: 400     Target:ACCELEROMETER     Action:0 
+Item at i was id: 400 --> 142 
+871 < 900 Executing unit with Timestamp: 871      ID: 142     Target:PROXIMITY     Action:0 
+Item at i was id: 142 --> 403 
+872 < 900 Executing unit with Timestamp: 872      ID: 403     Target:LIGHT     Action:1 
+Item at i was id: 403 --> 255 
+878 < 900 Executing unit with Timestamp: 878      ID: 255     Target:ORIENTATION     Action:1 
+Item at i was id: 255 --> 2 
+886 < 900 Executing unit with Timestamp: 886      ID: 2     Target:PROXIMITY     Action:0 
+Item at i was id: 2 --> 311 
+887 < 900 Executing unit with Timestamp: 887      ID: 311     Target:PRESSURE     Action:1 
+Item at i was id: 311 --> 415 
+890 < 900 Executing unit with Timestamp: 890      ID: 415     Target:ORIENTATION     Action:1 
+Item at i was id: 415 --> 432 
+892 < 900 Executing unit with Timestamp: 892      ID: 432     Target:PROXIMITY     Action:0 
+Item at i was id: 432 --> 289 
+899 < 900 Executing unit with Timestamp: 899      ID: 289     Target:GRAVITY     Action:1 
+Item at i was id: 289 --> 482 
+
+900 < 1000 Executing unit with Timestamp: 900      ID: 482     Target:PROXIMITY     Action:0 
+Item at i was id: 482 --> 108 
+902 < 1000 Executing unit with Timestamp: 902      ID: 108     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 108 --> 452 
+902 < 1000 Executing unit with Timestamp: 902      ID: 452     Target:PROXIMITY     Action:0 
+Item at i was id: 452 --> 209 
+904 < 1000 Executing unit with Timestamp: 904      ID: 209     Target:GRAVITY     Action:1 
+Item at i was id: 209 --> 172 
+914 < 1000 Executing unit with Timestamp: 914      ID: 172     Target:PROXIMITY     Action:0 
+Item at i was id: 172 --> 4 
+915 < 1000 Executing unit with Timestamp: 915      ID: 4     Target:GYROSCOPE     Action:0 
+Item at i was id: 4 --> 44 
+919 < 1000 Executing unit with Timestamp: 919      ID: 44     Target:GYROSCOPE     Action:0 
+Item at i was id: 44 --> 159 
+921 < 1000 Executing unit with Timestamp: 921      ID: 159     Target:GRAVITY     Action:1 
+Item at i was id: 159 --> 267 
+924 < 1000 Executing unit with Timestamp: 924      ID: 267     Target:MAGNETIC     Action:1 
+Item at i was id: 267 --> 62 
+925 < 1000 Executing unit with Timestamp: 925      ID: 62     Target:PROXIMITY     Action:0 
+Item at i was id: 62 --> 297 
+926 < 1000 Executing unit with Timestamp: 926      ID: 297     Target:MAGNETIC     Action:1 
+Item at i was id: 297 --> 130 
+927 < 1000 Executing unit with Timestamp: 927      ID: 130     Target:ACCELEROMETER     Action:0 
+Item at i was id: 130 --> 282 
+930 < 1000 Executing unit with Timestamp: 930      ID: 282     Target:PROXIMITY     Action:0 
+Item at i was id: 282 --> 283 
+933 < 1000 Executing unit with Timestamp: 933      ID: 283     Target:LIGHT     Action:1 
+Item at i was id: 283 --> 393 
+944 < 1000 Executing unit with Timestamp: 944      ID: 393     Target:LIGHT     Action:1 
+Item at i was id: 393 --> 485 
+949 < 1000 Executing unit with Timestamp: 949      ID: 485     Target:ORIENTATION     Action:1 
+Item at i was id: 485 --> 229 
+954 < 1000 Executing unit with Timestamp: 954      ID: 229     Target:GRAVITY     Action:1 
+Item at i was id: 229 --> 291 
+959 < 1000 Executing unit with Timestamp: 959      ID: 291     Target:PRESSURE     Action:1 
+Item at i was id: 291 --> 476 
+964 < 1000 Executing unit with Timestamp: 964      ID: 476     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 476 --> 136 
+965 < 1000 Executing unit with Timestamp: 965      ID: 136     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 136 --> 279 
+973 < 1000 Executing unit with Timestamp: 973      ID: 279     Target:GRAVITY     Action:1 
+Item at i was id: 279 --> 54 
+980 < 1000 Executing unit with Timestamp: 980      ID: 54     Target:GYROSCOPE     Action:0 
+Item at i was id: 54 --> 173 
+987 < 1000 Executing unit with Timestamp: 987      ID: 173     Target:LIGHT     Action:1 
+Item at i was id: 173 --> 426 
+990 < 1000 Executing unit with Timestamp: 990      ID: 426     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 426 --> 59 
+996 < 1000 Executing unit with Timestamp: 996      ID: 59     Target:GRAVITY     Action:1 
+Item at i was id: 59 --> 216 
+996 < 1000 Executing unit with Timestamp: 996      ID: 216     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 216 --> 290 
+996 < 1000 Executing unit with Timestamp: 996      ID: 290     Target:ACCELEROMETER     Action:0 
+Item at i was id: 290 --> 39 
+
+1011 < 1100 Executing unit with Timestamp: 1011      ID: 39     Target:GRAVITY     Action:1 
+Item at i was id: 39 --> 198 
+1011 < 1100 Executing unit with Timestamp: 1011      ID: 198     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 198 --> 428 
+1033 < 1100 Executing unit with Timestamp: 1033      ID: 428     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 428 --> 169 
+1034 < 1100 Executing unit with Timestamp: 1034      ID: 169     Target:GRAVITY     Action:1 
+Item at i was id: 169 --> 457 
+1039 < 1100 Executing unit with Timestamp: 1039      ID: 457     Target:MAGNETIC     Action:1 
+Item at i was id: 457 --> 456 
+1043 < 1100 Executing unit with Timestamp: 1043      ID: 456     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 456 --> 34 
+1058 < 1100 Executing unit with Timestamp: 1058      ID: 34     Target:GYROSCOPE     Action:0 
+Item at i was id: 34 --> 92 
+1060 < 1100 Executing unit with Timestamp: 1060      ID: 92     Target:PROXIMITY     Action:0 
+Item at i was id: 92 --> 35 
+1069 < 1100 Executing unit with Timestamp: 1069      ID: 35     Target:ORIENTATION     Action:1 
+Item at i was id: 35 --> 63 
+1084 < 1100 Executing unit with Timestamp: 1084      ID: 63     Target:LIGHT     Action:1 
+Item at i was id: 63 --> 299 
+1084 < 1100 Executing unit with Timestamp: 1084      ID: 299     Target:GRAVITY     Action:1 
+Item at i was id: 299 --> 81 
+1087 < 1100 Executing unit with Timestamp: 1087      ID: 81     Target:PRESSURE     Action:1 
+Item at i was id: 81 --> 296 
+1095 < 1100 Executing unit with Timestamp: 1095      ID: 296     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 296 --> 306 
+
+1107 < 1200 Executing unit with Timestamp: 1107      ID: 306     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 306 --> 28 
+1123 < 1200 Executing unit with Timestamp: 1123      ID: 28     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 28 --> 434 
+1125 < 1200 Executing unit with Timestamp: 1125      ID: 434     Target:GYROSCOPE     Action:0 
+Item at i was id: 434 --> 337 
+1127 < 1200 Executing unit with Timestamp: 1127      ID: 337     Target:MAGNETIC     Action:1 
+Item at i was id: 337 --> 211 
+1128 < 1200 Executing unit with Timestamp: 1128      ID: 211     Target:PRESSURE     Action:1 
+Item at i was id: 211 --> 280 
+1131 < 1200 Executing unit with Timestamp: 1131      ID: 280     Target:ACCELEROMETER     Action:0 
+Item at i was id: 280 --> 30 
+1135 < 1200 Executing unit with Timestamp: 1135      ID: 30     Target:ACCELEROMETER     Action:0 
+Item at i was id: 30 --> 492 
+1144 < 1200 Executing unit with Timestamp: 1144      ID: 492     Target:PROXIMITY     Action:0 
+Item at i was id: 492 --> 338 
+1150 < 1200 Executing unit with Timestamp: 1150      ID: 338     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 338 --> 466 
+1151 < 1200 Executing unit with Timestamp: 1151      ID: 466     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 466 --> 435 
+1152 < 1200 Executing unit with Timestamp: 1152      ID: 435     Target:ORIENTATION     Action:1 
+Item at i was id: 435 --> 370 
+1155 < 1200 Executing unit with Timestamp: 1155      ID: 370     Target:ACCELEROMETER     Action:0 
+Item at i was id: 370 --> 439 
+1157 < 1200 Executing unit with Timestamp: 1157      ID: 439     Target:GRAVITY     Action:1 
+Item at i was id: 439 --> 58 
+1170 < 1200 Executing unit with Timestamp: 1170      ID: 58     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 58 --> 19 
+1172 < 1200 Executing unit with Timestamp: 1172      ID: 19     Target:GRAVITY     Action:1 
+Item at i was id: 19 --> 481 
+1177 < 1200 Executing unit with Timestamp: 1177      ID: 481     Target:PRESSURE     Action:1 
+Item at i was id: 481 --> 84 
+1178 < 1200 Executing unit with Timestamp: 1178      ID: 84     Target:GYROSCOPE     Action:0 
+Item at i was id: 84 --> 309 
+1179 < 1200 Executing unit with Timestamp: 1179      ID: 309     Target:GRAVITY     Action:1 
+Item at i was id: 309 --> 438 
+1188 < 1200 Executing unit with Timestamp: 1188      ID: 438     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 438 --> 402 
+1189 < 1200 Executing unit with Timestamp: 1189      ID: 402     Target:PROXIMITY     Action:0 
+Item at i was id: 402 --> 295 
+1190 < 1200 Executing unit with Timestamp: 1190      ID: 295     Target:ORIENTATION     Action:1 
+Item at i was id: 295 --> 167 
+1193 < 1200 Executing unit with Timestamp: 1193      ID: 167     Target:MAGNETIC     Action:1 
+Item at i was id: 167 --> 47 
+1198 < 1200 Executing unit with Timestamp: 1198      ID: 47     Target:MAGNETIC     Action:1 
+Item at i was id: 47 --> 287 
+1199 < 1200 Executing unit with Timestamp: 1199      ID: 287     Target:MAGNETIC     Action:1 
+Item at i was id: 287 --> 395 
+
+1202 < 1300 Executing unit with Timestamp: 1202      ID: 395     Target:ORIENTATION     Action:1 
+Item at i was id: 395 --> 384 
+1205 < 1300 Executing unit with Timestamp: 1205      ID: 384     Target:GYROSCOPE     Action:0 
+Item at i was id: 384 --> 318 
+1210 < 1300 Executing unit with Timestamp: 1210      ID: 318     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 318 --> 21 
+1211 < 1300 Executing unit with Timestamp: 1211      ID: 21     Target:PRESSURE     Action:1 
+Item at i was id: 21 --> 355 
+1222 < 1300 Executing unit with Timestamp: 1222      ID: 355     Target:ORIENTATION     Action:1 
+Item at i was id: 355 --> 342 
+1224 < 1300 Executing unit with Timestamp: 1224      ID: 342     Target:PROXIMITY     Action:0 
+Item at i was id: 342 --> 184 
+1228 < 1300 Executing unit with Timestamp: 1228      ID: 184     Target:GYROSCOPE     Action:0 
+Item at i was id: 184 --> 192 
+1237 < 1300 Executing unit with Timestamp: 1237      ID: 192     Target:PROXIMITY     Action:0 
+Item at i was id: 192 --> 483 
+1238 < 1300 Executing unit with Timestamp: 1238      ID: 483     Target:LIGHT     Action:1 
+Item at i was id: 483 --> 326 
+1255 < 1300 Executing unit with Timestamp: 1255      ID: 326     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 326 --> 378 
+1255 < 1300 Executing unit with Timestamp: 1255      ID: 378     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 378 --> 266 
+1258 < 1300 Executing unit with Timestamp: 1258      ID: 266     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 266 --> 344 
+1269 < 1300 Executing unit with Timestamp: 1269      ID: 344     Target:GYROSCOPE     Action:0 
+Item at i was id: 344 --> 375 
+1273 < 1300 Executing unit with Timestamp: 1273      ID: 375     Target:ORIENTATION     Action:1 
+Item at i was id: 375 --> 185 
+1275 < 1300 Executing unit with Timestamp: 1275      ID: 185     Target:ORIENTATION     Action:1 
+Item at i was id: 185 --> 83 
+1276 < 1300 Executing unit with Timestamp: 1276      ID: 83     Target:LIGHT     Action:1 
+Item at i was id: 83 --> 60 
+1281 < 1300 Executing unit with Timestamp: 1281      ID: 60     Target:ACCELEROMETER     Action:0 
+Item at i was id: 60 --> 349 
+1292 < 1300 Executing unit with Timestamp: 1292      ID: 349     Target:GRAVITY     Action:1 
+Item at i was id: 349 --> 243 
+1299 < 1300 Executing unit with Timestamp: 1299      ID: 243     Target:LIGHT     Action:1 
+Item at i was id: 243 --> 356 
+1299 < 1300 Executing unit with Timestamp: 1299      ID: 356     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 356 --> 113 
+
+1301 < 1400 Executing unit with Timestamp: 1301      ID: 113     Target:LIGHT     Action:1 
+Item at i was id: 113 --> 322 
+1301 < 1400 Executing unit with Timestamp: 1301      ID: 322     Target:PROXIMITY     Action:0 
+Item at i was id: 322 --> 411 
+1303 < 1400 Executing unit with Timestamp: 1303      ID: 411     Target:PRESSURE     Action:1 
+Item at i was id: 411 --> 427 
+1303 < 1400 Executing unit with Timestamp: 1303      ID: 427     Target:MAGNETIC     Action:1 
+Item at i was id: 427 --> 256 
+1305 < 1400 Executing unit with Timestamp: 1305      ID: 256     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 256 --> 137 
+1306 < 1400 Executing unit with Timestamp: 1306      ID: 137     Target:MAGNETIC     Action:1 
+Item at i was id: 137 --> 249 
+1311 < 1400 Executing unit with Timestamp: 1311      ID: 249     Target:GRAVITY     Action:1 
+Item at i was id: 249 --> 69 
+1313 < 1400 Executing unit with Timestamp: 1313      ID: 69     Target:GRAVITY     Action:1 
+Item at i was id: 69 --> 109 
+1317 < 1400 Executing unit with Timestamp: 1317      ID: 109     Target:GRAVITY     Action:1 
+Item at i was id: 109 --> 257 
+1320 < 1400 Executing unit with Timestamp: 1320      ID: 257     Target:MAGNETIC     Action:1 
+Item at i was id: 257 --> 325 
+1321 < 1400 Executing unit with Timestamp: 1321      ID: 325     Target:ORIENTATION     Action:1 
+Item at i was id: 325 --> 217 
+1324 < 1400 Executing unit with Timestamp: 1324      ID: 217     Target:MAGNETIC     Action:1 
+Item at i was id: 217 --> 391 
+1326 < 1400 Executing unit with Timestamp: 1326      ID: 391     Target:PRESSURE     Action:1 
+Item at i was id: 391 --> 412 
+1333 < 1400 Executing unit with Timestamp: 1333      ID: 412     Target:PROXIMITY     Action:0 
+Item at i was id: 412 --> 368 
+1336 < 1400 Executing unit with Timestamp: 1336      ID: 368     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 368 --> 300 
+1340 < 1400 Executing unit with Timestamp: 1340      ID: 300     Target:ACCELEROMETER     Action:0 
+Item at i was id: 300 --> 496 
+1340 < 1400 Executing unit with Timestamp: 1340      ID: 496     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 496 --> 244 
+1343 < 1400 Executing unit with Timestamp: 1343      ID: 244     Target:GYROSCOPE     Action:0 
+Item at i was id: 244 --> 479 
+1343 < 1400 Executing unit with Timestamp: 1343      ID: 479     Target:GRAVITY     Action:1 
+Item at i was id: 479 --> 313 
+1348 < 1400 Executing unit with Timestamp: 1348      ID: 313     Target:LIGHT     Action:1 
+Item at i was id: 313 --> 237 
+1355 < 1400 Executing unit with Timestamp: 1355      ID: 237     Target:MAGNETIC     Action:1 
+Item at i was id: 237 --> 429 
+1363 < 1400 Executing unit with Timestamp: 1363      ID: 429     Target:GRAVITY     Action:1 
+Item at i was id: 429 --> 76 
+1367 < 1400 Executing unit with Timestamp: 1367      ID: 76     Target:ROTATION VECTOR     Action:0 
+Item at i was id: 76 --> 487 
+1367 < 1400 Executing unit with Timestamp: 1367      ID: 487     Target:MAGNETIC     Action:1 
+Item at i was id: 487 --> 22 
+1368 < 1400 Executing unit with Timestamp: 1368      ID: 22     Target:PROXIMITY     Action:0 
+Item at i was id: 22 --> 94 
+1368 < 1400 Executing unit with Timestamp: 1368      ID: 94     Target:GYROSCOPE     Action:0 
+Item at i was id: 94 --> 148 
+1368 < 1400 Executing unit with Timestamp: 1368      ID: 148     Target:LINEAR ACCELERATION     Action:0 
+Item at i was id: 148 --> 213 
+1369 < 1400 Executing unit with Timestamp: 1369      ID: 213     Target:LIGHT     Action:1 
+Item at i was id: 213 --> 324 
+1372 < 1400 Executing unit with Timestamp: 1372      ID: 324     Target:GYROSCOPE     Action:0 
+Item at i was id: 324 --> 42 
+1373 < 1400 Executing unit with Timestamp: 1373      ID: 42     Target:PROXIMITY     Action:0 
+Item at i was id: 42 --> 303 
+1376 < 1400 Executing unit with Timestamp: 1376      ID: 303     Target:LIGHT     Action:1 
+Item at i was id: 303 --> 275 
+1379 < 1400 Executing unit with Timestamp: 1379      ID: 275     Target:ORIENTATION     Action:1 
+Item at i was id: 275 --> 1 
+1383 < 1400 Executing unit with Timestamp: 1383      ID: 1     Target:PRESSURE     Action:1 
+Item at i was id: 1 --> 354 
+1385 < 1400 Executing unit with Timestamp: 1385      ID: 354     Target:GYROSCOPE     Action:0 
+Item at i was id: 354 --> 7 
+1386 < 1400 Executing unit with Timestamp: 1386      ID: 7     Target:MAGNETIC     Action:1 
+Item at i was id: 7 --> 37 
+1393 < 1400 Executing unit with Timestamp: 1393      ID: 37     Target:MAGNETIC     Action:1 
+Item at i was id: 37 --> 345 
+1396 < 1400 Executing unit with Timestamp: 1396      ID: 345     Target:ORIENTATION     Action:1 
+Item at i was id: 345 --> 87 
+
+--------------------------------------------------------------------------------
+0 - Timestamp: 1403      ID: 87     Target:MAGNETIC     Action:1 
+1 - Timestamp: 1407      ID: 186     Target:ROTATION VECTOR     Action:0 
+2 - Timestamp: 1412      ID: 312     Target:PROXIMITY     Action:0 
+3 - Timestamp: 1414      ID: 443     Target:LIGHT     Action:1 
+4 - Timestamp: 1416      ID: 264     Target:GYROSCOPE     Action:0 
+5 - Timestamp: 1421      ID: 10     Target:ACCELEROMETER     Action:0 
+6 - Timestamp: 1422      ID: 248     Target:LINEAR ACCELERATION     Action:0 
+7 - Timestamp: 1426      ID: 18     Target:LINEAR ACCELERATION     Action:0 
+8 - Timestamp: 1432      ID: 181     Target:PRESSURE     Action:1 
+9 - Timestamp: 1434      ID: 77     Target:MAGNETIC     Action:1 
+10 - Timestamp: 1434      ID: 103     Target:LIGHT     Action:1 
+11 - Timestamp: 1436      ID: 441     Target:PRESSURE     Action:1 
+12 - Timestamp: 1441      ID: 116     Target:ROTATION VECTOR     Action:0 
+13 - Timestamp: 1444      ID: 259     Target:GRAVITY     Action:1 
+14 - Timestamp: 1445      ID: 307     Target:MAGNETIC     Action:1 
+15 - Timestamp: 1451      ID: 158     Target:LINEAR ACCELERATION     Action:0 
+16 - Timestamp: 1452      ID: 273     Target:LIGHT     Action:1 
+17 - Timestamp: 1465      ID: 262     Target:PROXIMITY     Action:0 
+18 - Timestamp: 1467      ID: 105     Target:ORIENTATION     Action:1 
+19 - Timestamp: 1468      ID: 277     Target:MAGNETIC     Action:1 
+20 - Timestamp: 1470      ID: 219     Target:GRAVITY     Action:1 
+21 - Timestamp: 1474      ID: 187     Target:MAGNETIC     Action:1 
+22 - Timestamp: 1488      ID: 162     Target:PROXIMITY     Action:0 
+23 - Timestamp: 1497      ID: 133     Target:LIGHT     Action:1 
+24 - Timestamp: 1499      ID: 222     Target:PROXIMITY     Action:0 
+25 - Timestamp: 1500      ID: 168     Target:LINEAR ACCELERATION     Action:0 
+26 - Timestamp: 1503      ID: 145     Target:ORIENTATION     Action:1 
+27 - Timestamp: 1505      ID: 227     Target:MAGNETIC     Action:1 
+28 - Timestamp: 1506      ID: 396     Target:ROTATION VECTOR     Action:0 
+29 - Timestamp: 1507      ID: 236     Target:ROTATION VECTOR     Action:0 
+30 - Timestamp: 1526      ID: 52     Target:PROXIMITY     Action:0 
+31 - Timestamp: 1528      ID: 141     Target:PRESSURE     Action:1 
+32 - Timestamp: 1528      ID: 401     Target:PRESSURE     Action:1 
+33 - Timestamp: 1529      ID: 200     Target:ACCELEROMETER     Action:0 
+34 - Timestamp: 1529      ID: 420     Target:ACCELEROMETER     Action:0 
+35 - Timestamp: 1530      ID: 26     Target:ROTATION VECTOR     Action:0 
+36 - Timestamp: 1539      ID: 100     Target:ACCELEROMETER     Action:0 
+37 - Timestamp: 1541      ID: 497     Target:MAGNETIC     Action:1 
+38 - Timestamp: 1542      ID: 304     Target:GYROSCOPE     Action:0 
+39 - Timestamp: 1550      ID: 276     Target:ROTATION VECTOR     Action:0 
+40 - Timestamp: 1555      ID: 160     Target:ACCELEROMETER     Action:0 
+41 - Timestamp: 1556      ID: 451     Target:PRESSURE     Action:1 
+42 - Timestamp: 1567      ID: 386     Target:ROTATION VECTOR     Action:0 
+43 - Timestamp: 1567      ID: 417     Target:MAGNETIC     Action:1 
+44 - Timestamp: 1568      ID: 246     Target:ROTATION VECTOR     Action:0 
+45 - Timestamp: 1579      ID: 381     Target:PRESSURE     Action:1 
+46 - Timestamp: 1582      ID: 73     Target:LIGHT     Action:1 
+47 - Timestamp: 1584      ID: 86     Target:ROTATION VECTOR     Action:0 
+48 - Timestamp: 1587      ID: 320     Target:ACCELEROMETER     Action:0 
+49 - Timestamp: 1590      ID: 226     Target:ROTATION VECTOR     Action:0 
+50 - Timestamp: 1605      ID: 251     Target:PRESSURE     Action:1 
+51 - Timestamp: 1621      ID: 385     Target:ORIENTATION     Action:1 
+52 - Timestamp: 1622      ID: 241     Target:PRESSURE     Action:1 
+53 - Timestamp: 1624      ID: 270     Target:ACCELEROMETER     Action:0 
+54 - Timestamp: 1625      ID: 353     Target:LIGHT     Action:1 
+55 - Timestamp: 1629      ID: 474     Target:GYROSCOPE     Action:0 
+56 - Timestamp: 1630      ID: 347     Target:MAGNETIC     Action:1 
+57 - Timestamp: 1637      ID: 268     Target:LINEAR ACCELERATION     Action:0 
+58 - Timestamp: 1644      ID: 225     Target:ORIENTATION     Action:1 
+59 - Timestamp: 1647      ID: 463     Target:LIGHT     Action:1 
+60 - Timestamp: 1648      ID: 414     Target:GYROSCOPE     Action:0 
+61 - Timestamp: 1659      ID: 315     Target:ORIENTATION     Action:1 
+62 - Timestamp: 1661      ID: 253     Target:LIGHT     Action:1 
+63 - Timestamp: 1667      ID: 334     Target:GYROSCOPE     Action:0 
+64 - Timestamp: 1668      ID: 294     Target:GYROSCOPE     Action:0 
+65 - Timestamp: 1669      ID: 231     Target:PRESSURE     Action:1 
+66 - Timestamp: 1672      ID: 351     Target:PRESSURE     Action:1 
+67 - Timestamp: 1676      ID: 93     Target:LIGHT     Action:1 
+68 - Timestamp: 1682      ID: 495     Target:ORIENTATION     Action:1 
+69 - Timestamp: 1684      ID: 302     Target:PROXIMITY     Action:0 
+70 - Timestamp: 1686      ID: 433     Target:LIGHT     Action:1 
+71 - Timestamp: 1689      ID: 118     Target:LINEAR ACCELERATION     Action:0 
+72 - Timestamp: 1692      ID: 470     Target:ACCELEROMETER     Action:0 
+73 - Timestamp: 1697      ID: 454     Target:GYROSCOPE     Action:0 
+74 - Timestamp: 1705      ID: 335     Target:ORIENTATION     Action:1 
+75 - Timestamp: 1708      ID: 149     Target:GRAVITY     Action:1 
+76 - Timestamp: 1713      ID: 323     Target:LIGHT     Action:1 
+77 - Timestamp: 1721      ID: 329     Target:GRAVITY     Action:1 
+78 - Timestamp: 1729      ID: 68     Target:LINEAR ACCELERATION     Action:0 
+79 - Timestamp: 1729      ID: 440     Target:ACCELEROMETER     Action:0 
+80 - Timestamp: 1730      ID: 254     Target:GYROSCOPE     Action:0 
+81 - Timestamp: 1732      ID: 143     Target:LIGHT     Action:1 
+82 - Timestamp: 1732      ID: 369     Target:GRAVITY     Action:1 
+83 - Timestamp: 1736      ID: 20     Target:ACCELEROMETER     Action:0 
+84 - Timestamp: 1739      ID: 95     Target:ORIENTATION     Action:1 
+85 - Timestamp: 1743      ID: 175     Target:ORIENTATION     Action:1 
+86 - Timestamp: 1743      ID: 218     Target:LINEAR ACCELERATION     Action:0 
+87 - Timestamp: 1746      ID: 245     Target:ORIENTATION     Action:1 
+88 - Timestamp: 1746      ID: 418     Target:LINEAR ACCELERATION     Action:0 
+89 - Timestamp: 1750      ID: 80     Target:ACCELEROMETER     Action:0 
+90 - Timestamp: 1753      ID: 409     Target:GRAVITY     Action:1 
+91 - Timestamp: 1754      ID: 416     Target:ROTATION VECTOR     Action:0 
+92 - Timestamp: 1756      ID: 308     Target:LINEAR ACCELERATION     Action:0 
+93 - Timestamp: 1763      ID: 15     Target:ORIENTATION     Action:1 
+94 - Timestamp: 1763      ID: 204     Target:GYROSCOPE     Action:0 
+95 - Timestamp: 1764      ID: 163     Target:LIGHT     Action:1 
+96 - Timestamp: 1764      ID: 170     Target:ACCELEROMETER     Action:0 
+97 - Timestamp: 1771      ID: 126     Target:ROTATION VECTOR     Action:0 
+98 - Timestamp: 1772      ID: 223     Target:LIGHT     Action:1 
+99 - Timestamp: 1773      ID: 292     Target:PROXIMITY     Action:0 
+100 - Timestamp: 1776      ID: 376     Target:ROTATION VECTOR     Action:0 
+101 - Timestamp: 1782      ID: 25     Target:ORIENTATION     Action:1 
+102 - Timestamp: 1784      ID: 45     Target:ORIENTATION     Action:1 
+103 - Timestamp: 1786      ID: 230     Target:ACCELEROMETER     Action:0 
+104 - Timestamp: 1788      ID: 85     Target:ORIENTATION     Action:1 
+105 - Timestamp: 1788      ID: 423     Target:LIGHT     Action:1 
+106 - Timestamp: 1793      ID: 5     Target:ORIENTATION     Action:1 
+107 - Timestamp: 1793      ID: 194     Target:GYROSCOPE     Action:0 
+108 - Timestamp: 1795      ID: 490     Target:ACCELEROMETER     Action:0 
+109 - Timestamp: 1796      ID: 153     Target:LIGHT     Action:1 
+110 - Timestamp: 1797      ID: 424     Target:GYROSCOPE     Action:0 
+111 - Timestamp: 1801      ID: 252     Target:PROXIMITY     Action:0 
+112 - Timestamp: 1802      ID: 32     Target:PROXIMITY     Action:0 
+113 - Timestamp: 1810      ID: 250     Target:ACCELEROMETER     Action:0 
+114 - Timestamp: 1811      ID: 332     Target:PROXIMITY     Action:0 
+115 - Timestamp: 1818      ID: 195     Target:ORIENTATION     Action:1 
+116 - Timestamp: 1826      ID: 499     Target:GRAVITY     Action:1 
+117 - Timestamp: 1828      ID: 242     Target:PROXIMITY     Action:0 
+118 - Timestamp: 1841      ID: 165     Target:ORIENTATION     Action:1 
+119 - Timestamp: 1850      ID: 352     Target:PROXIMITY     Action:0 
+120 - Timestamp: 1856      ID: 132     Target:PROXIMITY     Action:0 
+121 - Timestamp: 1856      ID: 174     Target:GYROSCOPE     Action:0 
+122 - Timestamp: 1857      ID: 70     Target:ACCELEROMETER     Action:0 
+123 - Timestamp: 1859      ID: 179     Target:GRAVITY     Action:1 
+124 - Timestamp: 1860      ID: 379     Target:GRAVITY     Action:1 
+125 - Timestamp: 1865      ID: 117     Target:MAGNETIC     Action:1 
+126 - Timestamp: 1873      ID: 56     Target:ROTATION VECTOR     Action:0 
+127 - Timestamp: 1881      ID: 281     Target:PRESSURE     Action:1 
+128 - Timestamp: 1884      ID: 382     Target:PROXIMITY     Action:0 
+129 - Timestamp: 1894      ID: 284     Target:GYROSCOPE     Action:0 
+130 - Timestamp: 1895      ID: 72     Target:PROXIMITY     Action:0 
+131 - Timestamp: 1898      ID: 359     Target:GRAVITY     Action:1 
+132 - Timestamp: 1899      ID: 274     Target:GYROSCOPE     Action:0 
+133 - Timestamp: 1904      ID: 330     Target:ACCELEROMETER     Action:0 
+134 - Timestamp: 1908      ID: 404     Target:GYROSCOPE     Action:0 
+135 - Timestamp: 1917      ID: 214     Target:GYROSCOPE     Action:0 
+136 - Timestamp: 1917      ID: 215     Target:ORIENTATION     Action:1 
+137 - Timestamp: 1920      ID: 341     Target:PRESSURE     Action:1 
+138 - Timestamp: 1921      ID: 444     Target:GYROSCOPE     Action:0 
+139 - Timestamp: 1926      ID: 16     Target:ROTATION VECTOR     Action:0 
+140 - Timestamp: 1928      ID: 199     Target:GRAVITY     Action:1 
+141 - Timestamp: 1929      ID: 31     Target:PRESSURE     Action:1 
+142 - Timestamp: 1932      ID: 91     Target:PRESSURE     Action:1 
+143 - Timestamp: 1936      ID: 180     Target:ACCELEROMETER     Action:0 
+144 - Timestamp: 1936      ID: 305     Target:ORIENTATION     Action:1 
+145 - Timestamp: 1939      ID: 331     Target:PRESSURE     Action:1 
+146 - Timestamp: 1940      ID: 333     Target:LIGHT     Action:1 
+147 - Timestamp: 1956      ID: 55     Target:ORIENTATION     Action:1 
+148 - Timestamp: 1958      ID: 405     Target:ORIENTATION     Action:1 
+149 - Timestamp: 1961      ID: 389     Target:GRAVITY     Action:1 
+150 - Timestamp: 1971      ID: 484     Target:GYROSCOPE     Action:0 
+151 - Timestamp: 1972      ID: 350     Target:ACCELEROMETER     Action:0 
+152 - Timestamp: 1975      ID: 437     Target:MAGNETIC     Action:1 
+153 - Timestamp: 1981      ID: 288     Target:LINEAR ACCELERATION     Action:0 
+154 - Timestamp: 1984      ID: 339     Target:GRAVITY     Action:1 
+155 - Timestamp: 1988      ID: 488     Target:LINEAR ACCELERATION     Action:0 
+156 - Timestamp: 1993      ID: 383     Target:LIGHT     Action:1 
+157 - Timestamp: 1994      ID: 371     Target:PRESSURE     Action:1 
+158 - Timestamp: 1996      ID: 436     Target:ROTATION VECTOR     Action:0 
+ID_Counter: 501
+Unitcount: 159

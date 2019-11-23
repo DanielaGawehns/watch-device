@@ -76,7 +76,6 @@ create_base_gui(appdata_s *ad)
 
 	/* Show window after base gui is set up */
 	evas_object_show(ad->win);
-
 }
 
 /**
