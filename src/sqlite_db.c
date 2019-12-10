@@ -85,7 +85,7 @@ InsertDataInDatabase(int count, float * valArr,  sensor_type_e sensorType){
 		}else{
 			dlog_print(DLOG_ERROR, LOG_TAG, "COULD NOT INSERT SENSORDATA IN TABLE %s, ERROR CODE: %i, QUERY: %s ", tableName, ret, statementString); //print info
 		}
-		free(statementString);
+		sqlite3_free(statementString);
 	}else{
 		dlog_print(DLOG_ERROR, LOG_TAG, "TABLE %s WAS NOT OPENED, COULD NOT INSERT SENSORDATA", tableName); //print info
 	}
@@ -105,7 +105,7 @@ OpenTable(){
 		}else{
 			dlog_print(DLOG_ERROR, LOG_TAG, "COULD NOT CREATE TABLE %s, ERROR CODE: %i ", tableName, ret); //print info
 		}
-		//free(statementString); //TODO Memory leak
+		sqlite3_free(statementString);(statementString); //TODO Memory leak
 	}else{
 		dlog_print(DLOG_INFO, LOG_TAG, "TABLE %s HAS ALREADY BEEN CREATED/OPENED", tableName); //print info
 	}
