@@ -2,6 +2,7 @@
 
 #include "data.h"//used for sensor support
 #include "view.h"
+#include <device/power.h>
 
 #define MAX_SIZE_DATA_PATH 800
 
@@ -263,6 +264,7 @@ ui_app_low_memory(app_event_info_h event_info, void *user_data)
 int
 main(int argc, char *argv[])
 {
+	device_power_request_lock(POWER_LOCK_CPU, 0);
 	appdata_s ad = {0,};
 	int ret = 0;
 

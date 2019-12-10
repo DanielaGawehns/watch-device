@@ -105,7 +105,7 @@ OpenTable(){
 		}else{
 			dlog_print(DLOG_ERROR, LOG_TAG, "COULD NOT CREATE TABLE %s, ERROR CODE: %i ", tableName, ret); //print info
 		}
-		free(statementString);
+		//free(statementString); //TODO Memory leak
 	}else{
 		dlog_print(DLOG_INFO, LOG_TAG, "TABLE %s HAS ALREADY BEEN CREATED/OPENED", tableName); //print info
 	}

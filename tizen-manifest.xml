@@ -4,14 +4,16 @@
     <ui-application appid="org.example.sensorbasicui" exec="sensorbasicui" multiple="false" nodisplay="false" taskmanage="true" type="capp">
         <label>sensorbasicui</label>
         <icon>sensorbasicui.png</icon>
+        <metadata key="http://tizen.org/metadata/background-category/sensor"/>
     </ui-application>
     <privileges>
         <privilege>http://tizen.org/privilege/mediastorage</privilege>
         <privilege>http://tizen.org/privilege/network.get</privilege>
         <privilege>http://tizen.org/privilege/healthinfo</privilege>
         <privilege>http://tizen.org/privilege/network.set</privilege>
-        <privilege>http://tizen.org/privilege/network.profile</privilege>
         <privilege>http://tizen.org/privilege/internet</privilege>
+        <privilege>http://tizen.org/privilege/network.profile</privilege>
+        <privilege>http://tizen.org/privilege/power</privilege>
         <privilege>http://tizen.org/privilege/externalstorage</privilege>
     </privileges>
 </manifest>
