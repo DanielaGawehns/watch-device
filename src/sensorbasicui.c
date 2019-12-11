@@ -1,6 +1,5 @@
 #include "sensorbasicui.h"
-
-#include "data.h"//used for sensor support
+#include "data.h" //used for sensor support
 #include "view.h"
 #include <device/power.h>
 
@@ -8,6 +7,7 @@
 
 int
 OpenDatabase();
+
 int
 CloseDatabase();
 
@@ -20,6 +20,7 @@ typedef struct appdata {
 
 appdata_s * curAppdata;
 void broadcast_hello() ;
+
 static void
 win_delete_request_cb(void *data, Evas_Object *obj, void *event_info)
 {
@@ -34,6 +35,10 @@ win_back_cb(void *data, Evas_Object *obj, void *event_info)
 	elm_win_lower(ad->win);
 }
 
+/**
+ * @brief creates the gui for the watchface
+ * @param ad application data
+ */
 
 static void
 create_base_gui(appdata_s *ad)
@@ -82,6 +87,7 @@ create_base_gui(appdata_s *ad)
 /**
  * @brief Gets the full path to a write/readable file in the datafolder (this does not check if it exists)
  * @param WriteFile: name of the file to get the full path from
+ * @return pointer to char array containing filepath
  */
 char * get_filepath(char * writeFile){
 	char * finalPath = (char*) malloc(MAX_SIZE_DATA_PATH * sizeof(char)); //[MAX_SIZE_DATA_PATH] = {0,}; //max path size is 800, initialize all chars to 0
@@ -93,11 +99,12 @@ char * get_filepath(char * writeFile){
 	return finalPath;
 }
 
-/*
+/**
  * @brief creates a buffer with requested data from the database
  * @param sensorType of which data should be read in
  * @time1 1 of the between dates (data between time1 and time2 is requested)
  * @time2 2 of the between dates
+ * @return the character a TODO
  */
 char *
 get_sensor_data_from_database(sensor_type_e sensorType, const char * p_tableName, const char * time1, const char * time2){
@@ -129,7 +136,12 @@ get_sensor_data_from_database(sensor_type_e sensorType, const char * p_tableName
 	return "a";
 }
 
-
+/**
+ * @brief writes sensor data to the sensordata.csv file in the datafolder of the watch
+ * @param count amount of fields in the data
+ * @param valArr pointer to the data from the sensor
+ * @param sensorType name of the sensor that wants to log data
+ */
 void
 log_sensor_data_to_file(int count, float * valArr,  sensor_type_e sensorType){
 	char dataBuf[2000]; //create buffer for storing the sensor data
@@ -164,6 +176,11 @@ log_sensor_data_to_file(int count, float * valArr,  sensor_type_e sensorType){
 	dlog_print(DLOG_INFO, LOG_TAG, "Done with sensor update callback function", filePath);
 }
 
+/**
+ * @brief function that is called when a sensor records data
+ * @param sensorType name of the sensor that wants to log data
+ * @param ev contains the data from the sensor
+ */
 void
 Handle_Sensor_Update_Cb(sensor_type_e sensorType, sensor_event_s *ev){	//function for handling sensor input:
 
@@ -175,7 +192,11 @@ Handle_Sensor_Update_Cb(sensor_type_e sensorType, sensor_event_s *ev){	//functio
 
 
 
-
+/**
+ * @brief initialize function for view and sensor
+ * @param data pointer to application data
+ * @return success state
+ */
 static bool
 app_create(void *data)
 {
@@ -201,30 +222,49 @@ app_create(void *data)
 	return true;
 }
 
+/**
+ * @brief handles launch request
+ * @param app_control_h handle for handling launch requests from other applications
+ * @param data pointer to application data
+ */
 static void
 app_control(app_control_h app_control, void *data)
 {
-	/* Handle the launch request. */
 }
 
+/**
+ * @brief handles when application goes to the background
+ * @param data pointer to application data
+ */
 static void
 app_pause(void *data)
 {
-	/* Take necessary actions when application becomes invisible. */
 }
 
+/**
+ * @brief handles when application goes back to the foreground
+ * @param data pointer to application data
+ */
 static void
 app_resume(void *data)
 {
-	/* Take necessary actions when application becomes visible. */
 }
 
+/**
+ * @brief handles when the application is exited
+ * @param data pointer to application data
+ */
 static void
 app_terminate(void *data)
 {
 	/* Release all resources. */
 }
 
+/**
+ * @brief handles language change
+ * @param event_info
+ * @param user_data pointer to user data
+ */
 static void
 ui_app_lang_changed(app_event_info_h event_info, void *user_data)
 {
@@ -236,6 +276,11 @@ ui_app_lang_changed(app_event_info_h event_info, void *user_data)
 	return;
 }
 
+/**
+ * @brief handles change of orientation of device
+ * @param event_info
+ * @param user_data pointer to user data
+ */
 static void
 ui_app_orient_changed(app_event_info_h event_info, void *user_data)
 {
@@ -243,18 +288,33 @@ ui_app_orient_changed(app_event_info_h event_info, void *user_data)
 	return;
 }
 
+/**
+ * @brief handles region change
+ * @param event_info
+ * @param user_data pointer to user data
+ */
 static void
 ui_app_region_changed(app_event_info_h event_info, void *user_data)
 {
 	/*APP_EVENT_REGION_FORMAT_CHANGED*/
 }
 
+/**
+ * @brief handles when battery power becomes low
+ * @param event_info
+ * @param user_data pointer to user data
+ */
 static void
 ui_app_low_battery(app_event_info_h event_info, void *user_data)
 {
 	/*APP_EVENT_LOW_BATTERY*/
 }
 
+/**
+ * @brief handles when watch is low on memory
+ * @param event_info
+ * @param user_data pointer to user data
+ */
 static void
 ui_app_low_memory(app_event_info_h event_info, void *user_data)
 {
@@ -264,6 +324,7 @@ ui_app_low_memory(app_event_info_h event_info, void *user_data)
 int
 main(int argc, char *argv[])
 {
+	/// Prevent OS from terminating app when OS requires more resources
 	device_power_request_lock(POWER_LOCK_CPU, 0);
 	appdata_s ad = {0,};
 	int ret = 0;
@@ -278,7 +339,7 @@ main(int argc, char *argv[])
 	event_callback.app_control = app_control;
 
 
-
+	//set event handlers
 	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY], APP_EVENT_LOW_BATTERY, ui_app_low_battery, &ad);
 	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY], APP_EVENT_LOW_MEMORY, ui_app_low_memory, &ad);
 	ui_app_add_event_handler(&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED], APP_EVENT_DEVICE_ORIENTATION_CHANGED, ui_app_orient_changed, &ad);

@@ -47,7 +47,7 @@
 
 
 /**
- * String names for sensor_type_e values
+ * @brief String names for sensor_type_e values
  */
 const char *sensor_strings[SENSOR_COUNT] = {
 	"ACCELEROMETER",
@@ -67,12 +67,18 @@ const char *sensor_strings[SENSOR_COUNT] = {
 };
 //-----------------------------------
 
+/**
+ * @brief sensor data struct
+ */
 
 typedef struct _sensor_data {
 	sensor_h handle;
 	sensor_listener_h listener;
 } sensor_data_t;
 
+/**
+ * @brief info on the status of sensors
+ */
 static struct data_info {
 	sensor_type_e current_sensor;
 	bool sensor_activity[SENSOR_COUNT];		//custom: for checking which sensors are active
@@ -90,18 +96,32 @@ static struct data_info {
 };
 
 
-//predefenitions
+/**
+ * @brief predefinition
+ */
 static void _initialize_sensors(void);
+/**
+ * @brief predefinition
+ */
 static void _sensor_event_cb(sensor_h sensor, sensor_event_s *event, void *data);
+/**
+ * @brief predefinition
+ */
 static void _timer_stop(void);
+/**
+ * @brief predefinition
+ */
 static void _timer_start(int value);
+/**
+ * @brief predefinition
+ */
 static void _set_hrm_values(sensor_event_s *event);
 
 /**
  * TODO: the functions hereafter are custom added, handy web: https://developer.tizen.org/dev-guide/2.3.1/org.tizen.tutorials/html/native/system/sensor_tutorial_n.htm
  */
 
-/** CUSTOM
+/**
  * @brief sets a sensors activity, given the id and new activity (if sensor is available and status is not already the given status)
  * @param the sensor NR/id
  * @param new status of this sensor
@@ -125,7 +145,7 @@ void data_set_sensor_activity(sensor_type_e sensorNr, bool activity){
 	dlog_print(DLOG_INFO, LOG_TAG, "Set activity of sensor: %s to %i", sensor_strings[sensorNr], activity);
 }
 
-/** CUSTOM
+/**
  * @brief sets a new check interval for a sensor
  * @param the sensor nr/enum/id
  * @param the new interval at which the sensor should be checked

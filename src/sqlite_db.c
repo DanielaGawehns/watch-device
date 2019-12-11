@@ -3,8 +3,10 @@
 #include <sqlite3.h> //used for database
 
 //------------------------------ Temporary database constans
-#define BUFLEN 800 /* Buffer size, used in functions */
-const int key_len = 256; /* AES key length */
+ /* Buffer size, used in functions */
+#define BUFLEN 800
+ /* AES key length */
+const int key_len = 256;
 
 /* Password to generate key */
 static const unsigned char password[] = {"DummyPassword"};
@@ -24,6 +26,10 @@ unsigned char iv[17]; /* Encryption initial vector */
  */
 extern char * get_filepath(char * writeFile);
 
+/**
+ * @brief open the database to allow for reading and storing of data
+ * @return succes state
+ */
 int
 OpenDatabase(){
 	int ret = 0;
@@ -44,8 +50,12 @@ OpenDatabase(){
 	return ret;
 }
 
+/**
+ * @brief close the database
+ * @return succes state
+ */
 int
-CloseDatabase(){	//closes the database
+CloseDatabase(){
 	sqlite3_close(db);
 	openedDatabase = false;
 	openedTable = false;
@@ -53,6 +63,13 @@ CloseDatabase(){	//closes the database
 	return 0;
 }
 
+
+/**
+ * @brief writes sensor data to the database file in the datafolder of the watch
+ * @param count amount of fields in the data
+ * @param valArr pointer to the data from the sensor
+ * @param sensorType name of the sensor that wants to log data
+ */
 int
 InsertDataInDatabase(int count, float * valArr,  sensor_type_e sensorType){
 	char dataBuf[2000]; //create buffer for storing the sensor data
@@ -92,6 +109,10 @@ InsertDataInDatabase(int count, float * valArr,  sensor_type_e sensorType){
 	return ret;
 }
 
+/**
+ * @brief open a table within the database
+ * @return succes state
+ */
 int
 OpenTable(){
 	char * statementString; // = sqlite3_mprintf("SELECT count(name) FROM sqlite_master WHERE type='table' AND name='{%Q}'", tableName); //create statement using opened tablename : if table exists, count >0
