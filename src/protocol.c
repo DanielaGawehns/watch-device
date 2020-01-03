@@ -1,4 +1,8 @@
 
+
+
+#if false
+
 #include <string.h>
 #include <errno.h>
 #include <dlog.h>
@@ -181,3 +185,5 @@ void prot_process() {
 	prot_freeparam( nparam, param );
 
 }
+
+#endif

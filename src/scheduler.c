@@ -3,27 +3,11 @@
 #include <stdio.h>
 #include <string.h>
 #include "scheduler.h"
+#include "data.h"
 
 #define SCHEDULESIZEINCREASE 200 //Data increase per time the scheduler array is too small
 
 //for debgging purposes
-const char *sensor_strings[50] = {
-	"ACCELEROMETER",
-	"GRAVITY",
-	"LINEAR ACCELERATION",
-	"MAGNETIC",
-	"ROTATION VECTOR",
-	"ORIENTATION",
-	"GYROSCOPE",
-	"LIGHT",
-	"PROXIMITY",
-	"PRESSURE",
-	"ULTRAVIOLET",
-	"TEMPERATURE",
-	"HUMIDITY",
-	"HRM",
-    "NOT ADDED"
-};
 
 /*
 scheduler scheduler_data{
@@ -132,7 +116,7 @@ bool scheduler_unit_id_remove(int unit_id){
 
  void scheduler_execute_unit(schedule_unit * unit){
      //TODO: link this to sensor
-     printf("Executing unit with Timestamp: %llu      ID: %i     Target:%s     Action:%i \n", unit->timestamp, unit->unit_id, sensor_strings[ unit->unit_target_id],  unit->unit_action_id);
+    printf("Executing unit with Timestamp: %llu      ID: %i     Target:%s     Action:%i \n", unit->timestamp, unit->unit_id, sensor_strings[ unit->unit_target_id],  unit->unit_action_id);
     
  }
 
@@ -160,32 +144,32 @@ void scheduler_update(long long int cur_time){
 
 
 
-int main(){
-    for(int i = 499; i >= 0; i--){
-        schedule_unit temp;
-        temp.timestamp = rand() % 2000;//rand()%101 + rand()%50;
-        temp.unit_id = scheduler_get_new_unit_id();
-        temp.unit_target_id = i % 10;
-        temp.unit_action_id = i%2;
-        //printf("Adding %i with timestamp: %llu \n", i, temp.timestamp);
-        scheduler_unit_add(&temp);
+// int main(){
+//     for(int i = 499; i >= 0; i--){
+//         schedule_unit temp;
+//         temp.timestamp = rand() % 2000;//rand()%101 + rand()%50;
+//         temp.unit_id = scheduler_get_new_unit_id();
+//         temp.unit_target_id = i % 10;
+//         temp.unit_action_id = i%2;
+//         //printf("Adding %i with timestamp: %llu \n", i, temp.timestamp);
+//         scheduler_unit_add(&temp);
 
-    }
+//     }
 
 
-    printf("--------------------------------------------------------------------------------\n"); 
-    for(int i = 0; i < 1500; i+=100){
-        scheduler_update(i);
-        printf("\n");
-    }
+//     printf("--------------------------------------------------------------------------------\n"); 
+//     for(int i = 0; i < 1500; i+=100){
+//         scheduler_update(i);
+//         printf("\n");
+//     }
 
     
-    printf("--------------------------------------------------------------------------------\n");
+//     printf("--------------------------------------------------------------------------------\n");
 
 
-    //print_schedule();
-    printf("ID_Counter: %i\n", scheduler_data.id_counter);
-    printf("Unitcount: %i\n", scheduler_data.unitcount);
-    scheduler_finalize();
-    return 0;
-}
+//     //print_schedule();
+//     printf("ID_Counter: %i\n", scheduler_data.id_counter);
+//     printf("Unitcount: %i\n", scheduler_data.unitcount);
+//     scheduler_finalize();
+//     return 0;
+// }

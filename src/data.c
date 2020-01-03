@@ -64,7 +64,9 @@ const char *sensor_strings[SENSOR_COUNT] = {
 	"TEMPERATURE",
 	"HUMIDITY",
 	"HRM",
+	"STRING/SENSOR NOT ADDED"
 };
+
 //-----------------------------------
 
 /**

@@ -83,6 +83,6 @@ float data_get_sensor_resolution(sensor_type_e type);
  */
 char *data_get_sensor_vendor(sensor_type_e type);
 
-extern const char *sensor_strings[SENSOR_COUNT];
+extern const char  *sensor_strings[SENSOR_COUNT];
 
 #endif

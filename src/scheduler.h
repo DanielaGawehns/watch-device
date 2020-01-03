@@ -24,49 +24,49 @@ typedef struct{
  */
 typedef enum
 {
-    NONE = -2,
-    //--------------------------------Source: Tizen library--------------------------------
-	SENSOR_ALL = -1,                        /**< All sensors. This can be used to retrieve #sensor_h for all available sensors. */
-	SENSOR_ACCELEROMETER,                   /**< Accelerometer */
-	SENSOR_GRAVITY,                         /**< Gravity sensor */
-	SENSOR_LINEAR_ACCELERATION,             /**< Linear acceleration sensor */
-	SENSOR_MAGNETIC,                        /**< Magnetic sensor */
-	SENSOR_ROTATION_VECTOR,                 /**< Rotation vector sensor */
-	SENSOR_ORIENTATION,                     /**< Orientation sensor */
-	SENSOR_GYROSCOPE,                       /**< Gyroscope */
-	SENSOR_LIGHT,                           /**< Light sensor */
-	SENSOR_PROXIMITY,                       /**< Proximity sensor */
-	SENSOR_PRESSURE,                        /**< Pressure sensor */
-	SENSOR_ULTRAVIOLET,                     /**< Ultraviolet sensor */
-	SENSOR_TEMPERATURE,                     /**< Temperature sensor */
-	SENSOR_HUMIDITY,                        /**< Humidity sensor */
-	SENSOR_HRM,                             /**< Heart-rate monitor @if MOBILE (Since 2.3.1) @endif
+    TARGET_NONE = -2,
+    //--------------------------------Source for base: Tizen library--------------------------------
+	TARGET_SENSOR_ALL = -1,                        /**< All sensors. This can be used to retrieve #sensor_h for all available sensors. */
+	TARGET_SENSOR_ACCELEROMETER,                   /**< Accelerometer */
+	TARGET_SENSOR_GRAVITY,                         /**< Gravity sensor */
+	TARGET_SENSOR_LINEAR_ACCELERATION,             /**< Linear acceleration sensor */
+	TARGET_SENSOR_MAGNETIC,                        /**< Magnetic sensor */
+	TARGET_SENSOR_ROTATION_VECTOR,                 /**< Rotation vector sensor */
+	TARGET_SENSOR_ORIENTATION,                     /**< Orientation sensor */
+	TARGET_SENSOR_GYROSCOPE,                       /**< Gyroscope */
+	TARGET_SENSOR_LIGHT,                           /**< Light sensor */
+	TARGET_SENSOR_PROXIMITY,                       /**< Proximity sensor */
+	TARGET_SENSOR_PRESSURE,                        /**< Pressure sensor */
+	TARGET_SENSOR_ULTRAVIOLET,                     /**< Ultraviolet sensor */
+	TARGET_SENSOR_TEMPERATURE,                     /**< Temperature sensor */
+	TARGET_SENSOR_HUMIDITY,                        /**< Humidity sensor */
+	TARGET_SENSOR_HRM,                             /**< Heart-rate monitor @if MOBILE (Since 2.3.1) @endif
 	                                             @n Privilege : http://tizen.org/privilege/healthinfo */
-	SENSOR_HRM_LED_GREEN,                   /**< Green LED sensor of HRM @if MOBILE (Since 2.3.1) @endif
+	TARGET_SENSOR_HRM_LED_GREEN,                   /**< Green LED sensor of HRM @if MOBILE (Since 2.3.1) @endif
 	                                             @n Privilege : http://tizen.org/privilege/healthinfo */
-	SENSOR_HRM_LED_IR,                      /**< Infra-Red LED sensor of HRM @if MOBILE (Since 2.3.1) @endif
+	TARGET_SENSOR_HRM_LED_IR,                      /**< Infra-Red LED sensor of HRM @if MOBILE (Since 2.3.1) @endif
 	                                             @n Privilege : http://tizen.org/privilege/healthinfo */
-	SENSOR_HRM_LED_RED,                     /**< Red LED sensor of HRM @if MOBILE (Since 2.3.1) @endif
+	TARGET_SENSOR_HRM_LED_RED,                     /**< Red LED sensor of HRM @if MOBILE (Since 2.3.1) @endif
 	                                             @n Privilege : http://tizen.org/privilege/healthinfo */
-	SENSOR_GYROSCOPE_UNCALIBRATED,          /**< Uncalibrated Gyroscope sensor
+	TARGET_SENSOR_GYROSCOPE_UNCALIBRATED,          /**< Uncalibrated Gyroscope sensor
 	                                             @if MOBILE (Since 2.4) @elseif WEARABLE (Since 2.3.2) @endif */
-	SENSOR_GEOMAGNETIC_UNCALIBRATED,        /**< Uncalibrated Geomagnetic sensor
+	TARGET_SENSOR_GEOMAGNETIC_UNCALIBRATED,        /**< Uncalibrated Geomagnetic sensor
 	                                             @if MOBILE (Since 2.4) @elseif WEARABLE (Since 2.3.2) @endif */
-	SENSOR_GYROSCOPE_ROTATION_VECTOR,       /**< Gyroscope-based rotation vector sensor
+	TARGET_SENSOR_GYROSCOPE_ROTATION_VECTOR,       /**< Gyroscope-based rotation vector sensor
 	                                             @if MOBILE (Since 2.4) @elseif WEARABLE (Since 2.3.2) @endif */
-	SENSOR_GEOMAGNETIC_ROTATION_VECTOR,     /**< Geomagnetic-based rotation vector sensor
+	TARGET_SENSOR_GEOMAGNETIC_ROTATION_VECTOR,     /**< Geomagnetic-based rotation vector sensor
 	                                             @if MOBILE (Since 2.4) @elseif WEARABLE (Since 2.3.2) @endif */
-	SENSOR_SIGNIFICANT_MOTION = 0x100,      /**< Significant motion sensor (Since 4.0) */
-	SENSOR_HUMAN_PEDOMETER = 0x300,         /**< Pedometer (Since 3.0)
+	TARGET_SENSOR_SIGNIFICANT_MOTION = 0x100,      /**< Significant motion sensor (Since 4.0) */
+	TARGET_SENSOR_HUMAN_PEDOMETER = 0x300,         /**< Pedometer (Since 3.0)
 	                                             @n Privilege : http://tizen.org/privilege/healthinfo */
-	SENSOR_HUMAN_SLEEP_MONITOR,             /**< Sleep monitor (Since 3.0)
+	TARGET_SENSOR_HUMAN_SLEEP_MONITOR,             /**< Sleep monitor (Since 3.0)
 	                                             @n Privilege : http://tizen.org/privilege/healthinfo */
-	SENSOR_HUMAN_SLEEP_DETECTOR,            /**< Sleep detector (Since 3.0)
+	TARGET_SENSOR_HUMAN_SLEEP_DETECTOR,            /**< Sleep detector (Since 3.0)
 	                                             @n Privilege : http://tizen.org/privilege/healthinfo */
-	SENSOR_HUMAN_STRESS_MONITOR,            /**< Stress monitor (Since 3.0)
+	TARGET_SENSOR_HUMAN_STRESS_MONITOR,            /**< Stress monitor (Since 3.0)
 	                                             @n Privilege : http://tizen.org/privilege/healthinfo */
-	SENSOR_LAST,                            /**< End of sensor enum values (Deprecated since 3.0) */
-	SENSOR_CUSTOM = 0x2710,                 /**< Custom sensor (Deprecated since 3.0) */
+	TARGET_SENSOR_LAST,                            /**< End of sensor enum values (Deprecated since 3.0) */
+	TARGET_SENSOR_CUSTOM = 0x2710,                 /**< Custom sensor (Deprecated since 3.0) */
     //--------------------------------Source: Tizen library--------------------------------
     // TODO: add custom targets here
 
