@@ -1,3 +1,5 @@
+
+
 #include "sensorbasicui.h"
 #include "data.h"//used for sensor support
 #include <sqlite3.h> //used for database
@@ -126,7 +128,7 @@ OpenTable(){
 		}else{
 			dlog_print(DLOG_ERROR, LOG_TAG, "COULD NOT CREATE TABLE %s, ERROR CODE: %i ", tableName, ret); //print info
 		}
-		sqlite3_free(statementString);(statementString);
+		sqlite3_free(statementString);
 	}else{
 		dlog_print(DLOG_INFO, LOG_TAG, "TABLE %s HAS ALREADY BEEN CREATED/OPENED", tableName); //print info
 	}

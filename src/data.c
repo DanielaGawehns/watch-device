@@ -4,8 +4,8 @@
  * Some alterations to this file have been made, these do not fall under the same license.
  * TODO: copyright?
  *
- *
- *
+ * This class contains code to read out data from the sensors available on the device. A callback function needs to be passed, which will be called with the appropriate data when a sensor registers a value. 
+ * This class is NOT necessarily thread safe (TODO: is this necessary?) - make sure that the callback function is!
  * ------------------------------------------------------------------------------------
  * Copyright (c) 2016 Samsung Electronics Co., Ltd. All rights reserved.
  *
@@ -87,7 +87,7 @@ static struct data_info {
 	sensor_data_t sensors[SENSOR_COUNT];
 	unsigned int sensor_interval_ms[SENSOR_COUNT]; 	//custom: interval for sensor checking
 	Update_Sensor_Values_Cb sensor_update_cb;	//callback function that is called when a sensor reads new data, set when initializing this class at (data_initialize)
-	Ecore_Timer *timer;
+	Ecore_Timer *timer; //used for proximity sensor
 } s_info = {
 	.sensors = { {0}, },
 	.sensor_activity = { false, }, //custom: initialize sensors on inactive
@@ -122,6 +122,8 @@ static void _set_hrm_values(sensor_event_s *event);
 /**
  * TODO: the functions hereafter are custom added, handy web: https://developer.tizen.org/dev-guide/2.3.1/org.tizen.tutorials/html/native/system/sensor_tutorial_n.htm
  */
+
+
 
 /**
  * @brief sets a sensors activity, given the id and new activity (if sensor is available and status is not already the given status)

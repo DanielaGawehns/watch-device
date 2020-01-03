@@ -2,6 +2,7 @@
 #include "data.h" //used for sensor support
 #include "view.h"
 #include <device/power.h>
+#include "scheduler.h"
 
 #define MAX_SIZE_DATA_PATH 800
 
@@ -185,7 +186,7 @@ void
 Handle_Sensor_Update_Cb(sensor_type_e sensorType, sensor_event_s *ev){	//function for handling sensor input:
 
 	//dlog_print(DLOG_INFO, LOG_TAG, "Calling the sensor update callback function:");
-	//TODO:log_sensor_data_to_file(count, valArr, sensorType); //log to file
+	log_sensor_data_to_file(ev->value_count, ev->values, sensorType); //log to file
 	//OpenTable(); //open the table
 	//InsertDataInDatabase(count, valArr, sensorType); //insert sensordata into sqlite database
 }
@@ -211,9 +212,54 @@ app_create(void *data)
 	//-----------------------------
 
 	//ADDED:
-	view_create(); //initialize view
-	view_switch_view(1);
+//	view_create(); //initialize view
+//	view_switch_view(1);
 	//------------------------------
+
+
+
+
+
+	//initialize scheduler data
+	if(!scheduler_initialize()){
+		dlog_print(DLOG_ERROR, LOG_TAG, "Error initializing scheduler");
+	}
+
+    struct timeval timeValue;
+    gettimeofday(&timeValue, NULL);
+    unsigned long long cur_time = (unsigned long long)(timeValue.tv_sec) * 1000 + (unsigned long long)(timeValue.tv_usec) / 1000; //get current time in milliseconds from start of epoch
+
+
+	schedule_unit  newUnit; // = malloc( sizeof(schedule_unit));
+
+	//Simple hrm test:
+//	for(int i = 1; i <= 50; i++){
+//
+//	    dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Creating unit %i", __FILE__, __LINE__, i);
+//		newUnit.unit_id =  scheduler_get_new_unit_id();
+//		newUnit.unit_action_id = i%2 ? ACTION_TURN_OFF : ACTION_TURN_ON;
+//		newUnit.unit_target_id = (int)SENSOR_HRM;
+//		newUnit.data[0] = i * 50;
+//		newUnit.unit_execute_function = scheduler_data_set_sensor_activity_and_interval;
+//		scheduler_unit_add(newUnit);
+//	}
+
+	//repeating scheduling unit test:
+
+	newUnit.unit_id = scheduler_get_new_unit_id();
+	newUnit.timestamp = cur_time + 5000;
+	newUnit.data[0] = 10; //10 repeats
+	newUnit.data[1] = 3000; //every 3 ms
+	newUnit.unit_execute_function = scheduler_repeatedprocesstest;
+	scheduler_unit_add(&newUnit);
+
+
+    dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Done creating testunits", __FILE__, __LINE__);
+
+	//Scheduler/ecore mainloop:
+	scheduler_start_main_ecore_loop(1); //run ecore loop of scheduler every 1 second
+    dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Done starting main ecore loop", __FILE__, __LINE__);
+
 
 	//ORIGINAL:
 	//appdata_s *ad = data;
