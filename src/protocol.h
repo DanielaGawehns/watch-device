@@ -9,22 +9,46 @@
 #define PROTOCOL_H_
 
 #include <stdlib.h>
-#include <stdargs.h>
+#include <stdarg.h>
 #include <stdint.h>
 
+
+/**
+ * Packet header structure
+ */
 typedef struct __attribute__((packed)) {
-	int16_t length;
-	void *data;
+    /**
+     * Sequence ID
+     */
+	uint16_t seq;
+    /**
+     * Packet ID
+     */
+	uint8_t  opcode;
+	/**
+     * Number of message_param structures following this header
+     */
+	uint8_t  nparam;
+} message_header;
+
+/**
+ * Parameter structure for network protocol
+ */
+typedef struct __attribute__((packed)) {
+	uint16_t length;
+	void *   data;
 } message_param;
 
 #define PROTOCOL_VERSION (1)
-#define MESSAGE_PING (0)
-#define MESSAGE_PONG (1)
-#define MESSAGE_INCREMENT (2)
-#define MESSAGE_PLAYBACK (3)
-#define MESSAGE_SENSOR_INTERVAL (4)
-#define MESSAGE_SENSOR_SETTING (5)
-#define MESSAGE_LIVE_INTERVAL (6)
+
+#define PROTOCOL_ACK (0x06)
+
+#define MESSAGE_PING            (0)
+#define MESSAGE_REPLY           (1)
+#define MESSAGE_GET_VALUES      (2)
+#define MESSAGE_SET_VALUES      (3)
+#define MESSAGE_INCREMENT       (4)
+#define MESSAGE_PLAYBACK        (5)
 
 /**
  * Called by the protocol handler when a MESSAGE_SENSOR_INTERVAL comes in
@@ -42,7 +66,7 @@ void cmd_sensor_setting ( const char *sensor_name, const char *setting_name, con
 void cmd_live_interval  ( double interval );
 
 /**
- *
+ * 
  */
 void prot_printerr( const char *format, va_list list );
 
@@ -56,7 +80,7 @@ int  prot_handshake( );
  * Sends a message
  * @return 0 when successful. or -1 if not.
  */
-int  prot_send( int type, int nparam, message_param *param );
+int  prot_send( int seq, int type, int nparam, message_param *param );
 
 /**
  * Frees a message_param struct
@@ -67,7 +91,7 @@ void prot_freeparam( int nparam, message_param *param );
  * Receive a message
  * @return 0 when successful. or -1 if not.
  */
-int  prot_recv( int *type, int *nparam, message_param **param );
+int  prot_recv( int *seq, int *type, int *nparam, message_param **param );
 
 /**
  * Handle incoming packets if any
