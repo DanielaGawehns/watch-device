@@ -8,6 +8,11 @@
 
 void prot_error( const char *fmt, ... ) {
 	//TODO: Implement
+	va_list l;
+
+	va_start( l, fmt );
+	prot_printerr( fmt, l );
+	va_end( l );
 }
 
 /**
@@ -44,7 +49,8 @@ int prot_handshake( ) {
  * @return 0 when successful. or -1 if not.
  */
 int prot_send( int seq, int type, int nparam, message_param *param ) {
-	int r, i, el;
+	int r, i;
+	short pl;
 	message_header header;
 
 	/* Check for integer overflows in the header fields */
@@ -63,8 +69,8 @@ int prot_send( int seq, int type, int nparam, message_param *param ) {
 
 	/* Fill the header fields. */
 	/* (ntohs converts to network endianness) */
-	header.seq    = htons( type );
-	header.opcode = (char) nparam;
+	header.seq    = htons( seq );
+	header.opcode = (char) type;
 	header.nparam = (char) nparam;
 
 	/* Send the header */
@@ -75,24 +81,20 @@ int prot_send( int seq, int type, int nparam, message_param *param ) {
 	/* Send the parameters */
 	for ( i = 0; i < nparam; i++ ) {
 
-		/* Compute the length for the param structure */
-		el = param[i].length + 2;
-
 		/* Convert the length field to network endianness */
-		/* (We're reusing the input structure to construct the network
-         *  structure for the parameter so we need to convert this back
-         *  later, for otherwise the caller will see an invalid value
-         *  there. */
-		param[i].length = htons( param[i].length );
+		pl = htons( param[i].length );
 
-		/* Send the packet */
-		r = client_write( param + i, el );
+		/* Send the parameter size */
+		r = client_write( &pl, sizeof pl );
 		if ( r < 0 ) {
 			return -1;
 		}
 
-		/* Restore the length field */
-		param[i].length = ntohs( param[i].length );
+		/* Send the parameter body */
+		r = client_write( param[i].data, param[i].length );
+		if ( r < 0 ) {
+			return -1;
+		}
 
 	}
 
@@ -258,7 +260,7 @@ int prot_send_reply( int seq, int status, const char *msg,
 	message_param *out_param;
 	int out_nparam, r;
 
-	assert( param != NULL );
+	assert( nparam == 0 || param != NULL );
 
 	out_nparam = nparam + 2;
 
@@ -279,7 +281,8 @@ int prot_send_reply( int seq, int status, const char *msg,
 		goto allocerr;
 
 	/* Copy over parameters */
-	memcpy( out_param + 2, param, nparam * sizeof( message_param ) );
+	if ( nparam )
+		memcpy( out_param + 2, param, nparam * sizeof( message_param ) );
 
 	/* Send the packet */ 
 	r = prot_send( seq, MESSAGE_REPLY, out_nparam, out_param );
@@ -328,8 +331,8 @@ void prot_process() {
 		break;
 
 	case MESSAGE_SET_VALUES:
-		if ( nparam != 1 ) {
-			prot_error("Mismatched parameter count for MESSAGE_GET_VALUES: %i", nparam);
+		if ( nparam < 2 ) {
+			prot_error("Mismatched parameter count for MESSAGE_SET_VALUES: %i", nparam);
 			break;
 		}
 		cmd_set_values( seq, (const char *) param[0].data, nparam - 1, param + 1 );

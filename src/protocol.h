@@ -83,6 +83,15 @@ int  prot_recv( int *seq, int *type, int *nparam, message_param **param );
  */
 void prot_process();
 
+/**
+ * Sends a reply packet.
+ * @param seq    The sequence ID of the packet we are responding to
+ * @param status The status code to send
+ * @param msg    The status message to send
+ * @param nparam The number of parameters to send
+ * @param param  The parameters to send
+ * @return When succesful, 0. If failure occurred, <0.
+ */
 int prot_send_reply( int seq, int status, const char *msg, 
                       int nparam, message_param *param );
 
