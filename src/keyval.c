@@ -58,7 +58,7 @@ keyval *keyval_resolve( keyval *kv, const char *path, const char **rem_path )
 
 int keyval_get( const char *path, char **status, int *nparam, message_param **param )
 {
-	int i;
+	int i, r;
 	keyval *kv;
 	const char *rem_path;
 
@@ -82,32 +82,36 @@ int keyval_get( const char *path, char **status, int *nparam, message_param **pa
 
 	if ( strcmp( rem_path, "type" ) == 0 ) {
 		*nparam = 1;
-		*param = malloc( sizeof( message_param ) * *nparam );
+
+		*param = calloc( *nparam, sizeof( message_param ) );
 		if ( !*param ) {
 			goto nomem;
 		}
-		(*param)[0].length = strlen( kv->type );
-		(*param)[0].data   = strdup( kv->type );
-		if ( !(*param)[0].data ) {
+
+		r = prot_set_param_s( (*param) + 0, kv->type );
+		if ( r < 0 ) {
 			goto nomem;
 		}
+
 		*status = "OK";
 		return 0;		 
 	} else if ( strcmp( rem_path, "list" ) == 0 ) {
 		*nparam = kv->nchild;
-		*param = malloc( sizeof( message_param ) * *nparam );
+
+		*param = calloc( *nparam, sizeof( message_param ) );
 		if ( !*param ) {
 			goto nomem;
 		}
+
 		kv = kv->child;
 		for ( i = 0; i < *nparam; i++ ) {
-			(*param)[i].length = strlen( kv->name );
-			(*param)[i].data   = strdup( kv->name );
-			if ( !(*param)[i].data ) {
+			r = prot_set_param_s( (*param) + i, kv->name );
+			if ( r < 0 ) {
 				goto nomem;
 			}
 			kv = kv->next;
 		}
+
 		*status = "OK";
 		return 0;
 	}
