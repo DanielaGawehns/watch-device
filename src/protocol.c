@@ -1,22 +1,13 @@
 #include <string.h>
 #include <errno.h>
-#include <dlog.h>
-
-#ifdef  LOG_TAG
-#undef  LOG_TAG
-#endif
-#define LOG_TAG "sensorbasicui"
-
-#if !defined(PACKAGE)
-#define PACKAGE "org.example.sensorbasicui"
-#endif
-
+#include <assert.h>
 #include <arpa/inet.h>
 #include "network.h"
 #include "protocol.h"
+#include "prot_cmds.h"
 
-void prot_error( const char *format, ... ) {
-
+void prot_error( const char *fmt, ... ) {
+	//TODO: Implement
 }
 
 /**
@@ -119,7 +110,7 @@ void prot_freeparam( int nparam, message_param *param ){
 		/* Check if the data pointer is set */
 		if ( param[i].data ) {
 			/* If so, free the data buffer */
-			free( param[i].data )
+			free( param[i].data );
 		}
 	}
 	free( param );
@@ -131,7 +122,7 @@ void prot_freeparam( int nparam, message_param *param ){
  */
 int prot_recv( int *seq, int *type, int *nparam, message_param **param ) {
 	int r, i;
-	message_param header;
+	message_header header;
 	int16_t size;
 
 	r = client_read( &header, sizeof header );
@@ -140,19 +131,19 @@ int prot_recv( int *seq, int *type, int *nparam, message_param **param ) {
 	}
 
 	/* Decode the header fields */
-	*type   = header.type   & 0xFF;
+	*type   = header.opcode & 0xFF;
 	*nparam = header.nparam & 0xFF;
 	*seq    = ntohs( header.seq ) & 0xFFFF;
 
 	/* Allocate the parameter header structure */
-	*param = malloc( nparam * sizeof(message_param) );
+	*param = malloc( *nparam * sizeof(message_param) );
 	if ( !*param ) {
 		prot_error("Could not allocate parameter list");
 		return -1;
 	}
 
 	/* Zero it */
-	memset( *param, 0,  nparam * sizeof(message_param) );
+	memset( *param, 0, *nparam * sizeof(message_param) );
 
 	/* Receive the parameters */
 	for ( i = 0; i < *nparam; i++ ) {
@@ -192,10 +183,120 @@ dealloc_params:
 }
 
 /**
+ * Sets a param to an integer value.
+ * This allocates a buffer so that the params can always
+ * be freed, regardless of source
+ */
+int prot_set_param_i( message_param *param, int value )
+{
+
+	assert( param != NULL );
+
+	/* Set length */
+	param->length = sizeof value;
+
+	/* Allocate buffer and catch OOM*/
+	param->data   = malloc( param->length );
+	if ( !param->data )
+		return -1;
+
+	memcpy( param->data, &value, param->length );
+
+	return 0;
+
+}
+
+/**
+ * Sets a param to a double value.
+ * This allocates a buffer so that the params can always
+ * be freed, regardless of source
+ */
+int prot_set_param_d( message_param *param, double value )
+{
+
+	assert( param != NULL );
+
+	/* Set length */
+	param->length = sizeof value;
+
+	/* Allocate buffer and catch OOM*/
+	param->data   = malloc( param->length );
+	if ( !param->data )
+		return -1;
+
+	memcpy( param->data, &value, param->length );
+
+	return 0;
+
+}
+
+/**
+ * Sets a param to a string value.
+ * This allocates a buffer so that the params can always
+ * be freed, regardless of source
+ */
+int prot_set_param_s( message_param *param, const char *value )
+{
+
+	assert( param != NULL );
+
+	/* Set length */
+	param->length = strlen( value );
+
+	/* Copy string and catch OOM*/
+	param->data   = strdup( value );
+	if ( !param->data )
+		return -1;
+
+	return 0;
+
+}
+
+int prot_send_reply( int seq, int status, const char *msg, 
+                      int nparam, message_param *param )
+{
+	message_param *out_param;
+	int out_nparam, r;
+
+	assert( param != NULL );
+
+	out_nparam = nparam + 2;
+
+	out_param = malloc( out_nparam * sizeof( message_param ) );
+	if ( !out_param ) {
+		prot_error("Could not allocate reply parameters");
+		return -1;	
+	}
+
+	/* Load status parameter */
+	r = prot_set_param_i( out_param + 0, status );
+	if ( r < 0 )
+		goto allocerr;
+
+	/* Load message parameter */
+	r = prot_set_param_s( out_param + 1, msg );
+	if ( r < 0 )
+		goto allocerr;
+
+	/* Copy over parameters */
+	memcpy( out_param + 2, param, nparam * sizeof( message_param ) );
+
+	/* Send the packet */ 
+	r = prot_send( seq, MESSAGE_REPLY, out_nparam, out_param );
+
+	/* Free the new param list, but only the newly copied data */
+allocerr:
+	prot_freeparam( 2, out_param );
+
+	return r;
+
+}
+
+/**
  * Handle incoming packets if any
  */
 void prot_process() {
-	int seq, type, nparam;
+	int seq, type, nparam, r;
 	message_param *param;
 
 	/* Do we have at least a full header available? */
@@ -211,43 +312,27 @@ void prot_process() {
 
 	switch( type ) {
 	case MESSAGE_PING:
-		prot_send(MESSAGE_PONG, nparam, param);
+		prot_send_reply( seq, 0, "pong", nparam, param );
 		break;
 
 	case MESSAGE_REPLY:
 		/* Should not arrive like this? (at the watch side) */
 		break;
 
-	case MESSAGE_SENSOR_INTERVAL:
-		if ( nparam != 2 ) {
-			prot_error("Mismatched parameter count for MESSAGE_SENSOR_INTERVAL: %i", nparam);
-			break;
-		}
-		if ( param[1].size != 8 ) {
-			prot_error("Mismatched parameter 1 size for MESSAGE_SENSOR_INTERVAL: %i", param[1].size);
-			break;
-		}
-		cmd_sensor_interval( (const char *) param[0].data, &(double *)param[1].data );
-		break;
-
-	case MESSAGE_SENSOR_SETTING:
-		if ( nparam != 3 ) {
-			prot_error("Mismatched parameter count for MESSAGE_SENSOR_SETTING: %i", nparam);
-			break;
-		}
-		cmd_sensor_setting( (const char *) param[0].data, (const char *)param[1].data, param[2].data, param[2].length );
-		break;
-
-	case MESSAGE_LIVE_INTERVAL:
+	case MESSAGE_GET_VALUES:
 		if ( nparam != 1 ) {
-			prot_error("Mismatched parameter count for MESSAGE_LIVE_INTERVAL: %i", nparam);
+			prot_error("Mismatched parameter count for MESSAGE_GET_VALUES: %i", nparam);
 			break;
 		}
-		if ( param[0].size != 8 ) {
-			prot_error("Mismatched parameter 0 size for MESSAGE_LIVE_INTERVAL: %i", param[0].size);
+		cmd_get_values( seq, (const char *) param[0].data );
+		break;
+
+	case MESSAGE_SET_VALUES:
+		if ( nparam != 1 ) {
+			prot_error("Mismatched parameter count for MESSAGE_GET_VALUES: %i", nparam);
 			break;
 		}
-		cmd_live_interval( &(double *)param[0].data );
+		cmd_set_values( seq, (const char *) param[0].data, nparam - 1, param + 1 );
 		break;
 
 	default:
@@ -258,32 +343,3 @@ void prot_process() {
 	prot_freeparam( nparam, param );
 
 }
-
-int rep_data( int type, const char *name, double time, int ndata, double *data ) {
-	message_param *param;
-	int nparam;
-
-	nparam = 1 + ndata;
-
-	param = malloc( nparam * sizeof(message_param) );
-	if (!param) {
-		prot_error("Failed to allocate packet buffers");
-		return -1;
-	}
-
-	param[0].data = name;
-	param[0].length = strlen( name );
-
-	param[1].data = &time;
-	param[1].length = sizeof
-	for ( i = 0; i < ndata; i++ ) {
-		param[2+i].data = data + i;
-		param[2+i].length = sizeof double;
-	}
-
-
-
-}
-
-
-

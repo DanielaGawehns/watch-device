@@ -51,21 +51,6 @@ typedef struct __attribute__((packed)) {
 #define MESSAGE_PLAYBACK        (5)
 
 /**
- * Called by the protocol handler when a MESSAGE_SENSOR_INTERVAL comes in
- */
-void cmd_sensor_interval( const char *sensor_name, double interval );
-
-/**
- * Called by the protocol handler when a MESSAGE_SENSOR_SETTING comes in.
- */
-void cmd_sensor_setting ( const char *sensor_name, const char *setting_name, const void *value, size_t value_size );
-
-/**
- * Called by the protocol handler when a MESSAGE_LIVE_INTERVAL comes in.
- */
-void cmd_live_interval  ( double interval );
-
-/**
  * 
  */
 void prot_printerr( const char *format, va_list list );
@@ -97,5 +82,29 @@ int  prot_recv( int *seq, int *type, int *nparam, message_param **param );
  * Handle incoming packets if any
  */
 void prot_process();
+
+int prot_send_reply( int seq, int status, const char *msg, 
+                      int nparam, message_param *param );
+
+/**
+ * Sets a param to an integer value.
+ * This allocates a buffer so that the params can always
+ * be freed, regardless of source
+ */
+int prot_set_param_i( message_param *param, int value );
+
+/**
+ * Sets a param to a double value.
+ * This allocates a buffer so that the params can always
+ * be freed, regardless of source
+ */
+int prot_set_param_d( message_param *param, double value );
+
+/**
+ * Sets a param to a string value.
+ * This allocates a buffer so that the params can always
+ * be freed, regardless of source
+ */
+int prot_set_param_s( message_param *param, const char *value );
 
 #endif /* NETWORK_H_ */
