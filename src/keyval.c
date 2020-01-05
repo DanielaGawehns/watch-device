@@ -162,11 +162,11 @@ int keyval_get( const char *path, char **status,
 
 	}
 
-	*status = "Could not find node";
+	*status = strdup( "Could not find node" );
 	return KV_ENOENT;
 
 nomem:
-	*status = "Out of memory";
+	*status = strdup( "Out of memory" );
 
 	if ( !*param )
 		prot_freeparam( *nparam, *param );
@@ -197,17 +197,17 @@ int keyval_set( const char *path, char **status,
 		/* We found the node */
 		if ( kv->child ) {
 			/* Can't get something that is not a leaf */
-			*status = "Tried to `get` a namespace";
+			*status = strdup( "Tried to `get` a namespace" );
 			return KV_EISDIR;
 		} else if ( !kv->get ) {
 			/* Get is not implemented for this node */
-			*status = "Tried to `get` something that is not implemented";
+			*status = strdup( "Tried to `get` something that is not implemented" );
 			return KV_ENOSYS;
 		}
 		return kv->set( kv, status, nparam, param );
 	}
 
-	*status = "Could not find node";
+	*status = strdup( "Could not find node" );
 	return KV_ENOENT;
 }
 
