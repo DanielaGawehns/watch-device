@@ -260,7 +260,7 @@ keyval *keyval_create_ns( const char *name )
  * @param name The name (not path) for the node to create
  */
 keyval *keyval_create_leaf( const char *name, const char *type,
-                            kv_get getter, kv_set setter )
+                            kv_get getter, kv_set setter, void *impl )
 {
 	keyval *kv = malloc( sizeof( keyval ) );
 	if ( !kv )
@@ -270,6 +270,7 @@ keyval *keyval_create_leaf( const char *name, const char *type,
 	kv->name = strdup( name );
 	kv->get  = getter;
 	kv->set  = setter;
+	kv->impl = impl;
 	return kv;
 }
 

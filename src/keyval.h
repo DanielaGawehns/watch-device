@@ -84,7 +84,10 @@ keyval *keyval_create_ns  ( const char *name );
  * @param name The name (not path) for the node to create
  */
 keyval *keyval_create_leaf( const char *name, 
-                            const char *type, kv_get getter, kv_set setter );
+                            const char *type, 
+							kv_get getter, 
+							kv_set setter,
+							void *impl );
 
 void keyval_init();
 
