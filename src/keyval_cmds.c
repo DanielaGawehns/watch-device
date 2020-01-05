@@ -6,8 +6,10 @@
  */
 #include <assert.h>
 #include <stdlib.h>
+#include <string.h>
 #include "prot_cmds.h"
 #include "keyval.h"
+
 /**
  * Called by the protocol handler when a MESSAGE_SET_VALUES comes in
  */
@@ -38,6 +40,19 @@ void cmd_get_values( int seq, const char *path )
  */
 void cmd_set_values( int seq, const char *path, int nparam, message_param *param )
 {
-	assert( !"SHOULD NOT BE CALLED" );
+	char *status = NULL;
+	int s;
+
+	s = keyval_set( path, &status, nparam, param );
+
+	if ( !status )
+		status = strdup("NULL STATUS MESSAGE!");
+
+	prot_send_reply( seq, s, status, 0, NULL );
+
+	if ( status )
+		free( status );
+
+	return;
 }
 
