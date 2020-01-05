@@ -38,7 +38,8 @@ OpenDatabase(){
 	if(!openedDatabase){ //if database is not yet opened TODO: keep database open? Or close after each use
 		sqlite3_shutdown(); //shutdown the database TODO: is this neccesary?
 		char * dbPath = get_filepath("test.db"); //get filepath
-		ret = sqlite3_open(dbPath, &db); //open database
+		//ret = sqlite3_open_v2(dbPath, &db, SQLITE_OPEN_FULLMUTEX, NULL); //open database (serialized mode - fullmutex) TODO: is this necessary (callback ensures only one acces to database per time)
+		ret = sqlite3_open(dbPath, &db); //open database (serialized mode - fullmutex)
 		if(ret != SQLITE_OK){
 			dlog_print(DLOG_ERROR, LOG_TAG, "ERROR WHILE OPENING DATABASE, ERROR CODE: %i", ret); //print error
 			return ret;

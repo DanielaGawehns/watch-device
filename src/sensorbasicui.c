@@ -4,6 +4,8 @@
 #include <device/power.h>
 #include "scheduler.h"
 
+#include <sqlite3.h> //used for database
+
 #define MAX_SIZE_DATA_PATH 800
 
 int
@@ -232,25 +234,17 @@ app_create(void *data)
 
 	schedule_unit  newUnit; // = malloc( sizeof(schedule_unit));
 
-	//Simple hrm test:
-//	for(int i = 1; i <= 50; i++){
-//
-//	    dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Creating unit %i", __FILE__, __LINE__, i);
-//		newUnit.unit_id =  scheduler_get_new_unit_id();
-//		newUnit.unit_action_id = i%2 ? ACTION_TURN_OFF : ACTION_TURN_ON;
-//		newUnit.unit_target_id = (int)SENSOR_HRM;
-//		newUnit.data[0] = i * 50;
-//		newUnit.unit_execute_function = scheduler_data_set_sensor_activity_and_interval;
-//		scheduler_unit_add(newUnit);
-//	}
+	newUnit.unit_id = scheduler_get_new_unit_id(); //get id for unit
 
-	//repeating scheduling unit test:
+	char * temp = malloc(sizeof(char) * 10);
+	temp = "test/path";
 
-	newUnit.unit_id = scheduler_get_new_unit_id();
-	newUnit.timestamp = cur_time + 5000;
-	newUnit.data[0] = 10; //10 repeats
-	newUnit.data[1] = 3000; //every 3 ms
-	newUnit.unit_execute_function = scheduler_repeatedprocesstest;
+	newUnit.path = "test/path";
+	newUnit.timestamp = cur_time;
+	newUnit.nparam = 1;
+	newUnit.unit_execute_function = scheduler_keyval_set;
+
+	scheduler_unit_add(&newUnit);
 	scheduler_unit_add(&newUnit);
 
 
@@ -374,6 +368,10 @@ main(int argc, char *argv[])
 	device_power_request_lock(POWER_LOCK_CPU, 0);
 	appdata_s ad = {0,};
 	int ret = 0;
+
+
+	dlog_print(DLOG_INFO, LOG_TAG, "SQLITE THREADSAFETY: %i", sqlite3_threadsafe());
+
 
 	ui_app_lifecycle_callback_s event_callback = {0,};
 	app_event_handler_h handlers[5] = {NULL, };
