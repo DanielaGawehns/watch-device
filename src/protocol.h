@@ -116,4 +116,53 @@ int prot_set_param_d( message_param *param, double value );
  */
 int prot_set_param_s( message_param *param, const char *value );
 
+int prot_create_param_list( char **status, int *nparam, message_param **param );
+
+/**
+ * @brief Creates a parameter list with one string parameter and returns.
+ * If this is succesful, the status output will be set to "OK",
+ * otherwise, the status output will be set to contain a friendly error
+ * message.
+ * This function can be used as a convenient chainreturn on functions.
+ * @param status  Friendly status message output
+ * @param nparam  Parameter count output
+ * @param param   Parameter list pointer output
+ * @param value   The value to copy into the parameter list.
+ * @return 0 when successful. or -1 if not.
+ */
+int prot_create_param_1s( char **status, 
+                          int *nparam, message_param **param, 
+                          const char *value );
+
+/**
+ * @brief Creates a parameter list with one integer parameter and returns.
+ * If this is succesful, the status output will be set to "OK",
+ * otherwise, the status output will be set to contain a friendly error
+ * message.
+ * This function can be used as a convenient chainreturn on functions.
+ * @param status  Friendly status message output
+ * @param nparam  Parameter count output
+ * @param param   Parameter list pointer output
+ * @param value   The value to copy into the parameter list.
+ * @return 0 when successful. or -1 if not.
+ */
+int prot_create_param_1i( char **status, 
+                          int *nparam, message_param **param, 
+                          int value );
+
+/**
+ * @brief Creates a parameter list with one double parameter and returns.
+ * If this is succesful, the status output will be set to "OK",
+ * otherwise, the status output will be set to contain a friendly error
+ * message.
+ * This function can be used as a convenient chainreturn on functions.
+ * @param status  Friendly status message output
+ * @param nparam  Parameter count output
+ * @param param   Parameter list pointer output
+ * @param value   The value to copy into the parameter list.
+ * @return 0 when successful. or -1 if not.
+ */
+int prot_create_param_1d( char **status, 
+                          int *nparam, message_param **param, 
+                          double value );
 #endif /* NETWORK_H_ */

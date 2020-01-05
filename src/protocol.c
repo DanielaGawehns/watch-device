@@ -103,22 +103,6 @@ int prot_send( int seq, int type, int nparam, message_param *param ) {
 }
 
 /**
- * Frees a message_param struct
- */
-void prot_freeparam( int nparam, message_param *param ){
-	int i;
-	/* Iterate over the parameters */
-	for ( i = 0; i < nparam; i++ ) {
-		/* Check if the data pointer is set */
-		if ( param[i].data ) {
-			/* If so, free the data buffer */
-			free( param[i].data );
-		}
-	}
-	free( param );
-}
-
-/**
  * Receive a message
  * @return 0 when successful. or -1 if not.
  */
