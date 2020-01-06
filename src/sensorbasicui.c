@@ -14,6 +14,17 @@ OpenDatabase();
 int
 CloseDatabase();
 
+int
+OpenTable();
+
+int
+InsertDataInDatabase();
+
+char*
+GetDataFromDatabase();
+
+typedef struct data datatest; //refer to struct data with type data
+
 typedef struct appdata {
 	Evas_Object *win;
 	Evas_Object *conform;
@@ -103,43 +114,6 @@ char * get_filepath(char * writeFile){
 }
 
 /**
- * @brief creates a buffer with requested data from the database
- * @param sensorType of which data should be read in
- * @time1 1 of the between dates (data between time1 and time2 is requested)
- * @time2 2 of the between dates
- * @return the character a TODO
- */
-char *
-get_sensor_data_from_database(sensor_type_e sensorType, const char * p_tableName, const char * time1, const char * time2){
-	//Insert prepared datastring into the database
-		/*if(openedTable){ //if table has not yet been opened (not sure whether it exists or not
-			sqlite3_stmt statement;
-			char *  statementString = sqlite3_mprintf("SELECT * FROM %Q WHERE sensor_name LIKE %s AND rec_data BETWEEN %s AND %s", p_tableName, sensor_strings[sensorType], time1, time2); //insert databuf into table
-			int ret = sqlite3_prepare_v2(db, statementString, -1, &statement, NULL);
-
-			while(ret == SQLITE_OK && sqlite3_step(stmt) != SQLITE_DONE){	//TODO: safe like this?
-				int cols = sqlite3_column_count(stmt); //get amount of columns
-				for(int i = 0; i < cols; i++){	//loop over cols
-					//sqlite TODO: put data in struct? Or export whole database file and delete it?
-				}
-			}
-
-			sqlite3_finalize(statement);
-			//char *  statementString = sqlite3_mprintf("INSERT INTO %Q (sensor_name, data1, data2, data3, data4, data5) VALUES (%s)", p_tableName, dataBuf); //insert databuf into table
-			if(ret == SQLITE_OK){
-				dlog_print(DLOG_INFO, LOG_TAG, "SUCCESFULLY EXECUTED: %s", statementString);
-			}else{
-				dlog_print(DLOG_ERROR, LOG_TAG, "COULD NOT INSERT SENSORDATA IN TABLE %s, ERROR CODE: %i, QUERY: %s ", p_tableName, ret, statementString); //print info
-			}
-		}else{
-			dlog_print(DLOG_ERROR, LOG_TAG, "TABLE %s WAS NOT OPENED, COULD NOT INSERT SENSORDATA", p_tableName); //print info
-		}
-		free(statementString);
-		return ret;*/
-	return "a";
-}
-
-/**
  * @brief writes sensor data to the sensordata.csv file in the datafolder of the watch
  * @param count amount of fields in the data
  * @param valArr pointer to the data from the sensor
@@ -186,11 +160,39 @@ log_sensor_data_to_file(int count, float * valArr,  sensor_type_e sensorType){
  */
 void
 Handle_Sensor_Update_Cb(sensor_type_e sensorType, sensor_event_s *ev){	//function for handling sensor input:
-
+	int count = 0;
 	//dlog_print(DLOG_INFO, LOG_TAG, "Calling the sensor update callback function:");
-	log_sensor_data_to_file(ev->value_count, ev->values, sensorType); //log to file
 	//OpenTable(); //open the table
 	//InsertDataInDatabase(count, valArr, sensorType); //insert sensordata into sqlite database
+	//TODO:log_sensor_data_to_file(count, valArr, sensorType); //log to file
+	OpenTable(); //open the table
+	switch (sensorType) {
+		case 7:
+		case 8:
+		case 9:
+		case 10:
+		case 11:
+		case 12:
+		case 13:
+			count = 1;
+			break;
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+		case 5:
+		case 6:
+			count = 3;
+			break;
+		case 4:
+			count = 4;
+			break;
+		default:
+			dlog_print(DLOG_ERROR, LOG_TAG, "Sensor Callback handle for %s could not be found", sensor_strings[sensorType]);
+			break;
+	}
+	int writtenRows;
+	InsertDataInDatabase(count, ev, sensorType); //insert sensordata into sqlite database
 }
 
 
@@ -259,6 +261,7 @@ app_create(void *data)
 	//appdata_s *ad = data;
 	//create_base_gui(ad);
 	//-------
+	data_set_sensor_activity(0, 1);
 	return true;
 }
 
