@@ -4,6 +4,8 @@
 #include <device/power.h>
 #include "scheduler.h"
 
+#include <sqlite3.h> //used for database
+
 #define MAX_SIZE_DATA_PATH 800
 
 int
@@ -11,6 +13,17 @@ OpenDatabase();
 
 int
 CloseDatabase();
+
+int
+OpenTable();
+
+int
+InsertDataInDatabase();
+
+char*
+GetDataFromDatabase();
+
+typedef struct data datatest; //refer to struct data with type data
 
 typedef struct appdata {
 	Evas_Object *win;
@@ -101,43 +114,6 @@ char * get_filepath(char * writeFile){
 }
 
 /**
- * @brief creates a buffer with requested data from the database
- * @param sensorType of which data should be read in
- * @time1 1 of the between dates (data between time1 and time2 is requested)
- * @time2 2 of the between dates
- * @return the character a TODO
- */
-char *
-get_sensor_data_from_database(sensor_type_e sensorType, const char * p_tableName, const char * time1, const char * time2){
-	//Insert prepared datastring into the database
-		/*if(openedTable){ //if table has not yet been opened (not sure whether it exists or not
-			sqlite3_stmt statement;
-			char *  statementString = sqlite3_mprintf("SELECT * FROM %Q WHERE sensor_name LIKE %s AND rec_data BETWEEN %s AND %s", p_tableName, sensor_strings[sensorType], time1, time2); //insert databuf into table
-			int ret = sqlite3_prepare_v2(db, statementString, -1, &statement, NULL);
-
-			while(ret == SQLITE_OK && sqlite3_step(stmt) != SQLITE_DONE){	//TODO: safe like this?
-				int cols = sqlite3_column_count(stmt); //get amount of columns
-				for(int i = 0; i < cols; i++){	//loop over cols
-					//sqlite TODO: put data in struct? Or export whole database file and delete it?
-				}
-			}
-
-			sqlite3_finalize(statement);
-			//char *  statementString = sqlite3_mprintf("INSERT INTO %Q (sensor_name, data1, data2, data3, data4, data5) VALUES (%s)", p_tableName, dataBuf); //insert databuf into table
-			if(ret == SQLITE_OK){
-				dlog_print(DLOG_INFO, LOG_TAG, "SUCCESFULLY EXECUTED: %s", statementString);
-			}else{
-				dlog_print(DLOG_ERROR, LOG_TAG, "COULD NOT INSERT SENSORDATA IN TABLE %s, ERROR CODE: %i, QUERY: %s ", p_tableName, ret, statementString); //print info
-			}
-		}else{
-			dlog_print(DLOG_ERROR, LOG_TAG, "TABLE %s WAS NOT OPENED, COULD NOT INSERT SENSORDATA", p_tableName); //print info
-		}
-		free(statementString);
-		return ret;*/
-	return "a";
-}
-
-/**
  * @brief writes sensor data to the sensordata.csv file in the datafolder of the watch
  * @param count amount of fields in the data
  * @param valArr pointer to the data from the sensor
@@ -184,11 +160,39 @@ log_sensor_data_to_file(int count, float * valArr,  sensor_type_e sensorType){
  */
 void
 Handle_Sensor_Update_Cb(sensor_type_e sensorType, sensor_event_s *ev){	//function for handling sensor input:
-
+	int count = 0;
 	//dlog_print(DLOG_INFO, LOG_TAG, "Calling the sensor update callback function:");
-	log_sensor_data_to_file(ev->value_count, ev->values, sensorType); //log to file
 	//OpenTable(); //open the table
 	//InsertDataInDatabase(count, valArr, sensorType); //insert sensordata into sqlite database
+	//TODO:log_sensor_data_to_file(count, valArr, sensorType); //log to file
+	OpenTable(); //open the table
+	switch (sensorType) {
+		case 7:
+		case 8:
+		case 9:
+		case 10:
+		case 11:
+		case 12:
+		case 13:
+			count = 1;
+			break;
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+		case 5:
+		case 6:
+			count = 3;
+			break;
+		case 4:
+			count = 4;
+			break;
+		default:
+			dlog_print(DLOG_ERROR, LOG_TAG, "Sensor Callback handle for %s could not be found", sensor_strings[sensorType]);
+			break;
+	}
+	int writtenRows;
+	InsertDataInDatabase(count, ev, sensorType); //insert sensordata into sqlite database
 }
 
 
@@ -232,25 +236,17 @@ app_create(void *data)
 
 	schedule_unit  newUnit; // = malloc( sizeof(schedule_unit));
 
-	//Simple hrm test:
-//	for(int i = 1; i <= 50; i++){
-//
-//	    dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Creating unit %i", __FILE__, __LINE__, i);
-//		newUnit.unit_id =  scheduler_get_new_unit_id();
-//		newUnit.unit_action_id = i%2 ? ACTION_TURN_OFF : ACTION_TURN_ON;
-//		newUnit.unit_target_id = (int)SENSOR_HRM;
-//		newUnit.data[0] = i * 50;
-//		newUnit.unit_execute_function = scheduler_data_set_sensor_activity_and_interval;
-//		scheduler_unit_add(newUnit);
-//	}
+	newUnit.unit_id = scheduler_get_new_unit_id(); //get id for unit
 
-	//repeating scheduling unit test:
+	char * temp = malloc(sizeof(char) * 10);
+	temp = "test/path";
 
-	newUnit.unit_id = scheduler_get_new_unit_id();
-	newUnit.timestamp = cur_time + 5000;
-	newUnit.data[0] = 10; //10 repeats
-	newUnit.data[1] = 3000; //every 3 ms
-	newUnit.unit_execute_function = scheduler_repeatedprocesstest;
+	newUnit.path = "test/path";
+	newUnit.timestamp = cur_time;
+	newUnit.nparam = 1;
+	newUnit.unit_execute_function = scheduler_keyval_set;
+
+	scheduler_unit_add(&newUnit);
 	scheduler_unit_add(&newUnit);
 
 
@@ -265,6 +261,7 @@ app_create(void *data)
 	//appdata_s *ad = data;
 	//create_base_gui(ad);
 	//-------
+	data_set_sensor_activity(0, 1);
 	return true;
 }
 
@@ -374,6 +371,10 @@ main(int argc, char *argv[])
 	device_power_request_lock(POWER_LOCK_CPU, 0);
 	appdata_s ad = {0,};
 	int ret = 0;
+
+
+	dlog_print(DLOG_INFO, LOG_TAG, "SQLITE THREADSAFETY: %i", sqlite3_threadsafe());
+
 
 	ui_app_lifecycle_callback_s event_callback = {0,};
 	app_event_handler_h handlers[5] = {NULL, };

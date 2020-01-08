@@ -1,4 +1,4 @@
-
+#if false
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -10,17 +10,15 @@
 
 #define SCHEDULESIZEINCREASE 200 //Data increase per time the scheduler array is too small
 
-int keyval_set( const char *path, int nparam, message_param *param ){ //TODO: remove, placeholder function
-	dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] SETTING KEYVAL: 	PATH:  %s  -  NPARAM:  %i  -  PARAM: TODO?", __FILE__, __LINE__, path, nparam);
-}
+//for debgging purposes
 
-void scheduler_keyval_set(schedule_unit * unit){
-	 keyval_set(unit->path, unit->nparam, unit->param); //execute unit keyval_set action
-	 unit->nparam +=1;
-	 unit->timestamp += 1000;
-	 scheduler_unit_add(unit);
-}
-
+/*
+scheduler scheduler_data{
+    .arr = NULL;
+    .size = 0;
+    .unitcount = 0;
+    .active = false;
+};*/
 
 /**
 * scheduler_data
@@ -35,54 +33,32 @@ static scheduler scheduler_data = {
 	.timer = NULL//used for main-loop
 };
 
-
-/*
- * @brief: Resets the scheduler, all schedule units will be deleted and the scheduler timer will be reset
- * @params: none
- */
 void scheduler_reset(){ //resets scheduler to default
     scheduler_data.id_counter = 1;
     scheduler_data.unitcount = 0;
     scheduler_data.size = 0;
     scheduler_data.active = false;
     free(scheduler_data.arr);
-
-	ecore_timer_del(scheduler_data.timer);
     scheduler_data.timer = NULL;
 }
 
-/*
- * @brief: Gets a new id for a to-be-added unit
- * @params: none
- */
 long long unsigned int scheduler_get_new_unit_id(){
     unsigned cur = scheduler_data.id_counter;
     scheduler_data.id_counter += 1;
     return cur;
 }
 
-/*
- * @brief: Initializes the scheduler
- * @params: none
- */
 bool scheduler_initialize(){
     //TODO: initialization needed?
     return true;
 }
 
-
-/*
- * @brief: Reset/finalize the scheduler
- * @params: none
- */
 void scheduler_finalize(){
     scheduler_data.id_counter = 1;
     scheduler_data.unitcount = 0;
     scheduler_data.size = 0;
     scheduler_data.active = false;
     free(scheduler_data.arr);
-	ecore_timer_del(scheduler_data.timer);
-    scheduler_data.timer = NULL;
 }
 
 
@@ -95,11 +71,46 @@ void scheduler_push(int index, int offset){
 }
 
 
+void scheduler_data_set_sensor_activity_and_interval(schedule_unit * sensor_unit){
+	if(sensor_unit->unit_target_id < TARGET_SENSOR_START
+			|| sensor_unit->unit_target_id > TARGET_SENSOR_LAST){
+		dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Error: sensor target out of bounds", __FILE__, __LINE__ );
+	}
 
-/*
- * @brief: Increase the size of the scheduler, used to create space for new schedule units
- * @params: none
- */
+	sensor_type_e sensorTarget = (int)sensor_unit->unit_target_id; //sensor_type_e translates directly to unit_target
+
+	if(sensor_unit->unit_action_id == ACTION_TURN_ON){
+		data_set_sensor_activity(sensorTarget, true); //turn on sensor
+	} else if(sensor_unit->unit_action_id == ACTION_TURN_OFF){
+		data_set_sensor_activity(sensorTarget, false);
+	} else if(sensor_unit->unit_action_id != ACTION_NONE){
+		dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Error: sensor action not valid, only turn on, off and no action are implemented", __FILE__, __LINE__ );
+	}
+
+	if(sensor_unit->data[0] > 0){ //if a new interval is specified
+		data_set_sensor_interval(sensorTarget, (unsigned int) sensor_unit->data[0]);
+	}
+}
+
+void scheduler_repeatedprocesstest(schedule_unit * repeat_unit){
+	repeat_unit->data[0] -= 1;
+	dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] %i iterations left", __FILE__, __LINE__, repeat_unit->data[0] + 1 );
+	repeat_unit->unit_id = scheduler_get_new_unit_id(); //new id is not neccesary if no other unit exists, but just to be safe
+	repeat_unit->timestamp += repeat_unit->data[1];
+	if(repeat_unit->data[0] + 1> 0){
+		scheduler_unit_add(repeat_unit);
+	}
+}
+
+//void scheduler_data_set_sensor_interval(schedule_unit * sensor_unit){
+//	if(sensor_activity_unit->unit_target_id < TARGET_SENSOR_START
+//			|| sensor_activity_unit->unit_target_id > TARGET_SENSOR_LAST){
+//		dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Error: sensor target out of bounds", __FILE__, __LINE__ ); //check if sensor id is out of bounds
+//	}
+//
+//}
+
+
 void scheduler_increase_size(){
 	dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Increasing scheduler allocation size", __FILE__, __LINE__ );
     scheduler_data.size = SCHEDULESIZEINCREASE + scheduler_data.size - 1; //always leave a padding unit 
@@ -111,12 +122,7 @@ void scheduler_increase_size(){
     scheduler_data.arr = new_arr; 
 }
 
-
-/*
- * @brief: Add a schedule_unit to the scheduler
- * @params: the new schedule unit, a copy will be placed in the scheduler (the new unit should be deleted by the user
- */
-void scheduler_unit_add(schedule_unit const * const new_unit){
+void scheduler_unit_add(schedule_unit * new_unit){
     if(scheduler_data.unitcount + 1 > scheduler_data.size){ //if no longer enough size in scheduler
         scheduler_increase_size(); 
     }
@@ -135,10 +141,6 @@ void scheduler_unit_add(schedule_unit const * const new_unit){
     scheduler_data.unitcount++;
 }
 
-/*
- * @brief: Remove a unit by index
- * @params: the index of the schedule unit that needs to be removed
- */
 void scheduler_unit_index_remove(int index){
     if(index < 0 || index > scheduler_data.unitcount) //if out of bounds index
         return;
@@ -148,11 +150,6 @@ void scheduler_unit_index_remove(int index){
 
 
 
-/*
- * @brief: Remove a scheduler unit with the passed id from the scheduler
- * @params: the id of the to-be-deleted schedule_unit
- * @return: if the removal was succesful (did the unit exist)
- */
 bool scheduler_unit_id_remove(int unit_id){
     for(int i = 0; i < scheduler_data.unitcount; i++){
         if(scheduler_data.arr[i].unit_id == unit_id){ //check if object found
@@ -165,18 +162,10 @@ bool scheduler_unit_id_remove(int unit_id){
 }
 
 
-/*
- * @brief: Print a single scheduler_unit
- * @params: the unit that needs to be printed
- */
 void scheduler_print_unit(schedule_unit * unit){
-	dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] ID: %i  -  TIMESTAMP: %llu   -  PATH:  %s  -  NPARAM:  %i  -  PARAM: TODO?", __FILE__, __LINE__, unit->unit_id, unit->timestamp, unit->path);
+	 dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] UNIT %i - Time: %lli - Target: %i - Action: %i", __FILE__, __LINE__, unit->unit_id, unit->timestamp, unit->unit_target_id, unit->unit_action_id);
 }
 
-/*
- * @brief: Executes a schedule_unit, then removes it from the schedule (can be manually re-added)
- * @params: none
- */
  void scheduler_execute_unit(schedule_unit * unit){
 	 if(!unit){
 		 dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Error executing unit: no unit specified", __FILE__, __LINE__);
@@ -184,24 +173,22 @@ void scheduler_print_unit(schedule_unit * unit){
 	 }
 
 	 dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Executing unit with id: %i", __FILE__, __LINE__, unit->unit_id);
-
 	 if(!unit->unit_execute_function){
 		 dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Error executing function in schedule unit %i, none specified", __FILE__, __LINE__, unit->unit_id);
 		 return;
 	 }
-	 dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Executing function", __FILE__, __LINE__);
-
 	 unit->unit_execute_function(unit); //run execute function
  }
 
-/*
- * @brief: prints all schedule units, using scheduler_print_unit
- * @params: none
- */
+
 void print_schedule(){
 	 for(int i = 0; i < scheduler_data.unitcount; i++){
 		 scheduler_print_unit(&scheduler_data.arr[i]);
 	 }
+
+//    for(int i =0; i < scheduler_data.unitcount; i++){
+//        printf("%i - Timestamp: %llu      ID: %i     Target:%s     Action:%i \n", i, scheduler_data.arr[i].timestamp, scheduler_data.arr[i].unit_id, sensor_strings[scheduler_data.arr[i].unit_target_id], scheduler_data.arr[i].unit_action_id);
+//    }
 }
 
 
@@ -210,11 +197,19 @@ void print_schedule(){
 * @params: cur_time the current time (time since last epoch) in milliseconds
 */
 void scheduler_update(long long int cur_time){
+
+	//TODO: make this thread safe?
+
+    //dlog_print(DLOG_ERROR, LOG_TAG, "[%s:%d] Updating scheduler with time %lli", __FILE__, __LINE__, cur_time);
+    
+//	if((int)(cur_time / 1000) % 5 == 0){
+//	    print_schedule();
+//	}
+
     for(int i = 0; i < scheduler_data.unitcount;){ //if unit is executed, it is also deleted so no need to increase i
         if(scheduler_data.arr[i].timestamp < cur_time){
-        	schedule_unit temp = scheduler_data.arr[i]; //temp copy
-            scheduler_unit_index_remove(i); //remove the unit by index (NOT by ID since the scheduler can be re-added)
-            scheduler_execute_unit(&temp); //execute this unit
+            scheduler_execute_unit(&scheduler_data.arr[i]); //execute this unit
+            scheduler_unit_index_remove(i); //remove the unit
         }else{ //since it is sorted -> stop when first not-to-be-executed unit is encountered
             break;
         }
@@ -232,7 +227,7 @@ Eina_Bool scheduler_ecore_loop(void *data){
     gettimeofday(&timeValue, NULL);
     unsigned long long cur_time = (unsigned long long)(timeValue.tv_sec) * 1000 + (unsigned long long)(timeValue.tv_usec) / 1000; //get current time in milliseconds from start of epoch
     dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Updating scheduler with time %llu, units remaining: %i", __FILE__, __LINE__, cur_time, scheduler_data.unitcount);
-    scheduler_update((long long int) cur_time); //update scheduler with the current time
+    scheduler_update((long long int) cur_time); //update scheduler
 
     return ECORE_CALLBACK_RENEW; //renew ecore timer
 }
@@ -273,3 +268,36 @@ void scheduler_start_main_ecore_loop(double intervalInSec){
 
 
 
+
+
+// int main(){
+//     for(int i = 499; i >= 0; i--){
+//         schedule_unit temp;
+//         temp.timestamp = rand() % 2000;//rand()%101 + rand()%50;
+//         temp.unit_id = scheduler_get_new_unit_id();
+//         temp.unit_target_id = i % 10;
+//         temp.unit_action_id = i%2;
+//         //printf("Adding %i with timestamp: %llu \n", i, temp.timestamp);
+//         scheduler_unit_add(&temp);
+
+//     }
+
+
+//     printf("--------------------------------------------------------------------------------\n"); 
+//     for(int i = 0; i < 1500; i+=100){
+//         scheduler_update(i);
+//         printf("\n");
+//     }
+
+    
+//     printf("--------------------------------------------------------------------------------\n");
+
+
+//     //print_schedule();
+//     printf("ID_Counter: %i\n", scheduler_data.id_counter);
+//     printf("Unitcount: %i\n", scheduler_data.unitcount);
+//     scheduler_finalize();
+//     return 0;
+// }
+
+#endif
