@@ -32,7 +32,7 @@ void network_init() {
 
 }
 
-void ulst_init() {
+int ulst_init() {
 	int bc_enable, r;
     struct sockaddr_in s;
     struct timeval timeout;
@@ -42,7 +42,7 @@ void ulst_init() {
 	if ( ulst_sock < 0 ) {
 		net_log_err( "Failed to open UDP socket: %s (%i)",
 				strerror(errno), errno);
-		return;
+		return -1;
 	}
 
 	r = fcntl( ulst_sock, F_SETFL, 0 );
@@ -51,7 +51,7 @@ void ulst_init() {
 		net_log_err( "Failed to blocking mode: %s (%i)",
 				strerror(errno), errno);
 		close( ulst_sock );
-		return;
+		return -1;
 	}
 
 	timeout.tv_sec = 1;
@@ -66,7 +66,7 @@ void ulst_init() {
 		net_log_err( "Failed to enable broadcast: %s (%i)",
 				strerror(errno), errno);
 		close( ulst_sock );
-		return;
+		return -1;
 	}
 
 	r = setsockopt( ulst_sock, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
@@ -75,7 +75,7 @@ void ulst_init() {
 		net_log_err( "Failed to set timeout: %s (%i)",
 				strerror(errno), errno);
 		close( ulst_sock );
-		return;
+		return -1;
 	}
 
 	r = bind( ulst_sock, (struct sockaddr *) &any_addr, sizeof any_addr );
@@ -83,12 +83,12 @@ void ulst_init() {
 	if ( r < 0 ) {
 		net_log_err( "Failed to bind UDP socket: %s (%i)",
 					strerror(errno), errno);
-		return;
+		return -1;
 	}
-
+	return 0;
 }
 
-void broadcast_init() {
+int broadcast_init() {
 	int bc_enable, r;
     struct sockaddr_in s;
     struct timeval timeout;
@@ -98,7 +98,7 @@ void broadcast_init() {
 	if ( udp_sock < 0 ) {
 		net_log_err( "Failed to open UDP socket: %s (%i)",
 				strerror(errno), errno);
-		return;
+		return -1;
 	}
 
 	bc_enable = 1;
@@ -110,12 +110,13 @@ void broadcast_init() {
 		net_log_err( "Failed to enable broadcast: %s (%i)",
 				strerror(errno), errno);
 		close( udp_sock );
-		return;
+		return -1;
 	}
+	return 0;
 
 }
 
-void broadcast_send() {
+int broadcast_send() {
 
 	const char *mess = "HelloWorld!"; //TODO: What do we send here
 
@@ -124,33 +125,30 @@ void broadcast_send() {
 		net_log_err( "Failed to send broadcast: %s (%i)",
 				strerror(errno), errno);
 		close( udp_sock );
-		return;
+		return -1;
 	}
 
 	net_log_info( "Sent broadcast");
-
+	return 0;
 }
 
 int broadcast_recv() {
 	ssize_t rsz;
 	char buf[128];
 	socklen_t len = sizeof srv_addr;
-	for ( ;; ) {
-		/* Receive a single datagram from the server */
-		rsz = recvfrom( ulst_sock,
-						buf, sizeof buf - 1, 
-						0, (struct sockaddr *) &srv_addr, &len );
-		if ( rsz < 0 ) {
-			net_log_err( "Failed to receive server address: %s (%i)",
-					strerror(errno), errno);
-			return -1;
-		}
-		buf[rsz] = 0;
-		if ( rsz == 0 || 0 != strncmp( buf, srv_ident, sizeof buf - 1 ) ) {
-			net_log_warn( "Received invalid ack: %s", buf);
-			continue;
-		}
-		break;
+	/* Receive a single datagram from the server */
+	rsz = recvfrom( ulst_sock,
+					buf, sizeof buf - 1,
+					0, (struct sockaddr *) &srv_addr, &len );
+	if ( rsz < 0 ) {
+		net_log_err( "Failed to receive server address: %s (%i)",
+				strerror(errno), errno);
+		return -1;
+	}
+	buf[rsz] = 0;
+	if ( rsz == 0 || 0 != strncmp( buf, srv_ident, sizeof buf - 1 ) ) {
+		net_log_warn( "Received invalid ack: %s", buf);
+		return -1;
 	}
 	net_log_info( "Acked by server at %s", inet_ntoa(srv_addr.sin_addr));
     srv_addr.sin_port = (in_port_t)htons(2114);
@@ -162,11 +160,16 @@ void broadcast_stop() {
     close( udp_sock );
 }
 
+int broadcast_start() {
+	int res;
+	res = ulst_init();
+	if ( res < 0 )
+		return res;
+	return broadcast_init();
+}
+
 int broadcast_hello() {
 	int s;
-	network_init();
-	ulst_init();
-	broadcast_init();
 	broadcast_send();
 	s = broadcast_recv();
 	broadcast_stop();
@@ -255,12 +258,13 @@ int client_read( void *data, size_t size ) {
 	ssize_t ws, off;
 	for ( off = 0; off < size; off += ws ) {
 		ws = recv( clnt_sock, data + off, size - off, 0 );
-		if ( ws < 0 ) {
+		if ( ws < 0 && errno != EAGAIN ) {
 			net_log_err( "Failed to receive data over TCP: %s (%i)",
 					strerror(errno), errno);
 			close( clnt_sock );
 			return -1;
-		}
+		} else if ( ws < 0 )
+			ws = 0;
 	}
 	return 0;
 }

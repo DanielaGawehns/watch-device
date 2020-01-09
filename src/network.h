@@ -11,10 +11,12 @@
 #include <stdlib.h>
 
 void network_init();
-void ulst_init( );
-void broadcast_init( );
-void broadcast_send( );
+int ulst_init( );
+int broadcast_init( );
+int broadcast_send( );
 int broadcast_recv( );
+
+int broadcast_start();
 void broadcast_stop( );
 int broadcast_hello( );
 int client_connect( );

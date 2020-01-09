@@ -50,6 +50,8 @@ typedef struct __attribute__((packed)) {
 #define MESSAGE_INCREMENT       (4)
 #define MESSAGE_PLAYBACK        (5)
 
+void prot_handle_error();
+
 /**
  * 
  */
@@ -59,7 +61,13 @@ void prot_printerr( const char *format, va_list list );
  * This function performs the handshake with the host
  * @return 0 when successful. or -1 if not.
  */
-int  prot_handshake( );
+int prot_handshake_send( );
+
+/**
+ * This function receives the handshake from the host
+ * @return 0 when successful, 1 when delayed or -1 if an error occurred.
+ */
+int prot_handshake_recv( );
 
 /**
  * Sends a message

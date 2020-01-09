@@ -9,25 +9,39 @@
 void prot_error( const char *fmt, ... ) {
 	//TODO: Implement
 	va_list l;
-
 	va_start( l, fmt );
 	prot_printerr( fmt, l );
 	va_end( l );
+	prot_handle_error();
 }
 
 /**
  * This function performs the handshake with the host
  * @return 0 when successful. or -1 if not.
  */
-int prot_handshake( ) {
+int prot_handshake_send( ) {
 	int r;
-	char version = PROTOCOL_VERSION, reply = 0;
+	char version = PROTOCOL_VERSION;
 
 	/* Try to send the version code */
 	r = client_write( &version, sizeof version );
 	if ( r < 0 ) {
 		return -1;
 	}
+
+	return 0;
+}
+
+/**
+ * This function receives the handshake from the host
+ * @return 0 when successful, 1 when delayed or -1 if an error occurred.
+ */
+int prot_handshake_recv( ) {
+	int r;
+	char reply = 0;
+
+	if ( client_available() < 1 )
+		return 1;
 
 	/* Try to receive the reply */
 	r = client_read( &reply, sizeof reply );
@@ -293,7 +307,7 @@ void prot_process() {
 	/* Receive the packet */
 	r = prot_recv(&seq, &type, &nparam, &param);
 	if ( r < 0 ) {
-		prot_error("Error during protocol receive");
+		prot_error("Error during protocol receive in prot_process()");
 		return;
 	}
 

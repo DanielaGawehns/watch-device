@@ -481,7 +481,7 @@ static void init_sensor( int i )
 	sensor->kv_interval   = keyval_create_add_k_leaf( sensor->kv_ns, "interval"  , "double"   , kvdata_interval_get  , kvdata_interval_set, sensor );
 	sensor->kv_name       = keyval_create_add_k_leaf( sensor->kv_ns, "name"      , "string"   , kvdata_name_get      , NULL               , sensor );
 	sensor->kv_range      = keyval_create_add_k_leaf( sensor->kv_ns, "range"     , "double[2]", kvdata_range_get     , NULL               , sensor );
-	sensor->kv_resolution = keyval_create_add_k_leaf( sensor->kv_ns, "resolution", "string"   , kvdata_resolution_get, NULL               , sensor );
+	sensor->kv_resolution = keyval_create_add_k_leaf( sensor->kv_ns, "resolution", "double"   , kvdata_resolution_get, NULL               , sensor );
 	if ( !(sensor->kv_active && sensor->kv_interval && sensor->kv_name && sensor->kv_range && sensor->kv_resolution) ) {
 		dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] keyval_add_leaf() error %s", __FILE__, __LINE__, sensor->name );
 		return;

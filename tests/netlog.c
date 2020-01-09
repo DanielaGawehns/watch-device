@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdarg.h>
+#define LOG_TAG "sensorbasicui"
 
 void prot_printerr( const char *format, va_list list ) {
 	vprintf( format, list );
