@@ -1,27 +1,9 @@
 
-
+#include <sqlite3.h> //used for database
 #include "sensorbasicui.h"
 #include "data.h"//used for sensor support
 #include <sqlite3.h> //used for database
-
-//------------------------------ Temporary database constants
- /* Buffer size, used in functions */
-#define BUFLEN 800
-#define MAX_SIZE_DATA_PATH 800
- /* AES key length */
-static const unsigned char tableName[] = {"DataTable"};
-const int dbDataCols = 6;
-sqlite3 *db; /* Database handle */
-bool openedDatabase = false; //opened database
-bool openedTable = false; //made sure data table exists
-//----------------------------------
-
-//struct for sensordata
-struct __attribute__((__packed__)) data {
-	unsigned long long epoch; //epoch in milliseconds
-	float values[dbDataCols];
-};
-typedef struct data data; //refer to struct data with type data
+#include "sqlite_db.h"
 
 data *createDataEntry(unsigned long long epoch) {
 	data *d = malloc(sizeof(struct data));
@@ -44,9 +26,6 @@ char * get_filepath(char * writeFile){
 	}
 	return finalPath;
 }
-
-
-
 
 /**
  * @brief open the database to allow for reading and storing of data
