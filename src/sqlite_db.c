@@ -5,19 +5,23 @@
 #include <sqlite3.h> //used for database
 #include "sqlite_db.h"
 
-data *createDataEntry(unsigned long long epoch) {
+
+/**
+ * @brief Gets the full path to a write/readable file in the datafolder (this does not check if it exists)
+ * @param WriteFile: name of the file to get the full path from
+ */
+data *database_create_data_entry(unsigned long long epoch) {
 	data *d = malloc(sizeof(struct data));
 	d->epoch = epoch;
 	memset(d->values, 0, sizeof(d->values));
 	return d;
 }
-
 /**
  * @brief Gets the full path to a write/readable file in the datafolder (this does not check if it exists)
  * @param WriteFile: name of the file to get the full path from
  * @return pointer to char array containing filepath
  */
-char * get_filepath(char * writeFile){
+char * database_get_file_path(char * writeFile){
 	char * finalPath = (char*) malloc(MAX_SIZE_DATA_PATH * sizeof(char)); //[MAX_SIZE_DATA_PATH] = {0,}; //max path size is 800, initialize all chars to 0
 	char * dataPath = app_get_data_path(); //get pointer to data path
 	if(sizeof(dataPath) > 0){ //if datapath exists
@@ -32,11 +36,11 @@ char * get_filepath(char * writeFile){
  * @return succes state
  */
 int
-OpenDatabase(){
+database_open_database(){
 	int ret = 0;
 	if(!openedDatabase){ //if database is not yet opened TODO: keep database open? Or close after each use
 		sqlite3_shutdown(); //shutdown the database TODO: is this neccesary?
-		char * dbPath = get_filepath("test.db"); //get filepath
+		char * dbPath = database_get_file_path("test.db"); //get filepath
 		//ret = sqlite3_open_v2(dbPath, &db, SQLITE_OPEN_FULLMUTEX, NULL); //open database (serialized mode - fullmutex) TODO: is this necessary (callback ensures only one acces to database per time)
 		ret = sqlite3_open(dbPath, &db); //open database (serialized mode - fullmutex)
 		if(ret != SQLITE_OK){
@@ -57,7 +61,7 @@ OpenDatabase(){
  * @return succes state
  */
 int
-CloseDatabase(){
+database_close_database(){
 	sqlite3_close(db);
 	openedDatabase = false;
 	openedTable = false;
@@ -73,7 +77,7 @@ CloseDatabase(){
  * @param sensorType name of the sensor that wants to log data
  */
 int
-InsertDataInDatabase(int count, sensor_event_s *ev,  sensor_type_e sensorType){
+database_insert_data(int count, sensor_event_s *ev,  sensor_type_e sensorType){
 	char dataBuf[2000]; //create buffer for storing the sensor data
 	int ret = SQLITE_OK; //return value
 
@@ -129,7 +133,7 @@ InsertDataInDatabase(int count, sensor_event_s *ev,  sensor_type_e sensorType){
 
 //2020-02-02T02:11:33.930
 int
-GetDataFromDatabase(const char * sensor_name, unsigned long long time1, unsigned long long time2, char *ndata, int buffersize, int *writtenRows){
+database_get_data(const char * sensor_name, unsigned long long time1, unsigned long long time2, char *ndata, int buffersize, int *writtenRows){
 	int writtenEntries = 0;
 	int ret = SQLITE_OK; //return value
 	int rowret = SQLITE_OK; //return value for retrieving data from database
@@ -148,7 +152,7 @@ GetDataFromDatabase(const char * sensor_name, unsigned long long time1, unsigned
 				continue;
 			}
 			else {
-				entry = createDataEntry(sqlite3_column_int64(stmt, 1));
+				entry = database_create_data_entry(sqlite3_column_int64(stmt, 1));
 				for(int i = 2; i < dbDataCols; i++){	//loop over columns with data
 					entry->values[i-2] = sqlite3_column_double(stmt, i);
 				}
@@ -193,7 +197,7 @@ GetDataFromDatabase(const char * sensor_name, unsigned long long time1, unsigned
  * @return succes state
  */
 int
-OpenTable(){
+database_open_table(){
 	char * statementString; // = sqlite3_mprintf("SELECT count(name) FROM sqlite_master WHERE type='table' AND name='{%Q}'", tableName); //create statement using opened tablename : if table exists, count >0
 	int ret = SQLITE_OK; //return value
 	if(!openedTable || true){ //if table has not yet been opened (not sure whether it exists or not

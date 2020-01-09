@@ -151,7 +151,7 @@ Handle_Sensor_Update_Cb(sensor_type_e sensorType, sensor_event_s *ev){	//functio
 			dlog_print(DLOG_ERROR, LOG_TAG, "Sensor Callback handle for %s could not be found", sensor_strings[sensorType]);
 			break;
 	}
-	InsertDataInDatabase(count, ev, sensorType); //insert sensordata into sqlite database
+	database_insert_data(count, ev, sensorType); //insert sensordata into sqlite database
 }
 
 
