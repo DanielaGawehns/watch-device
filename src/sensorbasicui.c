@@ -2,8 +2,10 @@
 #include "data.h" //used for sensor support
 #include <device/power.h>
 #include "scheduler.h"
-
+#include "protocol.h"
+#include "network.h"
 #include <sqlite3.h> //used for database
+#include "netcore.h"
 
 #define MAX_SIZE_DATA_PATH 800
 
@@ -32,7 +34,6 @@ typedef struct appdata {
 
 
 appdata_s * curAppdata;
-void broadcast_hello() ;
 
 static void
 win_delete_request_cb(void *data, Evas_Object *obj, void *event_info)
@@ -152,9 +153,14 @@ Handle_Sensor_Update_Cb(sensor_type_e sensorType, sensor_event_s *ev){	//functio
 			break;
 	}
 	InsertDataInDatabase(count, ev, sensorType); //insert sensordata into sqlite database
+	double f[32];
+	for ( int i = 0; i < ev->value_count; i++ ) {
+		f[i] = ev->values[i];
+	}
+	netcore_send_increment( sensor_strings[sensorType], ev->timestamp/1000., ev->value_count, f  );
 }
 
-
+void init_syskv();
 
 /**
  * @brief initialize function for view and sensor
@@ -169,6 +175,7 @@ app_create(void *data)
 		If this function returns true, the main loop of application starts
 		If this function returns false, the application is terminated */
 
+	init_syskv();
 	//ADDED:
 	data_initialize(Handle_Sensor_Update_Cb);	//set sensor data class
 	OpenDatabase(); //open the database TODO: keep it opened?
@@ -182,26 +189,6 @@ app_create(void *data)
 		dlog_print(DLOG_ERROR, LOG_TAG, "Error initializing scheduler");
 	}
 
-// TESTS:
-//    struct timeval timeValue;
-//    gettimeofday(&timeValue, NULL);
-//    unsigned long long cur_time = (unsigned long long)(timeValue.tv_sec) * 1000 + (unsigned long long)(timeValue.tv_usec) / 1000; //get current time in milliseconds from start of epoch
-//	schedule_unit  newUnit; // = malloc( sizeof(schedule_unit));
-//
-//	newUnit.unit_id = scheduler_get_new_unit_id(); //get id for unit
-//
-//	char * temp = malloc(sizeof(char) * 10);
-//	temp = "test/path";
-//
-//	newUnit.path = "test/path";
-//	newUnit.timestamp = cur_time;
-//	newUnit.nparam = 1;
-//	newUnit.unit_execute_function = scheduler_keyval_set;
-//
-//	scheduler_unit_add(&newUnit);
-//	scheduler_unit_add(&newUnit);
-//  dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Done creating testunits", __FILE__, __LINE__);
-
 	//Scheduler/ecore mainloop:
 	scheduler_start_main_ecore_loop(1); //run ecore loop of scheduler every 1 second
     dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Done starting main ecore loop", __FILE__, __LINE__);
@@ -209,7 +196,10 @@ app_create(void *data)
     //Create basic GUI with message that says app has been launched successfully
 	appdata_s *ad = data;
 	create_base_gui(ad);
-	//-------
+
+	data_set_sensor_activity(0, 1);
+	netcore_init();
+	netcore_connect();
 
 	return true;
 }

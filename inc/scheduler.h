@@ -40,7 +40,6 @@
 #include "stdbool.h"
 #include <sys/time.h> //for time getting
 #include <Ecore.h> //ecore
-#include <Tizen.h>
 #include <dlog.h> //dlog
 
 
