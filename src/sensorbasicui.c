@@ -3,8 +3,10 @@
 #include "view.h"
 #include <device/power.h>
 #include "scheduler.h"
-
+#include "protocol.h"
+#include "network.h"
 #include <sqlite3.h> //used for database
+#include "netcore.h"
 
 #define MAX_SIZE_DATA_PATH 800
 
@@ -33,7 +35,6 @@ typedef struct appdata {
 
 
 appdata_s * curAppdata;
-void broadcast_hello() ;
 
 static void
 win_delete_request_cb(void *data, Evas_Object *obj, void *event_info)
@@ -195,7 +196,7 @@ Handle_Sensor_Update_Cb(sensor_type_e sensorType, sensor_event_s *ev){	//functio
 	InsertDataInDatabase(count, ev, sensorType); //insert sensordata into sqlite database
 }
 
-
+void init_syskv();
 
 /**
  * @brief initialize function for view and sensor
@@ -210,6 +211,7 @@ app_create(void *data)
 		If this function returns true, the main loop of application starts
 		If this function returns false, the application is terminated */
 
+	init_syskv();
 	//ADDED:
 	data_initialize(Handle_Sensor_Update_Cb);	//set sensor data class
 	OpenDatabase(); //open the database TODO: keep it opened?
@@ -248,20 +250,19 @@ app_create(void *data)
 
 	scheduler_unit_add(&newUnit);
 	scheduler_unit_add(&newUnit);
-
-
     dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Done creating testunits", __FILE__, __LINE__);
 
 	//Scheduler/ecore mainloop:
 	scheduler_start_main_ecore_loop(1); //run ecore loop of scheduler every 1 second
     dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Done starting main ecore loop", __FILE__, __LINE__);
 
-
 	//ORIGINAL:
 	//appdata_s *ad = data;
 	//create_base_gui(ad);
 	//-------
 	data_set_sensor_activity(0, 1);
+	netcore_connect();
+
 	return true;
 }
 

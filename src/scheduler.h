@@ -1,8 +1,8 @@
 
-#include "stdbool.h"
+#include <stdbool.h>
+#include "protocol.h"
 #include <sys/time.h> //for time getting
 #include <Ecore.h> //ecore
-#include <Tizen.h>
 #include <dlog.h> //dlog
 
 
@@ -47,10 +47,6 @@ typedef struct{
 //int secondLowestInterval[SENSORRESERVED] = {0,}; //Keeps track of the second lowest interval (used to set to when lowest interval on sensor is stopped)
 
 
-typedef struct __attribute__((packed)) { //todo: remove, placeholder
-	uint16_t length;
-	void *   data;
-} message_param;
 
 struct schedule_unit{
     /*

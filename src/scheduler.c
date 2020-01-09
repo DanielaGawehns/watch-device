@@ -5,17 +5,16 @@
 #include "scheduler.h"
 #include "data.h"
 #include <Ecore.h> //ecore
-#include <Tizen.h>
+#include "keyval.h"
 
+#define LOG_TAG "sensorbasicui"
 
 #define SCHEDULESIZEINCREASE 200 //Data increase per time the scheduler array is too small
 
-int keyval_set( const char *path, int nparam, message_param *param ){ //TODO: remove, placeholder function
-	dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] SETTING KEYVAL: 	PATH:  %s  -  NPARAM:  %i  -  PARAM: TODO?", __FILE__, __LINE__, path, nparam);
-}
 
 void scheduler_keyval_set(schedule_unit * unit){
-	 keyval_set(unit->path, unit->nparam, unit->param); //execute unit keyval_set action
+	 char *err;
+	 keyval_set(unit->path, &err, unit->nparam, unit->param); //execute unit keyval_set action
 	 unit->nparam +=1;
 	 unit->timestamp += 1000;
 	 scheduler_unit_add(unit);
@@ -189,7 +188,7 @@ void scheduler_print_unit(schedule_unit * unit){
 		 dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Error executing function in schedule unit %i, none specified", __FILE__, __LINE__, unit->unit_id);
 		 return;
 	 }
-	 dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Executing function", __FILE__, __LINE__);
+	//dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Executing function", __FILE__, __LINE__);
 
 	 unit->unit_execute_function(unit); //run execute function
  }
@@ -231,7 +230,7 @@ Eina_Bool scheduler_ecore_loop(void *data){
     struct timeval timeValue;
     gettimeofday(&timeValue, NULL);
     unsigned long long cur_time = (unsigned long long)(timeValue.tv_sec) * 1000 + (unsigned long long)(timeValue.tv_usec) / 1000; //get current time in milliseconds from start of epoch
-    dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Updating scheduler with time %llu, units remaining: %i", __FILE__, __LINE__, cur_time, scheduler_data.unitcount);
+   // dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Updating scheduler with time %llu, units remaining: %i", __FILE__, __LINE__, cur_time, scheduler_data.unitcount);
     scheduler_update((long long int) cur_time); //update scheduler with the current time
 
     return ECORE_CALLBACK_RENEW; //renew ecore timer

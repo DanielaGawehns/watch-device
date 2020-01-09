@@ -15,6 +15,7 @@
 #define KV_EISDIR		(-2)
 #define KV_ENOSYS		(-3)
 #define KV_ENOMEM    	(-4)
+#define KV_EINVAL    	(-5)
 
 typedef struct keyval_s keyval;
 
@@ -88,6 +89,9 @@ keyval *keyval_create_leaf( const char *name,
 							kv_get getter, 
 							kv_set setter,
 							void *impl );
+
+keyval *keyval_create_add_k_leaf( keyval *parent, const char *name, const char *type,
+                            kv_get getter, kv_set setter, void *impl  );
 
 void keyval_init();
 

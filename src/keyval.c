@@ -274,6 +274,26 @@ keyval *keyval_create_leaf( const char *name, const char *type,
 	return kv;
 }
 
+void keyval_free( keyval *kv )
+{
+	free( kv->type );
+	free( kv->name );
+	free( kv );
+}
+
+keyval *keyval_create_add_k_leaf( keyval *parent, const char *name, const char *type,
+                            kv_get getter, kv_set setter, void *impl  ) {
+	int res;
+	keyval *kv = keyval_create_leaf( name, type, getter, setter, impl );
+	if ( !kv )
+		return NULL;
+	res = keyval_add_k( parent, kv );
+	if ( res >= 0 )
+		return kv;
+	keyval_free( kv );
+	return NULL;
+}
+
 
 void keyval_init()
 {
