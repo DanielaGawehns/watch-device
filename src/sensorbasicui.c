@@ -96,6 +96,63 @@ create_base_gui(appdata_s *ad)
 	/* Show window after base gui is set up */
 	evas_object_show(ad->win);
 }
+//
+///**
+// * @brief Gets the full path to a write/readable file in the datafolder (this does not check if it exists)
+// * @param WriteFile: name of the file to get the full path from
+// * @return pointer to char array containing filepath
+// */
+//char * get_filepath(char * writeFile){
+//	char * finalPath = (char*) malloc(MAX_SIZE_DATA_PATH * sizeof(char)); //[MAX_SIZE_DATA_PATH] = {0,}; //max path size is 800, initialize all chars to 0
+//	char * dataPath = app_get_data_path(); //get pointer to data path
+//	if(sizeof(dataPath) > 0){ //if datapath exists
+//		snprintf(finalPath, MAX_SIZE_DATA_PATH, "%s%s", dataPath, writeFile);
+//		free(dataPath);
+//	}
+//	return finalPath;
+//}
+
+
+/**
+ * @brief function that is called when a sensor records data
+ * @param sensorType name of the sensor that wants to log data
+ * @param ev contains the data from the sensor
+ */
+void
+Handle_Sensor_Update_Cb(sensor_type_e sensorType, sensor_event_s *ev){	//function for handling sensor input:
+	int count = 0;
+	//dlog_print(DLOG_INFO, LOG_TAG, "Calling the sensor update callback function:");
+	//OpenTable(); //open the table
+	//InsertDataInDatabase(count, valArr, sensorType); //insert sensordata into sqlite database
+	//TODO:log_sensor_data_to_file(count, valArr, sensorType); //log to file
+	OpenTable(); //open the table
+	switch (sensorType) {
+		case 7:
+		case 8:
+		case 9:
+		case 10:
+		case 11:
+		case 12:
+		case 13:
+			count = 1;
+			break;
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+		case 5:
+		case 6:
+			count = 3;
+			break;
+		case 4:
+			count = 4;
+			break;
+		default:
+			dlog_print(DLOG_ERROR, LOG_TAG, "Sensor Callback handle for %s could not be found", sensor_strings[sensorType]);
+			break;
+	}
+	InsertDataInDatabase(count, ev, sensorType); //insert sensordata into sqlite database
+}
 
 
 

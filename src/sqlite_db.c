@@ -7,19 +7,13 @@
 //------------------------------ Temporary database constants
  /* Buffer size, used in functions */
 #define BUFLEN 800
+#define MAX_SIZE_DATA_PATH 800
  /* AES key length */
-const int key_len = 256;
-
-/* Password to generate key */
-static const unsigned char password[] = {"DummyPassword"};
 static const unsigned char tableName[] = {"DataTable"};
 const int dbDataCols = 6;
-
 sqlite3 *db; /* Database handle */
 bool openedDatabase = false; //opened database
 bool openedTable = false; //made sure data table exists
-unsigned char salt[9]; /* Encryption salt */
-unsigned char iv[17]; /* Encryption initial vector */
 //----------------------------------
 
 //struct for sensordata
