@@ -37,13 +37,6 @@
 #include <Ecore.h> //ecore
 #include <dlog.h>
 
-
-#define MAX_GYRO_VALUE 571.0
-#define MAX_HRM_VALUE 220.0
-#define LISTENER_TIMEOUT 0
-#define LISTENER_TIMEOUT_FINAL ((LISTENER_TIMEOUT != 0) ? LISTENER_TIMEOUT : 100)
-
-
 /**
  * @brief String names for sensor_type_e values
  */
@@ -65,9 +58,12 @@ const char *sensor_strings[SENSOR_COUNT] = {
 	"STRING/SENSOR NOT ADDED"
 };
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> c8c7a646921c9c7148bd8ad9427fc7e76347ee0f
 /**
  * @brief sensor data struct used to manage each sensor's listener and handle
  */
@@ -118,7 +114,13 @@ static void _timer_start(int value);
  */
 static void _set_hrm_values(sensor_event_s *event);
 
+<<<<<<< HEAD
 
+=======
+/**
+ * TODO: the functions hereafter are custom added, handy web: https://developer.tizen.org/dev-guide/2.3.1/org.tizen.tutorials/html/native/system/sensor_tutorial_n.htm
+ */
+>>>>>>> c8c7a646921c9c7148bd8ad9427fc7e76347ee0f
 
 /**
  * @brief sets a sensors activity, given the id and new activity (if sensor is available and status is not already the given status)

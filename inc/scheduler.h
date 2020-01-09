@@ -5,7 +5,7 @@
  *
  * When a schedule_unit is due to be executed (unit.timestamp < curtime during a call to scheduler_update), the callback function that is specified in the schedule_unit is called, along with a pointer to the to-be-executed schedule_unit
  *
- * After this, the schedule unit is deleted from the scheduler, after which it can be manually re-added in the callback function to repeatedly execute a schedule unit.
+ * After this, the schedule unit is deleted from the scheduler, after which it can be manually re-added in the callback function to repeatedly reschedule and re-execute a schedule unit (e.g. execute every 10 seconds).
  *
  *
  *

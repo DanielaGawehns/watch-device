@@ -211,7 +211,6 @@ app_create(void *data)
 	create_base_gui(ad);
 	//-------
 
-	data_set_sensor_activity(0, 1);
 	return true;
 }
 
