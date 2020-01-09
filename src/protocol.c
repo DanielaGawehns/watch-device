@@ -6,6 +6,8 @@
 #include "protocol.h"
 #include "prot_cmds.h"
 
+int prot_seq = 0;
+
 void prot_error( const char *fmt, ... ) {
 	//TODO: Implement
 	va_list l;
@@ -288,6 +290,50 @@ int prot_send_reply( int seq, int status, const char *msg,
 	/* Free the new param list, but only the newly copied data */
 allocerr:
 	prot_freeparam( 2, out_param );
+
+	return r;
+
+}
+
+int prot_send_increment( const char *sensor, double time,
+                      int ndata, double *data )
+{
+	message_param *out_param;
+	int out_nparam, r, i;
+
+	assert( ndata == 0 || data != NULL );
+
+	out_nparam = ndata + 2;
+
+	out_param = malloc( out_nparam * sizeof( message_param ) );
+	if ( !out_param ) {
+		prot_error("Could not allocate increment parameters");
+		return -1;
+	}
+
+	/* Load sensor parameter */
+	r = prot_set_param_s( out_param + 0, sensor );
+	if ( r < 0 )
+		goto allocerr;
+
+	/* Load time parameter */
+	r = prot_set_param_d( out_param + 1, time );
+	if ( r < 0 )
+		goto allocerr;
+
+	/* Copy over parameters */
+	for ( i = 0; i < ndata; i++ ) {
+		r = prot_set_param_d( out_param + 2 + i, data[i] );
+		if ( r < 0 )
+			goto allocerr;
+	}
+
+	/* Send the packet */
+	r = prot_send( 0, MESSAGE_INCREMENT, out_nparam, out_param );
+
+	/* Free the new param list */
+allocerr:
+	prot_freeparam( out_nparam, out_param );
 
 	return r;
 

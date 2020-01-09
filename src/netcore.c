@@ -31,6 +31,7 @@ Eina_Bool netcore_process(void *data) {
 		netcore_state = STATE_BCAST_START;
 		return 1;
 	case STATE_BCAST_START:
+		broadcast_stop();
 		res = broadcast_start();
 		if ( res < 0 ) {
 			netcore_state = STATE_DISCONNECT;
@@ -79,6 +80,12 @@ void prot_handle_error()
 	netcore_state = STATE_DISCONNECT;
 }
 
+int netcore_send_increment( const char *sensor, double time,
+                      int ndata, double *data ) {
+	if ( netcore_state != STATE_ACTIVE )
+		return 0;
+	return prot_send_increment(sensor, time, ndata, data);
+}
 
 /*
 * @brief: Stops the network processing timer

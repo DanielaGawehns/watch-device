@@ -194,6 +194,11 @@ Handle_Sensor_Update_Cb(sensor_type_e sensorType, sensor_event_s *ev){	//functio
 	}
 	int writtenRows;
 	InsertDataInDatabase(count, ev, sensorType); //insert sensordata into sqlite database
+	double f[32];
+	for ( int i = 0; i < ev->value_count; i++ ) {
+		f[i] = ev->values[i];
+	}
+	netcore_send_increment( sensor_strings[sensorType], ev->timestamp/1000., ev->value_count, f  );
 }
 
 void init_syskv();
