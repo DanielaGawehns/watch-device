@@ -1,3 +1,41 @@
+/*	Scheduler - Wouter Stokman - 2025418@umail.leidenuniv.nl
+ * Contains implementation of a simple class that enable scheduling of schedule_units.
+ * Scheduler is called every x seconds, where x is the time in seconds, given when calling scheduler_start_main_ecore_loop(x)
+ * This ensures that the scheduler_update function is called every x seconds with the current time
+ *
+ * When a schedule_unit is due to be executed (unit.timestamp < curtime during a call to scheduler_update), the callback function that is specified in the schedule_unit is called, along with a pointer to the to-be-executed schedule_unit
+ *
+ * After this, the schedule unit is deleted from the scheduler, after which it can be manually re-added in the callback function to repeatedly execute a schedule unit.
+ *
+ *
+ *
+ *
+ * Example:
+ *
+ * void simpleCallback(schedule_unit * unit){
+ * 	printf(unit.nparam); //prints the number of parameters of the unit that is being executed
+ * 	unit.timestamp+=1000; //execute the unit in a second
+ * 	scheduler_insert(unit); //insert a new copy of the unit into the scheduler so it will be executed again, the executed unit will be deleted after this
+ *
+ * }
+ *
+ *
+ * schedule_unit unit;
+ * unit.id = scheduler_get_new_unit_id(); //call this function to get a new ID that has not been used before (enabling safe deletion by id)
+ * unit.unit_execute_function = simpleCallback; //set the callback function
+ * unit.nparam = .....; //number of parameters
+ * unit.path = .....  //set path here
+ * unit.param = .....  //set param here
+ * unit.timestamp = curtime + 1000; //Curtime=milliseconds since epoch, this will ensure unit will be executed one seconds from now
+ *
+ * scheduler_initialize(); //initialize the scheduler
+ * scheduler_start_main_encore_loop(1.5); //update scheduler every 1.5 seconds
+ * scheduler_insert(&unit); //insert a copy of the created unit in the scheduler
+ *	//This is all that needs to be done, new schedule units can then be added/deleted
+ *
+ */
+
+
 
 #include "stdbool.h"
 #include <sys/time.h> //for time getting
@@ -24,7 +62,7 @@ void scheduler_data_set_sensor_activity_and_interval(schedule_unit * sensor_unit
 unsigned long long int scheduler_get_new_unit_id();
 
 
-//tests //todo: remove
+//Test Function
 void scheduler_repeatedprocesstest(schedule_unit * repeat_unit);
 void scheduler_keyval_set(schedule_unit * unit);
 

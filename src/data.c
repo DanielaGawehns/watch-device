@@ -2,10 +2,12 @@
  * This code is an alteration on the by Tizen Studio Provided sample code used in their sample apps.
  * All code from the original file is distributed under the license specified underneath this statement.
  * Some alterations to this file have been made, these do not fall under the same license.
- * TODO: copyright?
  *
- * This class contains code to read out data from the sensors available on the device. A callback function needs to be passed, which will be called with the appropriate data when a sensor registers a value. 
- * This class is NOT necessarily thread safe (TODO: is this necessary?) - make sure that the callback function is!
+ *
+ *
+ * This class contains code to read out data from the sensors available on the device. A callback function needs to be passed, which will be called with the appropriate data when a sensor registers a value.
+ * This class is PROBABLY NOT thread safe!
+ *
  * ------------------------------------------------------------------------------------
  * Copyright (c) 2016 Samsung Electronics Co., Ltd. All rights reserved.
  *
@@ -20,8 +22,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- *
  */
 
 #include <Eina.h>
@@ -34,8 +34,6 @@
 #include <sensor.h>
 #include <tizen.h>
 #include "data.h"
-//#include "view_defines.h"
-//#include <Ecore_Common.h> //ecore
 #include <Ecore.h> //ecore
 #include <dlog.h>
 
@@ -67,10 +65,11 @@ const char *sensor_strings[SENSOR_COUNT] = {
 	"STRING/SENSOR NOT ADDED"
 };
 
-//-----------------------------------
+
+
 
 /**
- * @brief sensor data struct
+ * @brief sensor data struct used to manage each sensor's listener and handle
  */
 
 typedef struct _sensor_data {
@@ -118,10 +117,6 @@ static void _timer_start(int value);
  * @brief predefinition
  */
 static void _set_hrm_values(sensor_event_s *event);
-
-/**
- * TODO: the functions hereafter are custom added, handy web: https://developer.tizen.org/dev-guide/2.3.1/org.tizen.tutorials/html/native/system/sensor_tutorial_n.htm
- */
 
 
 
@@ -304,8 +299,8 @@ char *data_get_sensor_vendor(sensor_type_e type)
 static Eina_Bool _proximity_timer_cb(void *data)
 {
 
-	float value = (int)data;
-	//TODO: s_info.sensor_update_cb(1, &value, SENSOR_PROXIMITY);
+	//float value = (int)data;
+	//TODO: s_info.sensor_update_cb(1, &value, SENSOR_PROXIMITY); //TODO: Upon implementation of a proximity sensor, this functionality needs to be added
 
 	return ECORE_CALLBACK_RENEW;
 }
@@ -370,7 +365,7 @@ static void _set_hrm_values(sensor_event_s *event)
  * @param event The event data.
  * @param data The user data.
  */
-static void _sensor_event_cb(sensor_h sensor, sensor_event_s *event, void *data)	//TODO: seperate data storing from this function?
+static void _sensor_event_cb(sensor_h sensor, sensor_event_s *event, void *data)
 {
 
 	sensor_type_e type = (sensor_type_e) data;
