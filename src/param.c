@@ -4,6 +4,149 @@
 #include "keyval.h"
 #include <string.h>
 #include <stdlib.h>
+#include <assert.h>
+#define _BSD_SOURCE
+#include <endian.h>
+
+/**
+ * Encode a long long to a memory buffer
+ */
+void prot_encode_long( void *output, long long value ) {
+	*(uint64_t *)output = htobe64( value );
+}
+
+/**
+ * Decode a long long from a memory buffer
+ */
+long long prot_decode_long( const void *output ) {
+	return be64toh(*(uint64_t *)output);
+}
+
+/**
+ * Encode an int to a memory buffer
+ */
+void prot_encode_int( void *output, int value ) {
+	*(uint32_t *)output = htobe32( value );
+}
+
+/**
+ * Decode an int from a memory buffer
+ */
+int prot_decode_int( const void *output ) {
+	return be32toh(*(uint32_t *)output);
+}
+
+/**
+ * Encode a double to a memory buffer
+ */
+void prot_encode_double( void *output, double value ) {
+	uint64_t bytes = *(uint64_t *)&value;
+	*(uint64_t *)output = htobe64( bytes );
+}
+
+/**
+ * Decode a double from a memory buffer
+ */
+double prot_decode_double( const void *output ) {
+	double value;
+	*(uint64_t *)&value = be64toh( *(uint64_t *)output );
+	return value;
+}
+
+/**
+ * Sets a param to a long long value.
+ * This allocates a buffer so that the params can always
+ * be freed, regardless of source
+ */
+int prot_set_param_l( message_param *param, long long value )
+{
+
+	assert( param != NULL );
+
+	/* Set length */
+	param->length = sizeof value;
+
+	/* Allocate buffer and catch OOM*/
+	param->data   = malloc( param->length );
+	if ( !param->data )
+		return -1;
+
+	prot_encode_long( param->data, value );
+
+	return 0;
+
+}
+
+/**
+ * Sets a param to an integer value.
+ * This allocates a buffer so that the params can always
+ * be freed, regardless of source
+ */
+int prot_set_param_i( message_param *param, int value )
+{
+
+	assert( param != NULL );
+
+	/* Set length */
+	param->length = sizeof value;
+
+	/* Allocate buffer and catch OOM*/
+	param->data   = malloc( param->length );
+	if ( !param->data )
+		return -1;
+
+	prot_encode_int( param->data, value );
+
+	return 0;
+
+}
+
+/**
+ * Sets a param to a double value.
+ * This allocates a buffer so that the params can always
+ * be freed, regardless of source
+ */
+int prot_set_param_d( message_param *param, double value )
+{
+
+	assert( param != NULL );
+
+	/* Set length */
+	param->length = sizeof value;
+
+	/* Allocate buffer and catch OOM*/
+	param->data   = malloc( param->length );
+	if ( !param->data )
+		return -1;
+
+	prot_encode_double( param->data, value );
+
+	return 0;
+
+}
+
+/**
+ * Sets a param to a string value.
+ * This allocates a buffer so that the params can always
+ * be freed, regardless of source
+ */
+int prot_set_param_s( message_param *param, const char *value )
+{
+
+	assert( param != NULL );
+
+	/* Set length */
+	param->length = strlen( value );
+
+	/* Copy string and catch OOM*/
+	param->data   = strdup( value );
+	if ( !param->data )
+		return -1;
+
+	return 0;
+
+}
+
 
 /**
  * Frees a message_param struct
