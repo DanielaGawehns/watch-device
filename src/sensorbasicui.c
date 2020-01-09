@@ -1,6 +1,5 @@
 #include "sensorbasicui.h"
 #include "data.h" //used for sensor support
-#include "view.h"
 #include <device/power.h>
 #include "scheduler.h"
 
@@ -90,109 +89,12 @@ create_base_gui(appdata_s *ad)
 	/* Create an actual view of the base gui.
 	   Modify this part to change the view. */
 	ad->label = elm_label_add(ad->conform);
-	elm_object_text_set(ad->label, "<align=center>Hello Tizen</align>");
+	elm_object_text_set(ad->label, "<align=center>App Started</align>");
 	evas_object_size_hint_weight_set(ad->label, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	elm_object_content_set(ad->conform, ad->label);
 
 	/* Show window after base gui is set up */
 	evas_object_show(ad->win);
-}
-
-/**
- * @brief Gets the full path to a write/readable file in the datafolder (this does not check if it exists)
- * @param WriteFile: name of the file to get the full path from
- * @return pointer to char array containing filepath
- */
-char * get_filepath(char * writeFile){
-	char * finalPath = (char*) malloc(MAX_SIZE_DATA_PATH * sizeof(char)); //[MAX_SIZE_DATA_PATH] = {0,}; //max path size is 800, initialize all chars to 0
-	char * dataPath = app_get_data_path(); //get pointer to data path
-	if(sizeof(dataPath) > 0){ //if datapath exists
-		snprintf(finalPath, MAX_SIZE_DATA_PATH, "%s%s", dataPath, writeFile);
-		free(dataPath);
-	}
-	return finalPath;
-}
-
-/**
- * @brief writes sensor data to the sensordata.csv file in the datafolder of the watch
- * @param count amount of fields in the data
- * @param valArr pointer to the data from the sensor
- * @param sensorType name of the sensor that wants to log data
- */
-void
-log_sensor_data_to_file(int count, float * valArr,  sensor_type_e sensorType){
-	char dataBuf[2000]; //create buffer for storing the sensor data
-	char * filePath = get_filepath("sensordata.csv");	//create file name
-	FILE * writeFile = fopen(filePath, "a"); //open a file in datapath called "testfile.csv", at the end (appending)
-	if(writeFile == NULL){
-		dlog_print(DLOG_ERROR, LOG_TAG, "Error opening file to write sensor data on path: %s", filePath);
-		return;
-	}
-
-	dlog_print(DLOG_INFO, LOG_TAG, "Opened file path: %s", filePath);
-
-	//get the time
-	time_t theTime;
-	struct tm * timeInfo;
-	time(&theTime); //get the time
-	timeInfo = localtime(&theTime);
-
-	snprintf(dataBuf, sizeof(dataBuf), "%s,",sensor_strings[sensorType]); //put sensortype, into databuffer
-	strftime(dataBuf + strlen(dataBuf), sizeof(dataBuf), "%Y-%m-%d,%H:%M:%S,", timeInfo); //put day, time, into databuffer
-
-	for(int i = 0 ; i < count; i++){
-		snprintf(dataBuf + strlen(dataBuf), sizeof(dataBuf), "%f,", valArr[i]); //write all sensordata into buffer
-	}
-	snprintf(dataBuf + strlen(dataBuf), sizeof(dataBuf), "\n"); //add nextline char
-	fprintf(writeFile, "%s", dataBuf); //write buffer into file
-	fclose(writeFile); //close file
-
-	free(filePath); //TODO: check if no memory leaks for long term app runs
-	dlog_print(DLOG_INFO, LOG_TAG, "Wrote to file: %s", dataBuf);
-
-	dlog_print(DLOG_INFO, LOG_TAG, "Done with sensor update callback function", filePath);
-}
-
-/**
- * @brief function that is called when a sensor records data
- * @param sensorType name of the sensor that wants to log data
- * @param ev contains the data from the sensor
- */
-void
-Handle_Sensor_Update_Cb(sensor_type_e sensorType, sensor_event_s *ev){	//function for handling sensor input:
-	int count = 0;
-	//dlog_print(DLOG_INFO, LOG_TAG, "Calling the sensor update callback function:");
-	//OpenTable(); //open the table
-	//InsertDataInDatabase(count, valArr, sensorType); //insert sensordata into sqlite database
-	//TODO:log_sensor_data_to_file(count, valArr, sensorType); //log to file
-	OpenTable(); //open the table
-	switch (sensorType) {
-		case 7:
-		case 8:
-		case 9:
-		case 10:
-		case 11:
-		case 12:
-		case 13:
-			count = 1;
-			break;
-		case 0:
-		case 1:
-		case 2:
-		case 3:
-		case 5:
-		case 6:
-			count = 3;
-			break;
-		case 4:
-			count = 4;
-			break;
-		default:
-			dlog_print(DLOG_ERROR, LOG_TAG, "Sensor Callback handle for %s could not be found", sensor_strings[sensorType]);
-			break;
-	}
-	int writtenRows;
-	InsertDataInDatabase(count, ev, sensorType); //insert sensordata into sqlite database
 }
 
 
@@ -215,12 +117,6 @@ app_create(void *data)
 	OpenDatabase(); //open the database TODO: keep it opened?
 	//-----------------------------
 
-	//ADDED:
-//	view_create(); //initialize view
-//	view_switch_view(1);
-	//------------------------------
-
-
 
 
 
@@ -229,38 +125,35 @@ app_create(void *data)
 		dlog_print(DLOG_ERROR, LOG_TAG, "Error initializing scheduler");
 	}
 
-    struct timeval timeValue;
-    gettimeofday(&timeValue, NULL);
-    unsigned long long cur_time = (unsigned long long)(timeValue.tv_sec) * 1000 + (unsigned long long)(timeValue.tv_usec) / 1000; //get current time in milliseconds from start of epoch
-
-
-	schedule_unit  newUnit; // = malloc( sizeof(schedule_unit));
-
-	newUnit.unit_id = scheduler_get_new_unit_id(); //get id for unit
-
-	char * temp = malloc(sizeof(char) * 10);
-	temp = "test/path";
-
-	newUnit.path = "test/path";
-	newUnit.timestamp = cur_time;
-	newUnit.nparam = 1;
-	newUnit.unit_execute_function = scheduler_keyval_set;
-
-	scheduler_unit_add(&newUnit);
-	scheduler_unit_add(&newUnit);
-
-
-    dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Done creating testunits", __FILE__, __LINE__);
+// TESTS:
+//    struct timeval timeValue;
+//    gettimeofday(&timeValue, NULL);
+//    unsigned long long cur_time = (unsigned long long)(timeValue.tv_sec) * 1000 + (unsigned long long)(timeValue.tv_usec) / 1000; //get current time in milliseconds from start of epoch
+//	schedule_unit  newUnit; // = malloc( sizeof(schedule_unit));
+//
+//	newUnit.unit_id = scheduler_get_new_unit_id(); //get id for unit
+//
+//	char * temp = malloc(sizeof(char) * 10);
+//	temp = "test/path";
+//
+//	newUnit.path = "test/path";
+//	newUnit.timestamp = cur_time;
+//	newUnit.nparam = 1;
+//	newUnit.unit_execute_function = scheduler_keyval_set;
+//
+//	scheduler_unit_add(&newUnit);
+//	scheduler_unit_add(&newUnit);
+//  dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Done creating testunits", __FILE__, __LINE__);
 
 	//Scheduler/ecore mainloop:
 	scheduler_start_main_ecore_loop(1); //run ecore loop of scheduler every 1 second
     dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Done starting main ecore loop", __FILE__, __LINE__);
 
-
-	//ORIGINAL:
-	//appdata_s *ad = data;
-	//create_base_gui(ad);
+    //Create basic GUI with message that says app has been launched successfully
+	appdata_s *ad = data;
+	create_base_gui(ad);
 	//-------
+
 	data_set_sensor_activity(0, 1);
 	return true;
 }

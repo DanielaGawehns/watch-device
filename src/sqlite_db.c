@@ -39,8 +39,20 @@ data *createDataEntry(unsigned long long epoch) {
 /**
  * @brief Gets the full path to a write/readable file in the datafolder (this does not check if it exists)
  * @param WriteFile: name of the file to get the full path from
+ * @return pointer to char array containing filepath
  */
-extern char * get_filepath(char * writeFile);
+char * get_filepath(char * writeFile){
+	char * finalPath = (char*) malloc(MAX_SIZE_DATA_PATH * sizeof(char)); //[MAX_SIZE_DATA_PATH] = {0,}; //max path size is 800, initialize all chars to 0
+	char * dataPath = app_get_data_path(); //get pointer to data path
+	if(sizeof(dataPath) > 0){ //if datapath exists
+		snprintf(finalPath, MAX_SIZE_DATA_PATH, "%s%s", dataPath, writeFile);
+		free(dataPath);
+	}
+	return finalPath;
+}
+
+
+
 
 /**
  * @brief open the database to allow for reading and storing of data
