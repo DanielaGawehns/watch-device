@@ -50,21 +50,7 @@
 struct schedule_unit;
 typedef struct schedule_unit schedule_unit;
 
-//public functions
-bool scheduler_initialize();
-void scheduler_insert(schedule_unit * unit);
-void scheduler_finalize();
-void print_schedule();
-void scheduler_start_main_ecore_loop(double intervalInSec);
-void scheduler_unit_add(schedule_unit const * const new_unit);
-void scheduler_print_unit(schedule_unit * unit);
-void scheduler_data_set_sensor_activity_and_interval(schedule_unit * sensor_unit);
-unsigned long long int scheduler_get_new_unit_id();
 
-
-//Test Function
-void scheduler_repeatedprocesstest(schedule_unit * repeat_unit);
-void scheduler_keyval_set(schedule_unit * unit);
 
 /**
 * Scheduler
@@ -106,16 +92,12 @@ struct schedule_unit{
      */
     int unit_id;
 
-
-
 	/*
 	 * unit_execute_function
 	 * Function that is called when this schedule unit is executed, only executed if specified (not NULL)
 	 * May be used to re-insert this schedule unit into the schedule after execution
 	 */
     void (*unit_execute_function)(schedule_unit * param);
-
-
 
 
 	/*
@@ -138,6 +120,62 @@ struct schedule_unit{
     message_param * param;
 
 };
+
+
+
+/*
+ * @brief: Initializes the scheduler, should be called when using the scheduler
+ * @params: none
+ */
+bool scheduler_initialize();
+
+
+/*
+ * @brief: Reset/finalize the scheduler
+ * @params: none
+ */
+void scheduler_finalize();
+
+/*
+ * @brief: Add a schedule_unit to the scheduler
+ * @params: the new schedule unit, a copy will be placed in the scheduler (the new unit should be deleted by the user
+ */
+void scheduler_unit_add(schedule_unit const * const new_unit);
+
+
+/*
+ * @brief: Remove a (first occurance of) scheduler unit with the passed id from the scheduler
+ * @params: the id of the to-be-deleted schedule_unit
+ * @return: if the removal was succesful (did the unit exist)
+ */
+bool scheduler_unit_id_remove(int unit_id);
+
+
+/*
+ * @brief: Print a single scheduler_unit
+ * @params: the unit that needs to be printed
+ */
+void scheduler_print_unit(schedule_unit * unit);
+
+/*
+ * @brief: prints all schedule units, using scheduler_print_unit
+ * @params: none
+ */
+void print_schedule();
+
+
+/*
+* @brief: stops the main ecore loop for the scheduler and deletes the timer
+* @params: intervalInSec the amount of seconds between scheduler updates
+*/
+void scheduler_stop_main_ecore_loop();
+
+
+/*
+* @brief: start the main ecore loop for the scheduler, which will update the program every intervalInSec seconds
+* @params: intervalInSec the amound of seconds between scheduler updates
+*/
+void scheduler_start_main_ecore_loop(double intervalInSec);
 
 
 
