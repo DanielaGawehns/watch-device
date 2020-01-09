@@ -127,6 +127,13 @@ int prot_set_param_d( message_param *param, double value );
  */
 int prot_set_param_s( message_param *param, const char *value );
 
+/**
+ * Sets a param to a long value.
+ * This allocates a buffer so that the params can always
+ * be freed, regardless of source
+ */
+int prot_set_param_l( message_param *param, long long value );
+
 int prot_create_param_list( char **status, int *nparam, message_param **param );
 
 /**
@@ -192,4 +199,34 @@ int prot_create_param_1d( char **status,
 int prot_create_param_2d( char **status,
                           int *nparam, message_param **param,
                           double val1, double val2 );
+
+/**
+ * Encode a long long to a memory buffer
+ */
+void prot_encode_long( void *output, long long value );
+
+/**
+ * Decode a long long from a memory buffer
+ */
+long long prot_decode_long( const void *output );
+
+/**
+ * Encode an int to a memory buffer
+ */
+void prot_encode_int( void *output, int value );
+
+/**
+ * Decode an int from a memory buffer
+ */
+int prot_decode_int( const void *output );
+
+/**
+ * Encode a double to a memory buffer
+ */
+void prot_encode_double( void *output, double value );
+
+/**
+ * Decode a double from a memory buffer
+ */
+double prot_decode_double( const void *output );
 #endif /* NETWORK_H_ */
