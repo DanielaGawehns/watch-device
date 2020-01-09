@@ -6,6 +6,13 @@
 #include "sqlite_db.h"
 
 
+
+//TODO: more tidy when placed in datastructure
+sqlite3 *db; /* Database handle */
+bool openedDatabase = false; //opened database
+bool openedTable = false; //made sure data table exists
+
+
 /**
  * @brief Gets the full path to a write/readable file in the datafolder (this does not check if it exists)
  * @param WriteFile: name of the file to get the full path from
@@ -108,7 +115,7 @@ database_insert_data(int count, sensor_event_s *ev,  sensor_type_e sensorType){
 		//char *  statementString = sqlite3_mprintf("INSERT INTO %Q (sensor_name, data1, data2, data3, data4, data5) VALUES (%s)", tableName, dataBuf); //insert databuf into table
 		ret = sqlite3_exec(db, statementString, NULL, NULL, NULL);
 		if(ret == SQLITE_OK){
-			dlog_print(DLOG_INFO, LOG_TAG, "SUCCESFULLY EXECUTED: %s", statementString);
+			//dlog_print(DLOG_INFO, LOG_TAG, "SUCCESFULLY EXECUTED: %s", statementString);
 		}else{
 			dlog_print(DLOG_ERROR, LOG_TAG, "COULD NOT INSERT SENSORDATA IN TABLE %s, ERROR CODE: %i, QUERY: %s ", tableName, ret, statementString); //print info
 		}
@@ -204,7 +211,7 @@ database_open_table(){
 		statementString = sqlite3_mprintf("CREATE TABLE IF NOT EXISTS %s(sensor_name TEXT, timestamp UNSIGNED BIG INT, data1 REAL, data2 REAL, data3 REAL, data4 REAL, data5 REAL, data6 REAL);", tableName); //create create table statement TODO: how many float datacolumns?
 		ret = sqlite3_exec(db, statementString, NULL, NULL, NULL);
 		if(ret == SQLITE_OK){
-			dlog_print(DLOG_INFO, LOG_TAG, "CREATED/OPENED TABLE %s", tableName); //print info
+			//dlog_print(DLOG_INFO, LOG_TAG, "CREATED/OPENED TABLE %s", tableName); //print info
 			openedTable = true;
 		}else{
 			dlog_print(DLOG_ERROR, LOG_TAG, "COULD NOT CREATE TABLE %s, ERROR CODE: %i ", tableName, ret); //print info

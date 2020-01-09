@@ -36,6 +36,7 @@
 #include "data.h"
 #include <Ecore.h> //ecore
 #include <dlog.h>
+#include "keyval.h"
 
 /**
  * @brief String names for sensor_type_e values
@@ -66,6 +67,14 @@ const char *sensor_strings[SENSOR_COUNT] = {
 typedef struct _sensor_data {
 	sensor_h handle;
 	sensor_listener_h listener;
+	keyval *kv_ns;
+	keyval *kv_active;
+	keyval *kv_interval;
+	keyval *kv_name;
+	keyval *kv_range;
+	keyval *kv_resolution;
+	sensor_type_e id;
+	const char *name;
 } sensor_data_t;
 
 /**
@@ -359,21 +368,136 @@ static void _set_hrm_values(sensor_event_s *event)
  * @param event The event data.
  * @param data The user data.
  */
-static void _sensor_event_cb(sensor_h sensor, sensor_event_s *event, void *data)
+static void _sensor_event_cb(sensor_h _sensor, sensor_event_s *event, void *data)	//TODO: seperate data storing from this function?
 {
 
-	sensor_type_e type = (sensor_type_e) data;
+	sensor_data_t *sensor = data;
 
 	_timer_stop();
-	if (type == SENSOR_HRM)
+	if ( sensor->id == SENSOR_HRM )
 		_set_hrm_values(event);
-	else if (type == SENSOR_PRESSURE)
+	else if ( sensor->id == SENSOR_PRESSURE)
 		event->value_count = 1;
-	else if (type == SENSOR_PROXIMITY)
+	else if ( sensor->id == SENSOR_PROXIMITY)
 		_timer_start((int)event->values[0]); /* Why? */
 
-	s_info.sensor_update_cb( type, event );		//call the "all sensors"-callback function, (the function that was set to handle all sensor data updates at data_initialize)
+	s_info.sensor_update_cb( sensor->id, event );		//call the "all sensors"-callback function, (the function that was set to handle all sensor data updates at data_initialize)
 
+}
+
+static keyval *sensor_ns;
+
+int kvdata_name_get( keyval *kv, char **status, int *nparam, message_param **param )
+{
+	sensor_data_t *sensor = kv->impl;
+	return prot_create_param_1s( status, nparam, param, sensor->name );
+}
+
+int kvdata_active_get( keyval *kv, char **status, int *nparam, message_param **param )
+{
+	sensor_data_t *sensor = kv->impl;
+	return prot_create_param_1i( status, nparam, param, s_info.sensor_activity[sensor->id] );
+}
+
+int kvdata_active_set( keyval *kv, char **status, int nparam, message_param *param )
+{
+	sensor_data_t *sensor = kv->impl;
+	if ( nparam != 1 || param[0].length != sizeof(int) ) {
+		*status = strdup( "Wrong arguments for sensor.active::set" );
+		return KV_EINVAL;
+	}
+	data_set_sensor_activity( sensor->id, *(uint32_t *)param[0].data );
+	return 0;
+}
+
+int kvdata_resolution_get( keyval *kv, char **status, int *nparam, message_param **param )
+{
+	sensor_data_t *sensor = kv->impl;
+	double res = data_get_sensor_resolution( sensor->id );
+	return prot_create_param_1d( status, nparam, param, res );
+}
+
+int kvdata_range_get( keyval *kv, char **status, int *nparam, message_param **param )
+{
+	sensor_data_t *sensor = kv->impl;
+	float min, max;
+	data_get_sensor_range( sensor->id, &min, &max );
+	return prot_create_param_2d( status, nparam, param, min, max );
+}
+
+int kvdata_interval_get( keyval *kv, char **status, int *nparam, message_param **param )
+{
+	sensor_data_t *sensor = kv->impl;;
+	return prot_create_param_1d( status, nparam, param, s_info.sensor_interval_ms[ sensor->id ] );
+}
+
+int kvdata_interval_set( keyval *kv, char **status, int nparam, message_param *param )
+{
+	sensor_data_t *sensor = kv->impl;
+	if ( nparam != 1 || param[0].length != sizeof(double) ) {
+		*status = strdup( "Wrong arguments for sensor.interval::set" );
+		return KV_EINVAL;
+	}
+	data_set_sensor_interval( sensor->id, (*(double*)param[0].data)*1000. );
+	return 0;
+}
+
+
+
+static void init_sensor( int i )
+{
+	int ret;
+	sensor_data_t *sensor = s_info.sensors + i;
+	/* Setup sensor fields */
+	sensor->id = i;
+	sensor->name = sensor_strings[i];
+
+	/* Allocate keyval namespace */
+	sensor->kv_ns = keyval_create_ns( sensor->name );
+	if ( !sensor->kv_ns ) {
+		dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] keyval_create_ns() error %s", __FILE__, __LINE__, sensor->name );
+		return;
+	}
+
+	/* Register keyval namespace */
+	ret = keyval_add_k( sensor_ns, sensor->kv_ns );
+	if ( ret < 0 ) {
+		dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] keyval_add_k() error %s", __FILE__, __LINE__, sensor->name );
+		return;
+	}
+
+	sensor->kv_active     = keyval_create_add_k_leaf( sensor->kv_ns, "active"    , "bool"     , kvdata_active_get    , kvdata_active_set  , sensor );
+	sensor->kv_interval   = keyval_create_add_k_leaf( sensor->kv_ns, "interval"  , "double"   , kvdata_interval_get  , kvdata_interval_set, sensor );
+	sensor->kv_name       = keyval_create_add_k_leaf( sensor->kv_ns, "name"      , "string"   , kvdata_name_get      , NULL               , sensor );
+	sensor->kv_range      = keyval_create_add_k_leaf( sensor->kv_ns, "range"     , "double[2]", kvdata_range_get     , NULL               , sensor );
+	sensor->kv_resolution = keyval_create_add_k_leaf( sensor->kv_ns, "resolution", "double"   , kvdata_resolution_get, NULL               , sensor );
+	if ( !(sensor->kv_active && sensor->kv_interval && sensor->kv_name && sensor->kv_range && sensor->kv_resolution) ) {
+		dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] keyval_add_leaf() error %s", __FILE__, __LINE__, sensor->name );
+		return;
+	}
+
+	/* Request a handle to the sensor */
+	ret = sensor_get_default_sensor( i, &sensor->handle );	//get a handle to the sensor
+	if (ret != SENSOR_ERROR_NONE) {
+		dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] sensor_get_default_sensor() error %s: %s", __FILE__, __LINE__, sensor->name, get_error_message(ret) );
+		return;
+	}
+
+	ret = sensor_create_listener( sensor->handle, &sensor->listener );	//link the appropriate listener to the sensor using the sensor handle
+	if (ret != SENSOR_ERROR_NONE) {
+		dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] sensor_create_listener() error %s: %s", __FILE__, __LINE__, sensor->name, get_error_message(ret) );
+		return;
+	}
+
+	sensor_listener_set_option( sensor->listener, SENSOR_OPTION_ALWAYS_ON ); //keep sensors on
+				///sensor_listener_set_option (s_info.sensors[i].listener, SENSOR_OPTION_ON_IN_SCREEN_OFF); //keep sensors on when screen is off
+	//TODO: make sure this option is not reverted when sensor is turned off then on again
+
+	ret = sensor_listener_set_event_cb( sensor->listener, LISTENER_TIMEOUT, _sensor_event_cb, sensor ); //set the callback on the sensor listener TODO: set listener_timeout
+	if (ret != SENSOR_ERROR_NONE) {
+		dlog_print(DLOG_ERROR, LOG_TAG, "[%s:%d] sensor_listener_set_event_cb() error %s: %s", __FILE__, __LINE__, sensor->name, get_error_message(ret));
+		return;
+	}
 }
 
 /**
@@ -381,30 +505,21 @@ static void _sensor_event_cb(sensor_h sensor, sensor_event_s *event, void *data)
  */
 static void _initialize_sensors(void)
 {
-	int ret;
-	int i;
+	int i,ret;
+	sensor_ns = keyval_create_ns( "sensor" );
+	if ( !sensor_ns ) {
+		dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] keyval_create_ns() error \"sensor\"", __FILE__, __LINE__ );
+		return;
+	}
+
+	/* Register keyval namespace */
+	ret = keyval_add_p( "", sensor_ns );
+	if ( ret < 0 ) {
+		dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] keyval_add_k() error  \"sensor\"", __FILE__, __LINE__ );
+		return;
+	}
+
 	for (i = 0; i < SENSOR_COUNT; ++i) {
-
-		/* Request a handle to the sensor */
-		ret = sensor_get_default_sensor(i, &s_info.sensors[i].handle);	//get a handle to the sensor
-		if (ret != SENSOR_ERROR_NONE) {
-			dlog_print(DLOG_ERROR, LOG_TAG, "[%s:%d] sensor_get_default_sensor() error %s: %s", __FILE__, __LINE__, sensor_strings[i], get_error_message(ret));
-			continue;
-		}
-
-		ret = sensor_create_listener(s_info.sensors[i].handle, &s_info.sensors[i].listener);	//link the appropriate listener to the sensor using the sensor handle
-		if (ret != SENSOR_ERROR_NONE) {
-			dlog_print(DLOG_ERROR, LOG_TAG, "[%s:%d] sensor_create_listener() error %s: %s", __FILE__, __LINE__, sensor_strings[i], get_error_message(ret));
-			continue;
-		} else {
-			sensor_listener_set_option (s_info.sensors[i].listener, SENSOR_OPTION_ALWAYS_ON); //keep sensors on
-			///sensor_listener_set_option (s_info.sensors[i].listener, SENSOR_OPTION_ON_IN_SCREEN_OFF); //keep sensors on when screen is off
-		} //TODO: make sure this option is not reverted when sensor is turned off then on again
-
-		ret = sensor_listener_set_event_cb(s_info.sensors[i].listener, LISTENER_TIMEOUT, _sensor_event_cb, (void *)i); //set the callback on the sensor listener TODO: set listener_timeout
-		if (ret != SENSOR_ERROR_NONE) {
-			dlog_print(DLOG_ERROR, LOG_TAG, "[%s:%d] sensor_listener_set_event_cb() error %s: %s", __FILE__, __LINE__, sensor_strings[i], get_error_message(ret));
-			continue;
-		}
+		init_sensor( i );
 	}
 }

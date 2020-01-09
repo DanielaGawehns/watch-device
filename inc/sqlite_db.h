@@ -5,16 +5,13 @@
 #include "data.h"//used for sensor support
 #include <sqlite3.h> //used for database
 
+
 //------------------------------ Database constants, can be made modular but there was no need yet
  /* Buffer size, used in functions */
 #define BUFLEN 800
 #define MAX_SIZE_DATA_PATH 800
-
+#define dbDataCols 6
 static const unsigned char tableName[] = {"DataTable"};
-
-sqlite3 *db; /* Database handle */
-bool openedDatabase = false; //opened database
-bool openedTable = false; //made sure data table exists
 //----------------------------------
 
 //struct for sensordata
@@ -28,7 +25,7 @@ typedef struct data data; //refer to struct data with type data
  * @brief Gets the full path to a write/readable file in the datafolder (this does not check if it exists)
  * @param WriteFile: name of the file to get the full path from
  */
-data *database_create_data_entry(unsigned long long epoch)
+data *database_create_data_entry(unsigned long long epoch);
 
 
 /**
