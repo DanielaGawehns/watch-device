@@ -41,7 +41,7 @@
 #include <sys/time.h> //for time getting
 #include <Ecore.h> //ecore
 #include <dlog.h> //dlog
-
+#include "protocol.h"
 
 #define SENSORRESERVED 50 //reserve 50 items for sensor types (as of 2019, only about 30 sensors exist)
 
@@ -68,12 +68,6 @@ typedef struct{
 
 //int inuseCount[SENSORRESERVED] = {0,}; //keeps track of if more than 1 
 //int secondLowestInterval[SENSORRESERVED] = {0,}; //Keeps track of the second lowest interval (used to set to when lowest interval on sensor is stopped)
-
-
-typedef struct __attribute__((packed)) { //todo: remove, placeholder
-	uint16_t length;
-	void *   data;
-} message_param;
 
 struct schedule_unit{
     /*
