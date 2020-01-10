@@ -406,7 +406,7 @@ int kvdata_active_set( keyval *kv, char **status, int nparam, message_param *par
 		*status = strdup( "Wrong arguments for sensor.active::set" );
 		return KV_EINVAL;
 	}
-	data_set_sensor_activity( sensor->id, *(uint32_t *)param[0].data );
+	data_set_sensor_activity( sensor->id, prot_decode_long(param[0].data) );
 	return 0;
 }
 
@@ -438,7 +438,7 @@ int kvdata_interval_set( keyval *kv, char **status, int nparam, message_param *p
 		*status = strdup( "Wrong arguments for sensor.interval::set" );
 		return KV_EINVAL;
 	}
-	data_set_sensor_interval( sensor->id, (*(double*)param[0].data)*1000. );
+	data_set_sensor_interval( sensor->id, prot_decode_double(param[0].data)*1000. );
 	return 0;
 }
 

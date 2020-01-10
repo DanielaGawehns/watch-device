@@ -229,4 +229,5 @@ void prot_encode_double( void *output, double value );
  * Decode a double from a memory buffer
  */
 double prot_decode_double( const void *output );
-#endif /* NETWORK_H_ */
+
+#endif /* PROTOCOL_H_ */

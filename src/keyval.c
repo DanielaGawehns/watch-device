@@ -281,6 +281,10 @@ void keyval_free( keyval *kv )
 	free( kv );
 }
 
+/**
+ * Creates a leaf node with a set and get callback and adds it to a parent node by label
+ * @param name The name (not path) for the node to create
+ */
 keyval *keyval_create_add_k_leaf( keyval *parent, const char *name, const char *type,
                             kv_get getter, kv_set setter, void *impl  ) {
 	int res;
@@ -294,7 +298,9 @@ keyval *keyval_create_add_k_leaf( keyval *parent, const char *name, const char *
 	return NULL;
 }
 
-
+/**
+ * Initializes the key value abstraction layer
+ */
 void keyval_init()
 {
 	keyval_root.type = "root";
