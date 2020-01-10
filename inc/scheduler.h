@@ -1,3 +1,8 @@
+/**
+ * @file scheduler.h
+ * @brief Contains implementation of a simple class that enable scheduling of schedule_units.
+ */
+
 /*	Scheduler - Wouter Stokman - 2025418@umail.leidenuniv.nl
  * Contains implementation of a simple class that enable scheduling of schedule_units.
  * Scheduler is called every x seconds, where x is the time in seconds, given when calling scheduler_start_main_ecore_loop(x)

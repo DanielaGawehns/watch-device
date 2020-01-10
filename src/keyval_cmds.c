@@ -1,9 +1,10 @@
-/*
- * keyval_cmds.c
- * 
- *  Created on: Jan 5, 2020
- *      Author: pbx
+/**
+ * @file keyval_cmds.c
+ * @author Peter Bosch <me@pbx.sh>
+ * @date Jan 5, 2020
+ * @brief parameters
  */
+
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>

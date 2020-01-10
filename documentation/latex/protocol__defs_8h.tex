@@ -1,0 +1,76 @@
+\hypertarget{protocol__defs_8h}{}\doxysection{/mnt/c/\+Users/\+R\+J/\+Desktop/\+Tizen\+Tijgers/watch-\/device/inc/protocol\+\_\+defs.h File Reference}
+\label{protocol__defs_8h}\index{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/inc/protocol\_defs.h@{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/inc/protocol\_defs.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structmeasurement__t}{measurement\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structmeasurement__type}{measurement\+\_\+type}}
+\item 
+struct \mbox{\hyperlink{structdataheader__t}{dataheader\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structmeasconfig__t}{measconfig\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{protocol__defs_8h_ae218e4314a5cdf2d32d77d2a4f52dc79}{H\+E\+A\+D\+E\+R\+\_\+\+M\+A\+G\+IC}}~(0x\+C001\+D\+A7A)
+\item 
+\#define \mbox{\hyperlink{protocol__defs_8h_a14840e051fe91a6c0d0581afb0ad4282}{C\+O\+N\+F\+I\+G\+\_\+\+M\+A\+G\+IC}}~(0x0\+D\+A7\+A\+C\+F6)
+\item 
+\#define \mbox{\hyperlink{protocol__defs_8h_ad5e7d8f334520b35fa7dcae546d8ba33}{Q\+U\+A\+N\+T\+\_\+\+T\+Y\+P\+E\+\_\+\+S\+C\+A\+L\+AR}}~(0)
+\item 
+\#define \mbox{\hyperlink{protocol__defs_8h_adc005f31f5e1029084671df70d39be17}{Q\+U\+A\+N\+T\+\_\+\+T\+Y\+P\+E\+\_\+\+V\+E\+C\+T\+OR}}~(1)
+\item 
+\#define \mbox{\hyperlink{protocol__defs_8h_a14840e051fe91a6c0d0581afb0ad4282}{C\+O\+N\+F\+I\+G\+\_\+\+M\+A\+G\+IC}}~(0x0\+D\+A7\+A\+C\+F6)
+\item 
+\#define \mbox{\hyperlink{protocol__defs_8h_af6f367dfe031bcc67183046e846c6692}{Q\+U\+A\+N\+T\+I\+T\+Y\+\_\+\+I\+N\+\_\+\+C\+O\+N\+F\+IG}}(Co,  Num)~( (quantity\+\_\+t $\ast$) (((void$\ast$)Co-\/$>$quant) + Co-\/$>$quant\+\_\+sz $\ast$ Num)  )
+\item 
+\#define \mbox{\hyperlink{protocol__defs_8h_ae140a5dfb0ae372f6750b7b44c0cb7ac}{Q\+U\+A\+N\+T\+I\+T\+Y\+\_\+\+I\+N\+\_\+\+H\+E\+A\+D\+ER}}(Co,  Num)~( (quantity\+\_\+t $\ast$) (((void$\ast$)Co-\/$>$quant) + Co-\/$>$quant\+\_\+sz $\ast$ Num)  )
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{protocol__defs_8h_a14840e051fe91a6c0d0581afb0ad4282}\label{protocol__defs_8h_a14840e051fe91a6c0d0581afb0ad4282}} 
+\index{protocol\_defs.h@{protocol\_defs.h}!CONFIG\_MAGIC@{CONFIG\_MAGIC}}
+\index{CONFIG\_MAGIC@{CONFIG\_MAGIC}!protocol\_defs.h@{protocol\_defs.h}}
+\doxysubsubsection{\texorpdfstring{CONFIG\_MAGIC}{CONFIG\_MAGIC}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \#define C\+O\+N\+F\+I\+G\+\_\+\+M\+A\+G\+IC~(0x0\+D\+A7\+A\+C\+F6)}
+
+\mbox{\Hypertarget{protocol__defs_8h_a14840e051fe91a6c0d0581afb0ad4282}\label{protocol__defs_8h_a14840e051fe91a6c0d0581afb0ad4282}} 
+\index{protocol\_defs.h@{protocol\_defs.h}!CONFIG\_MAGIC@{CONFIG\_MAGIC}}
+\index{CONFIG\_MAGIC@{CONFIG\_MAGIC}!protocol\_defs.h@{protocol\_defs.h}}
+\doxysubsubsection{\texorpdfstring{CONFIG\_MAGIC}{CONFIG\_MAGIC}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \#define C\+O\+N\+F\+I\+G\+\_\+\+M\+A\+G\+IC~(0x0\+D\+A7\+A\+C\+F6)}
+
+\mbox{\Hypertarget{protocol__defs_8h_ae218e4314a5cdf2d32d77d2a4f52dc79}\label{protocol__defs_8h_ae218e4314a5cdf2d32d77d2a4f52dc79}} 
+\index{protocol\_defs.h@{protocol\_defs.h}!HEADER\_MAGIC@{HEADER\_MAGIC}}
+\index{HEADER\_MAGIC@{HEADER\_MAGIC}!protocol\_defs.h@{protocol\_defs.h}}
+\doxysubsubsection{\texorpdfstring{HEADER\_MAGIC}{HEADER\_MAGIC}}
+{\footnotesize\ttfamily \#define H\+E\+A\+D\+E\+R\+\_\+\+M\+A\+G\+IC~(0x\+C001\+D\+A7A)}
+
+\mbox{\Hypertarget{protocol__defs_8h_ad5e7d8f334520b35fa7dcae546d8ba33}\label{protocol__defs_8h_ad5e7d8f334520b35fa7dcae546d8ba33}} 
+\index{protocol\_defs.h@{protocol\_defs.h}!QUANT\_TYPE\_SCALAR@{QUANT\_TYPE\_SCALAR}}
+\index{QUANT\_TYPE\_SCALAR@{QUANT\_TYPE\_SCALAR}!protocol\_defs.h@{protocol\_defs.h}}
+\doxysubsubsection{\texorpdfstring{QUANT\_TYPE\_SCALAR}{QUANT\_TYPE\_SCALAR}}
+{\footnotesize\ttfamily \#define Q\+U\+A\+N\+T\+\_\+\+T\+Y\+P\+E\+\_\+\+S\+C\+A\+L\+AR~(0)}
+
+\mbox{\Hypertarget{protocol__defs_8h_adc005f31f5e1029084671df70d39be17}\label{protocol__defs_8h_adc005f31f5e1029084671df70d39be17}} 
+\index{protocol\_defs.h@{protocol\_defs.h}!QUANT\_TYPE\_VECTOR@{QUANT\_TYPE\_VECTOR}}
+\index{QUANT\_TYPE\_VECTOR@{QUANT\_TYPE\_VECTOR}!protocol\_defs.h@{protocol\_defs.h}}
+\doxysubsubsection{\texorpdfstring{QUANT\_TYPE\_VECTOR}{QUANT\_TYPE\_VECTOR}}
+{\footnotesize\ttfamily \#define Q\+U\+A\+N\+T\+\_\+\+T\+Y\+P\+E\+\_\+\+V\+E\+C\+T\+OR~(1)}
+
+\mbox{\Hypertarget{protocol__defs_8h_af6f367dfe031bcc67183046e846c6692}\label{protocol__defs_8h_af6f367dfe031bcc67183046e846c6692}} 
+\index{protocol\_defs.h@{protocol\_defs.h}!QUANTITY\_IN\_CONFIG@{QUANTITY\_IN\_CONFIG}}
+\index{QUANTITY\_IN\_CONFIG@{QUANTITY\_IN\_CONFIG}!protocol\_defs.h@{protocol\_defs.h}}
+\doxysubsubsection{\texorpdfstring{QUANTITY\_IN\_CONFIG}{QUANTITY\_IN\_CONFIG}}
+{\footnotesize\ttfamily \#define Q\+U\+A\+N\+T\+I\+T\+Y\+\_\+\+I\+N\+\_\+\+C\+O\+N\+F\+IG(\begin{DoxyParamCaption}\item[{}]{Co,  }\item[{}]{Num }\end{DoxyParamCaption})~( (quantity\+\_\+t $\ast$) (((void$\ast$)Co-\/$>$quant) + Co-\/$>$quant\+\_\+sz $\ast$ Num)  )}
+
+\mbox{\Hypertarget{protocol__defs_8h_ae140a5dfb0ae372f6750b7b44c0cb7ac}\label{protocol__defs_8h_ae140a5dfb0ae372f6750b7b44c0cb7ac}} 
+\index{protocol\_defs.h@{protocol\_defs.h}!QUANTITY\_IN\_HEADER@{QUANTITY\_IN\_HEADER}}
+\index{QUANTITY\_IN\_HEADER@{QUANTITY\_IN\_HEADER}!protocol\_defs.h@{protocol\_defs.h}}
+\doxysubsubsection{\texorpdfstring{QUANTITY\_IN\_HEADER}{QUANTITY\_IN\_HEADER}}
+{\footnotesize\ttfamily \#define Q\+U\+A\+N\+T\+I\+T\+Y\+\_\+\+I\+N\+\_\+\+H\+E\+A\+D\+ER(\begin{DoxyParamCaption}\item[{}]{Co,  }\item[{}]{Num }\end{DoxyParamCaption})~( (quantity\+\_\+t $\ast$) (((void$\ast$)Co-\/$>$quant) + Co-\/$>$quant\+\_\+sz $\ast$ Num)  )}
+

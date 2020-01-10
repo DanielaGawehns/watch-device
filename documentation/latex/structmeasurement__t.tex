@@ -1,0 +1,63 @@
+\hypertarget{structmeasurement__t}{}\doxysection{measurement\+\_\+t Struct Reference}
+\label{structmeasurement__t}\index{measurement\_t@{measurement\_t}}
+
+
+{\ttfamily \#include $<$protocol\+\_\+defs.\+h$>$}
+
+\doxysubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structmeasurement__t_a815d67b59ea8f3319b0ea257d16d2416}{checksum}}
+\item 
+long long int \mbox{\hyperlink{structmeasurement__t_a87da72bca7916b1d68f222466f75c3f5}{timestamp}}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\mbox{\Hypertarget{unionmeasurement__t_1_1_0d0_aaed1323a700f050bae87cc0e5a4b2732}\label{unionmeasurement__t_1_1_0d0_aaed1323a700f050bae87cc0e5a4b2732}} 
+\>struct \{\\
+\>\>double {\bfseries x}\\
+\>\>double {\bfseries y}\\
+\>\>double {\bfseries z}\\
+\>\} \\
+\>double {\bfseries s}\\
+\} \mbox{\hyperlink{structmeasurement__t_aad30ff93ef36f197243e6248268fa82e}{value}}\\
+
+\end{tabbing}\item 
+int \mbox{\hyperlink{structmeasurement__t_a8d3ce5085de411751fde45cb6c0c766c}{measurement\+\_\+type\+\_\+id}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a data point of a quantity at a point in time 
+
+\doxysubsection{Field Documentation}
+\mbox{\Hypertarget{structmeasurement__t_a815d67b59ea8f3319b0ea257d16d2416}\label{structmeasurement__t_a815d67b59ea8f3319b0ea257d16d2416}} 
+\index{measurement\_t@{measurement\_t}!checksum@{checksum}}
+\index{checksum@{checksum}!measurement\_t@{measurement\_t}}
+\doxysubsubsection{\texorpdfstring{checksum}{checksum}}
+{\footnotesize\ttfamily uint32\+\_\+t measurement\+\_\+t\+::checksum}
+
+Checksum over the data point. Computed using the C\+R\+C32 algorithm, with this field set to zero for the calculation. \mbox{\Hypertarget{structmeasurement__t_a8d3ce5085de411751fde45cb6c0c766c}\label{structmeasurement__t_a8d3ce5085de411751fde45cb6c0c766c}} 
+\index{measurement\_t@{measurement\_t}!measurement\_type\_id@{measurement\_type\_id}}
+\index{measurement\_type\_id@{measurement\_type\_id}!measurement\_t@{measurement\_t}}
+\doxysubsubsection{\texorpdfstring{measurement\_type\_id}{measurement\_type\_id}}
+{\footnotesize\ttfamily int measurement\+\_\+t\+::measurement\+\_\+type\+\_\+id}
+
+Measurement type id that describes the data layout of this measurement \mbox{\Hypertarget{structmeasurement__t_a87da72bca7916b1d68f222466f75c3f5}\label{structmeasurement__t_a87da72bca7916b1d68f222466f75c3f5}} 
+\index{measurement\_t@{measurement\_t}!timestamp@{timestamp}}
+\index{timestamp@{timestamp}!measurement\_t@{measurement\_t}}
+\doxysubsubsection{\texorpdfstring{timestamp}{timestamp}}
+{\footnotesize\ttfamily long long int measurement\+\_\+t\+::timestamp}
+
+Data timestamp Unit\+: milliseconds since 00\+:00 January 1st 1970 \mbox{\Hypertarget{structmeasurement__t_aad30ff93ef36f197243e6248268fa82e}\label{structmeasurement__t_aad30ff93ef36f197243e6248268fa82e}} 
+\index{measurement\_t@{measurement\_t}!value@{value}}
+\index{value@{value}!measurement\_t@{measurement\_t}}
+\doxysubsubsection{\texorpdfstring{value}{value}}
+{\footnotesize\ttfamily union \{ ... \}   measurement\+\_\+t\+::value}
+
+The value, either a scalar or a vector 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/mnt/c/\+Users/\+R\+J/\+Desktop/\+Tizen\+Tijgers/watch-\/device/inc/protocol\+\_\+defs.\+h\end{DoxyCompactItemize}

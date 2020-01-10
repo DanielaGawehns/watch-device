@@ -1,0 +1,200 @@
+\hypertarget{scheduler_8c}{}\doxysection{/mnt/c/\+Users/\+R\+J/\+Desktop/\+Tizen\+Tijgers/watch-\/device/src/scheduler.c File Reference}
+\label{scheduler_8c}\index{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/src/scheduler.c@{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/src/scheduler.c}}
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}scheduler.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}data.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$Ecore.\+h$>$}\newline
+{\ttfamily \#include $<$Tizen.\+h$>$}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{scheduler_8c_ae014ff58a4df4948ead80b28a2e38294}{S\+C\+H\+E\+D\+U\+L\+E\+S\+I\+Z\+E\+I\+N\+C\+R\+E\+A\+SE}}~200
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{scheduler_8c_a8e66926ab69553f4bedc344897d21ed5}{keyval\+\_\+set}} (const char $\ast$path, int nparam, \mbox{\hyperlink{scheduler_8h_a8f7195f711556d694d6b43fc1520581f}{message\+\_\+param}} $\ast$param)
+\item 
+void \mbox{\hyperlink{scheduler_8c_a68505bc0d95f0d405ad2d52117fa29f1}{scheduler\+\_\+keyval\+\_\+set}} (\mbox{\hyperlink{structschedule__unit}{schedule\+\_\+unit}} $\ast$unit)
+\item 
+void \mbox{\hyperlink{scheduler_8c_a263153c57854dee2b3dca473c2fb9cbe}{scheduler\+\_\+reset}} ()
+\item 
+long long unsigned int \mbox{\hyperlink{scheduler_8c_a6603d9caca5427db116b3fdd90475e2d}{scheduler\+\_\+get\+\_\+new\+\_\+unit\+\_\+id}} ()
+\item 
+bool \mbox{\hyperlink{scheduler_8c_a6c3f36f84669bf534700eca993c869d2}{scheduler\+\_\+initialize}} ()
+\item 
+void \mbox{\hyperlink{scheduler_8c_a9adaf4fe848b4f6d2cad9c9675455895}{scheduler\+\_\+finalize}} ()
+\item 
+void \mbox{\hyperlink{scheduler_8c_a78ff843226facecfb9164c7c86f63e81}{scheduler\+\_\+push}} (int index, int offset)
+\item 
+void \mbox{\hyperlink{scheduler_8c_a20d3cf2a951f4fc0cbdb6918fc33dd0b}{scheduler\+\_\+increase\+\_\+size}} ()
+\item 
+void \mbox{\hyperlink{scheduler_8c_a8fa32ad8706d6a52e3b25eb273308a4a}{scheduler\+\_\+unit\+\_\+add}} (\mbox{\hyperlink{structschedule__unit}{schedule\+\_\+unit}} const $\ast$const new\+\_\+unit)
+\item 
+void \mbox{\hyperlink{scheduler_8c_a19e72d41e841fc81f415d15f4ce22110}{scheduler\+\_\+unit\+\_\+index\+\_\+remove}} (int index)
+\item 
+bool \mbox{\hyperlink{scheduler_8c_abd36178aad721cfea95df006325161d7}{scheduler\+\_\+unit\+\_\+id\+\_\+remove}} (int unit\+\_\+id)
+\item 
+void \mbox{\hyperlink{scheduler_8c_a384acdd052a653a093cd382ea3b4fdd0}{scheduler\+\_\+print\+\_\+unit}} (\mbox{\hyperlink{structschedule__unit}{schedule\+\_\+unit}} $\ast$unit)
+\item 
+void \mbox{\hyperlink{scheduler_8c_a300dd79cbb3bc14b4badf81515f10843}{scheduler\+\_\+execute\+\_\+unit}} (\mbox{\hyperlink{structschedule__unit}{schedule\+\_\+unit}} $\ast$unit)
+\item 
+void \mbox{\hyperlink{scheduler_8c_a4eb4dcbb88cc9d3b80f9b7c57b15cfa4}{print\+\_\+schedule}} ()
+\item 
+void \mbox{\hyperlink{scheduler_8c_aeb0d8ee5202991dbd6f9e91236ae707e}{scheduler\+\_\+update}} (long long int cur\+\_\+time)
+\item 
+Eina\+\_\+\+Bool \mbox{\hyperlink{scheduler_8c_a61afdc700dd4d85cd84fe23f9013f362}{scheduler\+\_\+ecore\+\_\+loop}} (void $\ast$\mbox{\hyperlink{sqlite__db_8h_a493583f6fc164cf849745e01e4c04ab5}{data}})
+\item 
+void \mbox{\hyperlink{scheduler_8c_a2df5da99bed4eafa6740c3ebb2921a36}{scheduler\+\_\+stop\+\_\+main\+\_\+ecore\+\_\+loop}} ()
+\item 
+void \mbox{\hyperlink{scheduler_8c_a1a0c535f99feded84dadef3b83b534cf}{scheduler\+\_\+start\+\_\+main\+\_\+ecore\+\_\+loop}} (double interval\+In\+Sec)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{structscheduler}{scheduler}} \mbox{\hyperlink{scheduler_8c_ac3698213dbfd6d12c0848be68eec3592}{scheduler\+\_\+data}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{scheduler_8c_ae014ff58a4df4948ead80b28a2e38294}\label{scheduler_8c_ae014ff58a4df4948ead80b28a2e38294}} 
+\index{scheduler.c@{scheduler.c}!SCHEDULESIZEINCREASE@{SCHEDULESIZEINCREASE}}
+\index{SCHEDULESIZEINCREASE@{SCHEDULESIZEINCREASE}!scheduler.c@{scheduler.c}}
+\doxysubsubsection{\texorpdfstring{SCHEDULESIZEINCREASE}{SCHEDULESIZEINCREASE}}
+{\footnotesize\ttfamily \#define S\+C\+H\+E\+D\+U\+L\+E\+S\+I\+Z\+E\+I\+N\+C\+R\+E\+A\+SE~200}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{scheduler_8c_a8e66926ab69553f4bedc344897d21ed5}\label{scheduler_8c_a8e66926ab69553f4bedc344897d21ed5}} 
+\index{scheduler.c@{scheduler.c}!keyval\_set@{keyval\_set}}
+\index{keyval\_set@{keyval\_set}!scheduler.c@{scheduler.c}}
+\doxysubsubsection{\texorpdfstring{keyval\_set()}{keyval\_set()}}
+{\footnotesize\ttfamily int keyval\+\_\+set (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path,  }\item[{int}]{nparam,  }\item[{\mbox{\hyperlink{scheduler_8h_a8f7195f711556d694d6b43fc1520581f}{message\+\_\+param}} $\ast$}]{param }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8c_a4eb4dcbb88cc9d3b80f9b7c57b15cfa4}\label{scheduler_8c_a4eb4dcbb88cc9d3b80f9b7c57b15cfa4}} 
+\index{scheduler.c@{scheduler.c}!print\_schedule@{print\_schedule}}
+\index{print\_schedule@{print\_schedule}!scheduler.c@{scheduler.c}}
+\doxysubsubsection{\texorpdfstring{print\_schedule()}{print\_schedule()}}
+{\footnotesize\ttfamily void print\+\_\+schedule (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8c_a61afdc700dd4d85cd84fe23f9013f362}\label{scheduler_8c_a61afdc700dd4d85cd84fe23f9013f362}} 
+\index{scheduler.c@{scheduler.c}!scheduler\_ecore\_loop@{scheduler\_ecore\_loop}}
+\index{scheduler\_ecore\_loop@{scheduler\_ecore\_loop}!scheduler.c@{scheduler.c}}
+\doxysubsubsection{\texorpdfstring{scheduler\_ecore\_loop()}{scheduler\_ecore\_loop()}}
+{\footnotesize\ttfamily Eina\+\_\+\+Bool scheduler\+\_\+ecore\+\_\+loop (\begin{DoxyParamCaption}\item[{void $\ast$}]{data }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8c_a300dd79cbb3bc14b4badf81515f10843}\label{scheduler_8c_a300dd79cbb3bc14b4badf81515f10843}} 
+\index{scheduler.c@{scheduler.c}!scheduler\_execute\_unit@{scheduler\_execute\_unit}}
+\index{scheduler\_execute\_unit@{scheduler\_execute\_unit}!scheduler.c@{scheduler.c}}
+\doxysubsubsection{\texorpdfstring{scheduler\_execute\_unit()}{scheduler\_execute\_unit()}}
+{\footnotesize\ttfamily void scheduler\+\_\+execute\+\_\+unit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structschedule__unit}{schedule\+\_\+unit}} $\ast$}]{unit }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8c_a9adaf4fe848b4f6d2cad9c9675455895}\label{scheduler_8c_a9adaf4fe848b4f6d2cad9c9675455895}} 
+\index{scheduler.c@{scheduler.c}!scheduler\_finalize@{scheduler\_finalize}}
+\index{scheduler\_finalize@{scheduler\_finalize}!scheduler.c@{scheduler.c}}
+\doxysubsubsection{\texorpdfstring{scheduler\_finalize()}{scheduler\_finalize()}}
+{\footnotesize\ttfamily void scheduler\+\_\+finalize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8c_a6603d9caca5427db116b3fdd90475e2d}\label{scheduler_8c_a6603d9caca5427db116b3fdd90475e2d}} 
+\index{scheduler.c@{scheduler.c}!scheduler\_get\_new\_unit\_id@{scheduler\_get\_new\_unit\_id}}
+\index{scheduler\_get\_new\_unit\_id@{scheduler\_get\_new\_unit\_id}!scheduler.c@{scheduler.c}}
+\doxysubsubsection{\texorpdfstring{scheduler\_get\_new\_unit\_id()}{scheduler\_get\_new\_unit\_id()}}
+{\footnotesize\ttfamily long long unsigned int scheduler\+\_\+get\+\_\+new\+\_\+unit\+\_\+id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8c_a20d3cf2a951f4fc0cbdb6918fc33dd0b}\label{scheduler_8c_a20d3cf2a951f4fc0cbdb6918fc33dd0b}} 
+\index{scheduler.c@{scheduler.c}!scheduler\_increase\_size@{scheduler\_increase\_size}}
+\index{scheduler\_increase\_size@{scheduler\_increase\_size}!scheduler.c@{scheduler.c}}
+\doxysubsubsection{\texorpdfstring{scheduler\_increase\_size()}{scheduler\_increase\_size()}}
+{\footnotesize\ttfamily void scheduler\+\_\+increase\+\_\+size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8c_a6c3f36f84669bf534700eca993c869d2}\label{scheduler_8c_a6c3f36f84669bf534700eca993c869d2}} 
+\index{scheduler.c@{scheduler.c}!scheduler\_initialize@{scheduler\_initialize}}
+\index{scheduler\_initialize@{scheduler\_initialize}!scheduler.c@{scheduler.c}}
+\doxysubsubsection{\texorpdfstring{scheduler\_initialize()}{scheduler\_initialize()}}
+{\footnotesize\ttfamily bool scheduler\+\_\+initialize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8c_a68505bc0d95f0d405ad2d52117fa29f1}\label{scheduler_8c_a68505bc0d95f0d405ad2d52117fa29f1}} 
+\index{scheduler.c@{scheduler.c}!scheduler\_keyval\_set@{scheduler\_keyval\_set}}
+\index{scheduler\_keyval\_set@{scheduler\_keyval\_set}!scheduler.c@{scheduler.c}}
+\doxysubsubsection{\texorpdfstring{scheduler\_keyval\_set()}{scheduler\_keyval\_set()}}
+{\footnotesize\ttfamily void scheduler\+\_\+keyval\+\_\+set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structschedule__unit}{schedule\+\_\+unit}} $\ast$}]{unit }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8c_a384acdd052a653a093cd382ea3b4fdd0}\label{scheduler_8c_a384acdd052a653a093cd382ea3b4fdd0}} 
+\index{scheduler.c@{scheduler.c}!scheduler\_print\_unit@{scheduler\_print\_unit}}
+\index{scheduler\_print\_unit@{scheduler\_print\_unit}!scheduler.c@{scheduler.c}}
+\doxysubsubsection{\texorpdfstring{scheduler\_print\_unit()}{scheduler\_print\_unit()}}
+{\footnotesize\ttfamily void scheduler\+\_\+print\+\_\+unit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structschedule__unit}{schedule\+\_\+unit}} $\ast$}]{unit }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8c_a78ff843226facecfb9164c7c86f63e81}\label{scheduler_8c_a78ff843226facecfb9164c7c86f63e81}} 
+\index{scheduler.c@{scheduler.c}!scheduler\_push@{scheduler\_push}}
+\index{scheduler\_push@{scheduler\_push}!scheduler.c@{scheduler.c}}
+\doxysubsubsection{\texorpdfstring{scheduler\_push()}{scheduler\_push()}}
+{\footnotesize\ttfamily void scheduler\+\_\+push (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{int}]{offset }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8c_a263153c57854dee2b3dca473c2fb9cbe}\label{scheduler_8c_a263153c57854dee2b3dca473c2fb9cbe}} 
+\index{scheduler.c@{scheduler.c}!scheduler\_reset@{scheduler\_reset}}
+\index{scheduler\_reset@{scheduler\_reset}!scheduler.c@{scheduler.c}}
+\doxysubsubsection{\texorpdfstring{scheduler\_reset()}{scheduler\_reset()}}
+{\footnotesize\ttfamily void scheduler\+\_\+reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8c_a1a0c535f99feded84dadef3b83b534cf}\label{scheduler_8c_a1a0c535f99feded84dadef3b83b534cf}} 
+\index{scheduler.c@{scheduler.c}!scheduler\_start\_main\_ecore\_loop@{scheduler\_start\_main\_ecore\_loop}}
+\index{scheduler\_start\_main\_ecore\_loop@{scheduler\_start\_main\_ecore\_loop}!scheduler.c@{scheduler.c}}
+\doxysubsubsection{\texorpdfstring{scheduler\_start\_main\_ecore\_loop()}{scheduler\_start\_main\_ecore\_loop()}}
+{\footnotesize\ttfamily void scheduler\+\_\+start\+\_\+main\+\_\+ecore\+\_\+loop (\begin{DoxyParamCaption}\item[{double}]{interval\+In\+Sec }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8c_a2df5da99bed4eafa6740c3ebb2921a36}\label{scheduler_8c_a2df5da99bed4eafa6740c3ebb2921a36}} 
+\index{scheduler.c@{scheduler.c}!scheduler\_stop\_main\_ecore\_loop@{scheduler\_stop\_main\_ecore\_loop}}
+\index{scheduler\_stop\_main\_ecore\_loop@{scheduler\_stop\_main\_ecore\_loop}!scheduler.c@{scheduler.c}}
+\doxysubsubsection{\texorpdfstring{scheduler\_stop\_main\_ecore\_loop()}{scheduler\_stop\_main\_ecore\_loop()}}
+{\footnotesize\ttfamily void scheduler\+\_\+stop\+\_\+main\+\_\+ecore\+\_\+loop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8c_a8fa32ad8706d6a52e3b25eb273308a4a}\label{scheduler_8c_a8fa32ad8706d6a52e3b25eb273308a4a}} 
+\index{scheduler.c@{scheduler.c}!scheduler\_unit\_add@{scheduler\_unit\_add}}
+\index{scheduler\_unit\_add@{scheduler\_unit\_add}!scheduler.c@{scheduler.c}}
+\doxysubsubsection{\texorpdfstring{scheduler\_unit\_add()}{scheduler\_unit\_add()}}
+{\footnotesize\ttfamily void scheduler\+\_\+unit\+\_\+add (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structschedule__unit}{schedule\+\_\+unit}} const $\ast$const}]{new\+\_\+unit }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8c_abd36178aad721cfea95df006325161d7}\label{scheduler_8c_abd36178aad721cfea95df006325161d7}} 
+\index{scheduler.c@{scheduler.c}!scheduler\_unit\_id\_remove@{scheduler\_unit\_id\_remove}}
+\index{scheduler\_unit\_id\_remove@{scheduler\_unit\_id\_remove}!scheduler.c@{scheduler.c}}
+\doxysubsubsection{\texorpdfstring{scheduler\_unit\_id\_remove()}{scheduler\_unit\_id\_remove()}}
+{\footnotesize\ttfamily bool scheduler\+\_\+unit\+\_\+id\+\_\+remove (\begin{DoxyParamCaption}\item[{int}]{unit\+\_\+id }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8c_a19e72d41e841fc81f415d15f4ce22110}\label{scheduler_8c_a19e72d41e841fc81f415d15f4ce22110}} 
+\index{scheduler.c@{scheduler.c}!scheduler\_unit\_index\_remove@{scheduler\_unit\_index\_remove}}
+\index{scheduler\_unit\_index\_remove@{scheduler\_unit\_index\_remove}!scheduler.c@{scheduler.c}}
+\doxysubsubsection{\texorpdfstring{scheduler\_unit\_index\_remove()}{scheduler\_unit\_index\_remove()}}
+{\footnotesize\ttfamily void scheduler\+\_\+unit\+\_\+index\+\_\+remove (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8c_aeb0d8ee5202991dbd6f9e91236ae707e}\label{scheduler_8c_aeb0d8ee5202991dbd6f9e91236ae707e}} 
+\index{scheduler.c@{scheduler.c}!scheduler\_update@{scheduler\_update}}
+\index{scheduler\_update@{scheduler\_update}!scheduler.c@{scheduler.c}}
+\doxysubsubsection{\texorpdfstring{scheduler\_update()}{scheduler\_update()}}
+{\footnotesize\ttfamily void scheduler\+\_\+update (\begin{DoxyParamCaption}\item[{long long int}]{cur\+\_\+time }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{scheduler_8c_ac3698213dbfd6d12c0848be68eec3592}\label{scheduler_8c_ac3698213dbfd6d12c0848be68eec3592}} 
+\index{scheduler.c@{scheduler.c}!scheduler\_data@{scheduler\_data}}
+\index{scheduler\_data@{scheduler\_data}!scheduler.c@{scheduler.c}}
+\doxysubsubsection{\texorpdfstring{scheduler\_data}{scheduler\_data}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structscheduler}{scheduler}} scheduler\+\_\+data\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \{}
+\DoxyCodeLine{    .id\_counter = 1, }
+\DoxyCodeLine{    .arr = NULL,}
+\DoxyCodeLine{    .size = 0,}
+\DoxyCodeLine{    .unitcount = 0,}
+\DoxyCodeLine{    .active = \textcolor{keyword}{false}, }
+\DoxyCodeLine{    .timer = NULL}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+scheduler\+\_\+data Data used for the scheduler 

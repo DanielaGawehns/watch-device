@@ -1,0 +1,237 @@
+\hypertarget{data_8h}{}\doxysection{/mnt/c/\+Users/\+R\+J/\+Desktop/\+Tizen\+Tijgers/watch-\/device/inc/data.h File Reference}
+\label{data_8h}\index{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/inc/data.h@{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/inc/data.h}}
+
+
+File implementing the communication with the sensors on the watch device.  
+
+
+{\ttfamily \#include $<$sensor.\+h$>$}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{data_8h_a7ce0df38eb467e59f209470c8f5ac4e6}\label{data_8h_a7ce0df38eb467e59f209470c8f5ac4e6}} 
+\#define {\bfseries L\+O\+G\+\_\+\+T\+AG}~\char`\"{}sensorbasicui\char`\"{}
+\item 
+\mbox{\Hypertarget{data_8h_adb6af7ed8689b3af8abc20736f75d26a}\label{data_8h_adb6af7ed8689b3af8abc20736f75d26a}} 
+\#define {\bfseries S\+E\+N\+S\+O\+R\+\_\+\+C\+O\+U\+NT}~15
+\item 
+\mbox{\Hypertarget{data_8h_a25953c14d380300aa0bb9f18c82982b4}\label{data_8h_a25953c14d380300aa0bb9f18c82982b4}} 
+\#define {\bfseries M\+A\+X\+\_\+\+V\+A\+L\+U\+E\+S\+\_\+\+P\+E\+R\+\_\+\+S\+E\+N\+S\+OR}~4
+\item 
+\mbox{\Hypertarget{data_8h_a4855530c6accfb0217440a218af6e74e}\label{data_8h_a4855530c6accfb0217440a218af6e74e}} 
+\#define {\bfseries M\+A\+X\+\_\+\+G\+Y\+R\+O\+\_\+\+V\+A\+L\+UE}~571.\+0
+\item 
+\mbox{\Hypertarget{data_8h_ab0daa9081cf3d29bc51118abe710dc9f}\label{data_8h_ab0daa9081cf3d29bc51118abe710dc9f}} 
+\#define {\bfseries M\+A\+X\+\_\+\+H\+R\+M\+\_\+\+V\+A\+L\+UE}~220.\+0
+\item 
+\mbox{\Hypertarget{data_8h_a754105b047477c45e709b69d345cea0e}\label{data_8h_a754105b047477c45e709b69d345cea0e}} 
+\#define {\bfseries L\+I\+S\+T\+E\+N\+E\+R\+\_\+\+T\+I\+M\+E\+O\+UT}~0
+\item 
+\mbox{\Hypertarget{data_8h_a0116cca22208c83fc25554f71024606b}\label{data_8h_a0116cca22208c83fc25554f71024606b}} 
+\#define {\bfseries L\+I\+S\+T\+E\+N\+E\+R\+\_\+\+T\+I\+M\+E\+O\+U\+T\+\_\+\+F\+I\+N\+AL}~((L\+I\+S\+T\+E\+N\+E\+R\+\_\+\+T\+I\+M\+E\+O\+UT != 0) ? L\+I\+S\+T\+E\+N\+E\+R\+\_\+\+T\+I\+M\+E\+O\+UT \+: 100)
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{data_8h_a25ec5e682d7052c109d2c8d01d1fa22c}\label{data_8h_a25ec5e682d7052c109d2c8d01d1fa22c}} 
+typedef void($\ast$ {\bfseries Update\+\_\+\+Sensor\+\_\+\+Values\+\_\+\+Cb}) (sensor\+\_\+type\+\_\+e sensor\+Type, sensor\+\_\+event\+\_\+s $\ast$event)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{data_8h_ac81676b6b290c14a016c4fc6e6244ba7}{data\+\_\+set\+\_\+sensor\+\_\+activity}} (sensor\+\_\+type\+\_\+e sensor\+Nr, bool activity)
+\begin{DoxyCompactList}\small\item\em sets a sensors activity, given the id and new activity (if sensor is available and status is not already the given status) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{data_8h_a08f3030b217613ffd3dc85fa46b88803}{data\+\_\+set\+\_\+sensor\+\_\+interval}} (sensor\+\_\+type\+\_\+e sensor\+Nr, unsigned int sensor\+Interval\+Ms)
+\begin{DoxyCompactList}\small\item\em sets a new check interval for a sensor \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{data_8h_a91d7e14b1df15d0092326969a0bbfc84}{data\+\_\+finalize}} (void)
+\begin{DoxyCompactList}\small\item\em Function used to destroy the sensor listeners. Should be invoked when the app is terminated. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{data_8h_a25987133f31c57c15eee4574f5eb9d3b}{data\+\_\+initialize}} (Update\+\_\+\+Sensor\+\_\+\+Values\+\_\+\+Cb callback)
+\begin{DoxyCompactList}\small\item\em Function that initializes the data module. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{data_8h_a5362f8e2858791028d074be10d89d11e}{data\+\_\+get\+\_\+sensor\+\_\+support}} (sensor\+\_\+type\+\_\+e type)
+\begin{DoxyCompactList}\small\item\em Checks if the given sensor type is supported by the device. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{data_8h_a7fae01cf399520f69b4082dce6b5d992}{data\+\_\+get\+\_\+sensor\+\_\+range}} (sensor\+\_\+type\+\_\+e type, float $\ast$min, float $\ast$max)
+\begin{DoxyCompactList}\small\item\em Checks the minimal and maximal values that the given sensor supports. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{data_8h_afa8c91be0c6574a50b2d40e71f2aa003}{data\+\_\+get\+\_\+sensor\+\_\+resolution}} (sensor\+\_\+type\+\_\+e type)
+\begin{DoxyCompactList}\small\item\em Checks the sensor\textquotesingle{}s resolution. \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{data_8h_a3617a936dfc6c2584e3d4c98e8c037fe}{data\+\_\+get\+\_\+sensor\+\_\+vendor}} (sensor\+\_\+type\+\_\+e type)
+\begin{DoxyCompactList}\small\item\em Checks the sensor\textquotesingle{}s vendor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{data_8h_a0c602ad044f5f225efcf10c5b86794ef}\label{data_8h_a0c602ad044f5f225efcf10c5b86794ef}} 
+const char $\ast$ \mbox{\hyperlink{data_8h_a0c602ad044f5f225efcf10c5b86794ef}{sensor\+\_\+strings}} \mbox{[}S\+E\+N\+S\+O\+R\+\_\+\+C\+O\+U\+NT\mbox{]}
+\begin{DoxyCompactList}\small\item\em String names for sensor\+\_\+type\+\_\+e values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+File implementing the communication with the sensors on the watch device. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{data_8h_a91d7e14b1df15d0092326969a0bbfc84}\label{data_8h_a91d7e14b1df15d0092326969a0bbfc84}} 
+\index{data.h@{data.h}!data\_finalize@{data\_finalize}}
+\index{data\_finalize@{data\_finalize}!data.h@{data.h}}
+\doxysubsubsection{\texorpdfstring{data\_finalize()}{data\_finalize()}}
+{\footnotesize\ttfamily void data\+\_\+finalize (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Function used to destroy the sensor listeners. Should be invoked when the app is terminated. 
+
+Teardown sensor A\+PI \mbox{\Hypertarget{data_8h_a7fae01cf399520f69b4082dce6b5d992}\label{data_8h_a7fae01cf399520f69b4082dce6b5d992}} 
+\index{data.h@{data.h}!data\_get\_sensor\_range@{data\_get\_sensor\_range}}
+\index{data\_get\_sensor\_range@{data\_get\_sensor\_range}!data.h@{data.h}}
+\doxysubsubsection{\texorpdfstring{data\_get\_sensor\_range()}{data\_get\_sensor\_range()}}
+{\footnotesize\ttfamily void data\+\_\+get\+\_\+sensor\+\_\+range (\begin{DoxyParamCaption}\item[{sensor\+\_\+type\+\_\+e}]{type,  }\item[{float $\ast$}]{min,  }\item[{float $\ast$}]{max }\end{DoxyParamCaption})}
+
+
+
+Checks the minimal and maximal values that the given sensor supports. 
+
+Get the range for the sensor 
+\begin{DoxyParams}[1]{Parameters}
+ & {\em sensor\+Nr} & The sensor to query \\
+\hline
+ & {\em min} & Output parameter returning the minimal value for a sensor \\
+\hline
+ & {\em max} & Output parameter returning the maximal value for a sensor\\
+\hline
+ & {\em type} & The sensor type. \\
+\hline
+\mbox{\texttt{ out}}  & {\em min} & The minimal value. \\
+\hline
+\mbox{\texttt{ out}}  & {\em max} & The maximal value. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{data_8h_afa8c91be0c6574a50b2d40e71f2aa003}\label{data_8h_afa8c91be0c6574a50b2d40e71f2aa003}} 
+\index{data.h@{data.h}!data\_get\_sensor\_resolution@{data\_get\_sensor\_resolution}}
+\index{data\_get\_sensor\_resolution@{data\_get\_sensor\_resolution}!data.h@{data.h}}
+\doxysubsubsection{\texorpdfstring{data\_get\_sensor\_resolution()}{data\_get\_sensor\_resolution()}}
+{\footnotesize\ttfamily float data\+\_\+get\+\_\+sensor\+\_\+resolution (\begin{DoxyParamCaption}\item[{sensor\+\_\+type\+\_\+e}]{type }\end{DoxyParamCaption})}
+
+
+
+Checks the sensor\textquotesingle{}s resolution. 
+
+Get the resolution for a sensor 
+\begin{DoxyParams}{Parameters}
+{\em sensor\+Nr} & The sensor to query\\
+\hline
+{\em type} & The sensor type. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The sensor\textquotesingle{}s resolution. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{data_8h_a5362f8e2858791028d074be10d89d11e}\label{data_8h_a5362f8e2858791028d074be10d89d11e}} 
+\index{data.h@{data.h}!data\_get\_sensor\_support@{data\_get\_sensor\_support}}
+\index{data\_get\_sensor\_support@{data\_get\_sensor\_support}!data.h@{data.h}}
+\doxysubsubsection{\texorpdfstring{data\_get\_sensor\_support()}{data\_get\_sensor\_support()}}
+{\footnotesize\ttfamily bool data\+\_\+get\+\_\+sensor\+\_\+support (\begin{DoxyParamCaption}\item[{sensor\+\_\+type\+\_\+e}]{type }\end{DoxyParamCaption})}
+
+
+
+Checks if the given sensor type is supported by the device. 
+
+Check whether or not a given sensor is available on this device 
+\begin{DoxyParams}{Parameters}
+{\em sensor\+Nr} & The sensor to query\\
+\hline
+{\em type} & The sensor\textquotesingle{}s type. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true -\/ sensor is supported, false -\/ sensor is not supported. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{data_8h_a3617a936dfc6c2584e3d4c98e8c037fe}\label{data_8h_a3617a936dfc6c2584e3d4c98e8c037fe}} 
+\index{data.h@{data.h}!data\_get\_sensor\_vendor@{data\_get\_sensor\_vendor}}
+\index{data\_get\_sensor\_vendor@{data\_get\_sensor\_vendor}!data.h@{data.h}}
+\doxysubsubsection{\texorpdfstring{data\_get\_sensor\_vendor()}{data\_get\_sensor\_vendor()}}
+{\footnotesize\ttfamily char$\ast$ data\+\_\+get\+\_\+sensor\+\_\+vendor (\begin{DoxyParamCaption}\item[{sensor\+\_\+type\+\_\+e}]{type }\end{DoxyParamCaption})}
+
+
+
+Checks the sensor\textquotesingle{}s vendor. 
+
+Get the vendor who provided the sensor 
+\begin{DoxyParams}{Parameters}
+{\em sensor\+Nr} & The sensor to query \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The name of the vendor, should be freed by caller.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em type} & The sensor type. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The sensor\textquotesingle{}s vendor (the returned value should be freed). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{data_8h_a25987133f31c57c15eee4574f5eb9d3b}\label{data_8h_a25987133f31c57c15eee4574f5eb9d3b}} 
+\index{data.h@{data.h}!data\_initialize@{data\_initialize}}
+\index{data\_initialize@{data\_initialize}!data.h@{data.h}}
+\doxysubsubsection{\texorpdfstring{data\_initialize()}{data\_initialize()}}
+{\footnotesize\ttfamily bool data\+\_\+initialize (\begin{DoxyParamCaption}\item[{Update\+\_\+\+Sensor\+\_\+\+Values\+\_\+\+Cb}]{sensor\+\_\+update\+\_\+cb }\end{DoxyParamCaption})}
+
+
+
+Function that initializes the data module. 
+
+Initialize sensor A\+PI 
+\begin{DoxyParams}{Parameters}
+{\em Update\+\_\+\+Sensor\+\_\+\+Values\+\_\+\+Cb} & Callback invoked when a sensor provides new data\\
+\hline
+{\em sensor\+\_\+update\+\_\+cb} & Callback used to update the data displayed in the data view. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True on success or false on error. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{data_8h_ac81676b6b290c14a016c4fc6e6244ba7}\label{data_8h_ac81676b6b290c14a016c4fc6e6244ba7}} 
+\index{data.h@{data.h}!data\_set\_sensor\_activity@{data\_set\_sensor\_activity}}
+\index{data\_set\_sensor\_activity@{data\_set\_sensor\_activity}!data.h@{data.h}}
+\doxysubsubsection{\texorpdfstring{data\_set\_sensor\_activity()}{data\_set\_sensor\_activity()}}
+{\footnotesize\ttfamily void data\+\_\+set\+\_\+sensor\+\_\+activity (\begin{DoxyParamCaption}\item[{sensor\+\_\+type\+\_\+e}]{sensor\+Nr,  }\item[{bool}]{activity }\end{DoxyParamCaption})}
+
+
+
+sets a sensors activity, given the id and new activity (if sensor is available and status is not already the given status) 
+
+Enable or disable a sensor 
+\begin{DoxyParams}{Parameters}
+{\em sensor\+Nr} & The sensor to configure \\
+\hline
+{\em activity} & Whether or not it is active\\
+\hline
+\end{DoxyParams}
+T\+O\+DO\+: the functions hereafter are custom added, handy web\+: \href{https://developer.tizen.org/dev-guide/2.3.1/org.tizen.tutorials/html/native/system/sensor_tutorial_n.htm}{\texttt{ https\+://developer.\+tizen.\+org/dev-\/guide/2.\+3.\+1/org.\+tizen.\+tutorials/html/native/system/sensor\+\_\+tutorial\+\_\+n.\+htm}} 
+\begin{DoxyParams}{Parameters}
+{\em the} & sensor N\+R/id \\
+\hline
+{\em new} & status of this sensor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{data_8h_a08f3030b217613ffd3dc85fa46b88803}\label{data_8h_a08f3030b217613ffd3dc85fa46b88803}} 
+\index{data.h@{data.h}!data\_set\_sensor\_interval@{data\_set\_sensor\_interval}}
+\index{data\_set\_sensor\_interval@{data\_set\_sensor\_interval}!data.h@{data.h}}
+\doxysubsubsection{\texorpdfstring{data\_set\_sensor\_interval()}{data\_set\_sensor\_interval()}}
+{\footnotesize\ttfamily void data\+\_\+set\+\_\+sensor\+\_\+interval (\begin{DoxyParamCaption}\item[{sensor\+\_\+type\+\_\+e}]{sensor\+Nr,  }\item[{unsigned int}]{sensor\+Interval\+Ms }\end{DoxyParamCaption})}
+
+
+
+sets a new check interval for a sensor 
+
+Set the interval for a sensor 
+\begin{DoxyParams}{Parameters}
+{\em sensor\+Nr} & The sensor to configure \\
+\hline
+{\em sensor\+Interval\+Ms} & The measurement interval in milliseconds\\
+\hline
+{\em the} & sensor nr/enum/id \\
+\hline
+{\em the} & new interval at which the sensor should be checked \\
+\hline
+\end{DoxyParams}

@@ -1,0 +1,394 @@
+\hypertarget{data_8c}{}\doxysection{/mnt/c/\+Users/\+R\+J/\+Desktop/\+Tizen\+Tijgers/watch-\/device/src/data.c File Reference}
+\label{data_8c}\index{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/src/data.c@{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/src/data.c}}
+
+
+File implementing the communication with the sensors on the watch device.  
+
+
+{\ttfamily \#include $<$Eina.\+h$>$}\newline
+{\ttfamily \#include $<$app\+\_\+preference.\+h$>$}\newline
+{\ttfamily \#include $<$linux/limits.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$app\+\_\+common.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$sensor.\+h$>$}\newline
+{\ttfamily \#include $<$tizen.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}data.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$Ecore.\+h$>$}\newline
+{\ttfamily \#include $<$dlog.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}keyval.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct__sensor__data}{\+\_\+sensor\+\_\+data}}
+\begin{DoxyCompactList}\small\item\em sensor data struct used to manage each sensor\textquotesingle{}s listener and handle \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structdata__info}{data\+\_\+info}}
+\begin{DoxyCompactList}\small\item\em info on the status of sensors \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{data_8c_a9db935b05245439184a14307df4fa049}\label{data_8c_a9db935b05245439184a14307df4fa049}} 
+typedef struct \mbox{\hyperlink{struct__sensor__data}{\+\_\+sensor\+\_\+data}} \mbox{\hyperlink{data_8c_a9db935b05245439184a14307df4fa049}{sensor\+\_\+data\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em sensor data struct used to manage each sensor\textquotesingle{}s listener and handle \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{data_8c_ad83cbd9fb5e2bdf5affb677bf5d93ccf}{\+\_\+initialize\+\_\+sensors}} (void)
+\begin{DoxyCompactList}\small\item\em predefinition \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{data_8c_addde5103953f871161bfb0e2cd9f325f}{\+\_\+sensor\+\_\+event\+\_\+cb}} (sensor\+\_\+h sensor, sensor\+\_\+event\+\_\+s $\ast$event, void $\ast$data)
+\begin{DoxyCompactList}\small\item\em predefinition \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{data_8c_a28210f169953230101fb91a636e937d6}{\+\_\+timer\+\_\+stop}} (void)
+\begin{DoxyCompactList}\small\item\em predefinition \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{data_8c_abf4c319f174604fbc44e40f267a2394e}{\+\_\+timer\+\_\+start}} (int value)
+\begin{DoxyCompactList}\small\item\em predefinition \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{data_8c_a6482a002811544b4f890814d142090e4}{\+\_\+set\+\_\+hrm\+\_\+values}} (sensor\+\_\+event\+\_\+s $\ast$event)
+\begin{DoxyCompactList}\small\item\em predefinition \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{data_8c_ac81676b6b290c14a016c4fc6e6244ba7}{data\+\_\+set\+\_\+sensor\+\_\+activity}} (sensor\+\_\+type\+\_\+e sensor\+Nr, bool activity)
+\begin{DoxyCompactList}\small\item\em sets a sensors activity, given the id and new activity (if sensor is available and status is not already the given status) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{data_8c_a08f3030b217613ffd3dc85fa46b88803}{data\+\_\+set\+\_\+sensor\+\_\+interval}} (sensor\+\_\+type\+\_\+e sensor\+Nr, unsigned int sensor\+Interval\+Ms)
+\begin{DoxyCompactList}\small\item\em sets a new check interval for a sensor \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{data_8c_a40725073edad4d64a08eef43b1d5eb58}{data\+\_\+initialize}} (Update\+\_\+\+Sensor\+\_\+\+Values\+\_\+\+Cb sensor\+\_\+update\+\_\+cb)
+\begin{DoxyCompactList}\small\item\em Function that initializes the data module. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{data_8c_a91d7e14b1df15d0092326969a0bbfc84}{data\+\_\+finalize}} (void)
+\begin{DoxyCompactList}\small\item\em Function used to destroy the sensor listeners. Should be invoked when the app is terminated. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{data_8c_a5362f8e2858791028d074be10d89d11e}{data\+\_\+get\+\_\+sensor\+\_\+support}} (sensor\+\_\+type\+\_\+e type)
+\begin{DoxyCompactList}\small\item\em Checks if the given sensor type is supported by the device. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{data_8c_a7fae01cf399520f69b4082dce6b5d992}{data\+\_\+get\+\_\+sensor\+\_\+range}} (sensor\+\_\+type\+\_\+e type, float $\ast$min, float $\ast$max)
+\begin{DoxyCompactList}\small\item\em Checks the minimal and maximal values that the given sensor supports. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{data_8c_afa8c91be0c6574a50b2d40e71f2aa003}{data\+\_\+get\+\_\+sensor\+\_\+resolution}} (sensor\+\_\+type\+\_\+e type)
+\begin{DoxyCompactList}\small\item\em Checks the sensor\textquotesingle{}s resolution. \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{data_8c_a3617a936dfc6c2584e3d4c98e8c037fe}{data\+\_\+get\+\_\+sensor\+\_\+vendor}} (sensor\+\_\+type\+\_\+e type)
+\begin{DoxyCompactList}\small\item\em Checks the sensor\textquotesingle{}s vendor. \end{DoxyCompactList}\item 
+static Eina\+\_\+\+Bool \mbox{\hyperlink{data_8c_a56b9dd81f19bf950d855dba356c9ea50}{\+\_\+proximity\+\_\+timer\+\_\+cb}} (void $\ast$data)
+\begin{DoxyCompactList}\small\item\em A ecore timer callback used when the proximity timer is the current one. This is needed because the proximity sensor works differently than most of the other sensors. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{data_8c_af3027485c73046c0b8707e04145b3c1a}\label{data_8c_af3027485c73046c0b8707e04145b3c1a}} 
+int {\bfseries kvdata\+\_\+name\+\_\+get} (\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$kv, char $\ast$$\ast$status, int $\ast$nparam, message\+\_\+param $\ast$$\ast$param)
+\item 
+\mbox{\Hypertarget{data_8c_a5a3bd9102b52069e033ffa784a346879}\label{data_8c_a5a3bd9102b52069e033ffa784a346879}} 
+int {\bfseries kvdata\+\_\+active\+\_\+get} (\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$kv, char $\ast$$\ast$status, int $\ast$nparam, message\+\_\+param $\ast$$\ast$param)
+\item 
+\mbox{\Hypertarget{data_8c_a13ee4c32c0d743caba46775cfc845f51}\label{data_8c_a13ee4c32c0d743caba46775cfc845f51}} 
+int {\bfseries kvdata\+\_\+active\+\_\+set} (\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$kv, char $\ast$$\ast$status, int nparam, message\+\_\+param $\ast$param)
+\item 
+\mbox{\Hypertarget{data_8c_a2e6947b1e1d33729bed024e9e4140e09}\label{data_8c_a2e6947b1e1d33729bed024e9e4140e09}} 
+int {\bfseries kvdata\+\_\+resolution\+\_\+get} (\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$kv, char $\ast$$\ast$status, int $\ast$nparam, message\+\_\+param $\ast$$\ast$param)
+\item 
+\mbox{\Hypertarget{data_8c_a7cc4733bb0e858253fca136a073308d8}\label{data_8c_a7cc4733bb0e858253fca136a073308d8}} 
+int {\bfseries kvdata\+\_\+range\+\_\+get} (\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$kv, char $\ast$$\ast$status, int $\ast$nparam, message\+\_\+param $\ast$$\ast$param)
+\item 
+\mbox{\Hypertarget{data_8c_aa46d6839b2a5952e782933ae3e9c5700}\label{data_8c_aa46d6839b2a5952e782933ae3e9c5700}} 
+int {\bfseries kvdata\+\_\+interval\+\_\+get} (\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$kv, char $\ast$$\ast$status, int $\ast$nparam, message\+\_\+param $\ast$$\ast$param)
+\item 
+\mbox{\Hypertarget{data_8c_a00237e9bf899aa607d4aa8a7d004cbd4}\label{data_8c_a00237e9bf899aa607d4aa8a7d004cbd4}} 
+int {\bfseries kvdata\+\_\+interval\+\_\+set} (\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$kv, char $\ast$$\ast$status, int nparam, message\+\_\+param $\ast$param)
+\item 
+static void \mbox{\hyperlink{data_8c_a840127a0e3252b4e882e68b5504e9665}{init\+\_\+sensor}} (int i)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ \mbox{\hyperlink{data_8c_a0c602ad044f5f225efcf10c5b86794ef}{sensor\+\_\+strings}} \mbox{[}S\+E\+N\+S\+O\+R\+\_\+\+C\+O\+U\+NT\mbox{]}
+\begin{DoxyCompactList}\small\item\em String names for sensor\+\_\+type\+\_\+e values. \end{DoxyCompactList}\item 
+static struct \mbox{\hyperlink{structdata__info}{data\+\_\+info}} {\bfseries s\+\_\+info}
+\item 
+\mbox{\Hypertarget{data_8c_a1080b281b96f9c6b34d97a604e04c85e}\label{data_8c_a1080b281b96f9c6b34d97a604e04c85e}} 
+static \mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$ {\bfseries sensor\+\_\+ns}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+File implementing the communication with the sensors on the watch device. 
+
+\begin{DoxyDate}{Date}
+10 Jan 2020 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{data_8c_ad83cbd9fb5e2bdf5affb677bf5d93ccf}\label{data_8c_ad83cbd9fb5e2bdf5affb677bf5d93ccf}} 
+\index{data.c@{data.c}!\_initialize\_sensors@{\_initialize\_sensors}}
+\index{\_initialize\_sensors@{\_initialize\_sensors}!data.c@{data.c}}
+\doxysubsubsection{\texorpdfstring{\_initialize\_sensors()}{\_initialize\_sensors()}}
+{\footnotesize\ttfamily static void \+\_\+initialize\+\_\+sensors (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+predefinition 
+
+Initializes the sensors. The function sets the handles and creates a listener for each of the sensors. \mbox{\Hypertarget{data_8c_a56b9dd81f19bf950d855dba356c9ea50}\label{data_8c_a56b9dd81f19bf950d855dba356c9ea50}} 
+\index{data.c@{data.c}!\_proximity\_timer\_cb@{\_proximity\_timer\_cb}}
+\index{\_proximity\_timer\_cb@{\_proximity\_timer\_cb}!data.c@{data.c}}
+\doxysubsubsection{\texorpdfstring{\_proximity\_timer\_cb()}{\_proximity\_timer\_cb()}}
+{\footnotesize\ttfamily static Eina\+\_\+\+Bool \+\_\+proximity\+\_\+timer\+\_\+cb (\begin{DoxyParamCaption}\item[{void $\ast$}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+A ecore timer callback used when the proximity timer is the current one. This is needed because the proximity sensor works differently than most of the other sensors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{data_8c_addde5103953f871161bfb0e2cd9f325f}\label{data_8c_addde5103953f871161bfb0e2cd9f325f}} 
+\index{data.c@{data.c}!\_sensor\_event\_cb@{\_sensor\_event\_cb}}
+\index{\_sensor\_event\_cb@{\_sensor\_event\_cb}!data.c@{data.c}}
+\doxysubsubsection{\texorpdfstring{\_sensor\_event\_cb()}{\_sensor\_event\_cb()}}
+{\footnotesize\ttfamily static void \+\_\+sensor\+\_\+event\+\_\+cb (\begin{DoxyParamCaption}\item[{sensor\+\_\+h}]{\+\_\+sensor,  }\item[{sensor\+\_\+event\+\_\+s $\ast$}]{event,  }\item[{void $\ast$}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+predefinition 
+
+Callback invoked by a sensor\textquotesingle{}s listener.
+
+
+\begin{DoxyParams}{Parameters}
+{\em sensor} & The sensor\textquotesingle{}s handle. \\
+\hline
+{\em event} & The event data. \\
+\hline
+{\em data} & The user data. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{data_8c_a6482a002811544b4f890814d142090e4}\label{data_8c_a6482a002811544b4f890814d142090e4}} 
+\index{data.c@{data.c}!\_set\_hrm\_values@{\_set\_hrm\_values}}
+\index{\_set\_hrm\_values@{\_set\_hrm\_values}!data.c@{data.c}}
+\doxysubsubsection{\texorpdfstring{\_set\_hrm\_values()}{\_set\_hrm\_values()}}
+{\footnotesize\ttfamily static void \+\_\+set\+\_\+hrm\+\_\+values (\begin{DoxyParamCaption}\item[{sensor\+\_\+event\+\_\+s $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+predefinition 
+
+Function used when the hrm sensor is the current one. The hrm sensor works differently than most of the other sensors.
+
+
+\begin{DoxyParams}{Parameters}
+{\em event} & The event object storing the sensor data. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{data_8c_abf4c319f174604fbc44e40f267a2394e}\label{data_8c_abf4c319f174604fbc44e40f267a2394e}} 
+\index{data.c@{data.c}!\_timer\_start@{\_timer\_start}}
+\index{\_timer\_start@{\_timer\_start}!data.c@{data.c}}
+\doxysubsubsection{\texorpdfstring{\_timer\_start()}{\_timer\_start()}}
+{\footnotesize\ttfamily static void \+\_\+timer\+\_\+start (\begin{DoxyParamCaption}\item[{int}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+predefinition 
+
+Function used to create the proximity timer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Value provided by the proximity sensor. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{data_8c_a28210f169953230101fb91a636e937d6}\label{data_8c_a28210f169953230101fb91a636e937d6}} 
+\index{data.c@{data.c}!\_timer\_stop@{\_timer\_stop}}
+\index{\_timer\_stop@{\_timer\_stop}!data.c@{data.c}}
+\doxysubsubsection{\texorpdfstring{\_timer\_stop()}{\_timer\_stop()}}
+{\footnotesize\ttfamily static void \+\_\+timer\+\_\+stop (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+predefinition 
+
+Function used to delete the proximity timer. \mbox{\Hypertarget{data_8c_a91d7e14b1df15d0092326969a0bbfc84}\label{data_8c_a91d7e14b1df15d0092326969a0bbfc84}} 
+\index{data.c@{data.c}!data\_finalize@{data\_finalize}}
+\index{data\_finalize@{data\_finalize}!data.c@{data.c}}
+\doxysubsubsection{\texorpdfstring{data\_finalize()}{data\_finalize()}}
+{\footnotesize\ttfamily void data\+\_\+finalize (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Function used to destroy the sensor listeners. Should be invoked when the app is terminated. 
+
+Teardown sensor A\+PI \mbox{\Hypertarget{data_8c_a7fae01cf399520f69b4082dce6b5d992}\label{data_8c_a7fae01cf399520f69b4082dce6b5d992}} 
+\index{data.c@{data.c}!data\_get\_sensor\_range@{data\_get\_sensor\_range}}
+\index{data\_get\_sensor\_range@{data\_get\_sensor\_range}!data.c@{data.c}}
+\doxysubsubsection{\texorpdfstring{data\_get\_sensor\_range()}{data\_get\_sensor\_range()}}
+{\footnotesize\ttfamily void data\+\_\+get\+\_\+sensor\+\_\+range (\begin{DoxyParamCaption}\item[{sensor\+\_\+type\+\_\+e}]{type,  }\item[{float $\ast$}]{min,  }\item[{float $\ast$}]{max }\end{DoxyParamCaption})}
+
+
+
+Checks the minimal and maximal values that the given sensor supports. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+ & {\em type} & The sensor type. \\
+\hline
+\mbox{\texttt{ out}}  & {\em min} & The minimal value. \\
+\hline
+\mbox{\texttt{ out}}  & {\em max} & The maximal value. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{data_8c_afa8c91be0c6574a50b2d40e71f2aa003}\label{data_8c_afa8c91be0c6574a50b2d40e71f2aa003}} 
+\index{data.c@{data.c}!data\_get\_sensor\_resolution@{data\_get\_sensor\_resolution}}
+\index{data\_get\_sensor\_resolution@{data\_get\_sensor\_resolution}!data.c@{data.c}}
+\doxysubsubsection{\texorpdfstring{data\_get\_sensor\_resolution()}{data\_get\_sensor\_resolution()}}
+{\footnotesize\ttfamily float data\+\_\+get\+\_\+sensor\+\_\+resolution (\begin{DoxyParamCaption}\item[{sensor\+\_\+type\+\_\+e}]{type }\end{DoxyParamCaption})}
+
+
+
+Checks the sensor\textquotesingle{}s resolution. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & The sensor type. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The sensor\textquotesingle{}s resolution. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{data_8c_a5362f8e2858791028d074be10d89d11e}\label{data_8c_a5362f8e2858791028d074be10d89d11e}} 
+\index{data.c@{data.c}!data\_get\_sensor\_support@{data\_get\_sensor\_support}}
+\index{data\_get\_sensor\_support@{data\_get\_sensor\_support}!data.c@{data.c}}
+\doxysubsubsection{\texorpdfstring{data\_get\_sensor\_support()}{data\_get\_sensor\_support()}}
+{\footnotesize\ttfamily bool data\+\_\+get\+\_\+sensor\+\_\+support (\begin{DoxyParamCaption}\item[{sensor\+\_\+type\+\_\+e}]{type }\end{DoxyParamCaption})}
+
+
+
+Checks if the given sensor type is supported by the device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & The sensor\textquotesingle{}s type. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true -\/ sensor is supported, false -\/ sensor is not supported. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{data_8c_a3617a936dfc6c2584e3d4c98e8c037fe}\label{data_8c_a3617a936dfc6c2584e3d4c98e8c037fe}} 
+\index{data.c@{data.c}!data\_get\_sensor\_vendor@{data\_get\_sensor\_vendor}}
+\index{data\_get\_sensor\_vendor@{data\_get\_sensor\_vendor}!data.c@{data.c}}
+\doxysubsubsection{\texorpdfstring{data\_get\_sensor\_vendor()}{data\_get\_sensor\_vendor()}}
+{\footnotesize\ttfamily char$\ast$ data\+\_\+get\+\_\+sensor\+\_\+vendor (\begin{DoxyParamCaption}\item[{sensor\+\_\+type\+\_\+e}]{type }\end{DoxyParamCaption})}
+
+
+
+Checks the sensor\textquotesingle{}s vendor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & The sensor type. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The sensor\textquotesingle{}s vendor (the returned value should be freed). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{data_8c_a40725073edad4d64a08eef43b1d5eb58}\label{data_8c_a40725073edad4d64a08eef43b1d5eb58}} 
+\index{data.c@{data.c}!data\_initialize@{data\_initialize}}
+\index{data\_initialize@{data\_initialize}!data.c@{data.c}}
+\doxysubsubsection{\texorpdfstring{data\_initialize()}{data\_initialize()}}
+{\footnotesize\ttfamily bool data\+\_\+initialize (\begin{DoxyParamCaption}\item[{Update\+\_\+\+Sensor\+\_\+\+Values\+\_\+\+Cb}]{sensor\+\_\+update\+\_\+cb }\end{DoxyParamCaption})}
+
+
+
+Function that initializes the data module. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sensor\+\_\+update\+\_\+cb} & Callback used to update the data displayed in the data view. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True on success or false on error. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{data_8c_ac81676b6b290c14a016c4fc6e6244ba7}\label{data_8c_ac81676b6b290c14a016c4fc6e6244ba7}} 
+\index{data.c@{data.c}!data\_set\_sensor\_activity@{data\_set\_sensor\_activity}}
+\index{data\_set\_sensor\_activity@{data\_set\_sensor\_activity}!data.c@{data.c}}
+\doxysubsubsection{\texorpdfstring{data\_set\_sensor\_activity()}{data\_set\_sensor\_activity()}}
+{\footnotesize\ttfamily void data\+\_\+set\+\_\+sensor\+\_\+activity (\begin{DoxyParamCaption}\item[{sensor\+\_\+type\+\_\+e}]{sensor\+Nr,  }\item[{bool}]{activity }\end{DoxyParamCaption})}
+
+
+
+sets a sensors activity, given the id and new activity (if sensor is available and status is not already the given status) 
+
+T\+O\+DO\+: the functions hereafter are custom added, handy web\+: \href{https://developer.tizen.org/dev-guide/2.3.1/org.tizen.tutorials/html/native/system/sensor_tutorial_n.htm}{\texttt{ https\+://developer.\+tizen.\+org/dev-\/guide/2.\+3.\+1/org.\+tizen.\+tutorials/html/native/system/sensor\+\_\+tutorial\+\_\+n.\+htm}} 
+\begin{DoxyParams}{Parameters}
+{\em the} & sensor N\+R/id \\
+\hline
+{\em new} & status of this sensor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{data_8c_a08f3030b217613ffd3dc85fa46b88803}\label{data_8c_a08f3030b217613ffd3dc85fa46b88803}} 
+\index{data.c@{data.c}!data\_set\_sensor\_interval@{data\_set\_sensor\_interval}}
+\index{data\_set\_sensor\_interval@{data\_set\_sensor\_interval}!data.c@{data.c}}
+\doxysubsubsection{\texorpdfstring{data\_set\_sensor\_interval()}{data\_set\_sensor\_interval()}}
+{\footnotesize\ttfamily void data\+\_\+set\+\_\+sensor\+\_\+interval (\begin{DoxyParamCaption}\item[{sensor\+\_\+type\+\_\+e}]{sensor\+Nr,  }\item[{unsigned int}]{sensor\+Interval\+Ms }\end{DoxyParamCaption})}
+
+
+
+sets a new check interval for a sensor 
+
+
+\begin{DoxyParams}{Parameters}
+{\em the} & sensor nr/enum/id \\
+\hline
+{\em the} & new interval at which the sensor should be checked \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{data_8c_a840127a0e3252b4e882e68b5504e9665}\label{data_8c_a840127a0e3252b4e882e68b5504e9665}} 
+\index{data.c@{data.c}!init\_sensor@{init\_sensor}}
+\index{init\_sensor@{init\_sensor}!data.c@{data.c}}
+\doxysubsubsection{\texorpdfstring{init\_sensor()}{init\_sensor()}}
+{\footnotesize\ttfamily static void init\+\_\+sensor (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+sensor\+\_\+listener\+\_\+set\+\_\+option (s\+\_\+info.\+sensors\mbox{[}i\mbox{]}.listener, S\+E\+N\+S\+O\+R\+\_\+\+O\+P\+T\+I\+O\+N\+\_\+\+O\+N\+\_\+\+I\+N\+\_\+\+S\+C\+R\+E\+E\+N\+\_\+\+O\+FF); //keep sensors on when screen is off
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{data_8c_a865156c33c8c8e992653c20bd99f6290}\label{data_8c_a865156c33c8c8e992653c20bd99f6290}} 
+\index{data.c@{data.c}!s\_info@{s\_info}}
+\index{s\_info@{s\_info}!data.c@{data.c}}
+\doxysubsubsection{\texorpdfstring{s\_info}{s\_info}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structdata__info}{data\+\_\+info}}  s\+\_\+info\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \{}
+\DoxyCodeLine{    .sensors = \{ \{0\}, \},}
+\DoxyCodeLine{    .sensor\_activity = \{ \textcolor{keyword}{false}, \}, }
+\DoxyCodeLine{    .sensor\_interval\_ms = \{ 0, \},}
+\DoxyCodeLine{    .current\_sensor = 0,}
+\DoxyCodeLine{    .sensor\_update\_cb = NULL,}
+\DoxyCodeLine{    .timer = NULL,}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{data_8c_a0c602ad044f5f225efcf10c5b86794ef}\label{data_8c_a0c602ad044f5f225efcf10c5b86794ef}} 
+\index{data.c@{data.c}!sensor\_strings@{sensor\_strings}}
+\index{sensor\_strings@{sensor\_strings}!data.c@{data.c}}
+\doxysubsubsection{\texorpdfstring{sensor\_strings}{sensor\_strings}}
+{\footnotesize\ttfamily const char$\ast$ sensor\+\_\+strings\mbox{[}S\+E\+N\+S\+O\+R\+\_\+\+C\+O\+U\+NT\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \{}
+\DoxyCodeLine{    \textcolor{stringliteral}{"ACCELEROMETER"},}
+\DoxyCodeLine{    \textcolor{stringliteral}{"GRAVITY"},}
+\DoxyCodeLine{    \textcolor{stringliteral}{"LINEAR ACCELERATION"},}
+\DoxyCodeLine{    \textcolor{stringliteral}{"MAGNETIC"},}
+\DoxyCodeLine{    \textcolor{stringliteral}{"ROTATION VECTOR"},}
+\DoxyCodeLine{    \textcolor{stringliteral}{"ORIENTATION"},}
+\DoxyCodeLine{    \textcolor{stringliteral}{"GYROSCOPE"},}
+\DoxyCodeLine{    \textcolor{stringliteral}{"LIGHT"},}
+\DoxyCodeLine{    \textcolor{stringliteral}{"PROXIMITY"},}
+\DoxyCodeLine{    \textcolor{stringliteral}{"PRESSURE"},}
+\DoxyCodeLine{    \textcolor{stringliteral}{"ULTRAVIOLET"},}
+\DoxyCodeLine{    \textcolor{stringliteral}{"TEMPERATURE"},}
+\DoxyCodeLine{    \textcolor{stringliteral}{"HUMIDITY"},}
+\DoxyCodeLine{    \textcolor{stringliteral}{"HRM"},}
+\DoxyCodeLine{    \textcolor{stringliteral}{"STRING/SENSOR NOT ADDED"}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+String names for sensor\+\_\+type\+\_\+e values. 
+

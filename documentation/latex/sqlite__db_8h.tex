@@ -1,0 +1,174 @@
+\hypertarget{sqlite__db_8h}{}\doxysection{/mnt/c/\+Users/\+R\+J/\+Desktop/\+Tizen\+Tijgers/watch-\/device/inc/sqlite\+\_\+db.h File Reference}
+\label{sqlite__db_8h}\index{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/inc/sqlite\_db.h@{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/inc/sqlite\_db.h}}
+
+
+Implementation of the database on the watch.  
+
+
+{\ttfamily \#include \char`\"{}sensorbasicui.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}data.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$sqlite3.\+h$>$}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{sqlite__db_8h_ad974fe981249f5e84fbf1683b012c9f8}\label{sqlite__db_8h_ad974fe981249f5e84fbf1683b012c9f8}} 
+\#define {\bfseries B\+U\+F\+L\+EN}~800
+\item 
+\mbox{\Hypertarget{sqlite__db_8h_ac917e4cf23388f315a3e44c8b36dc4d5}\label{sqlite__db_8h_ac917e4cf23388f315a3e44c8b36dc4d5}} 
+\#define {\bfseries M\+A\+X\+\_\+\+S\+I\+Z\+E\+\_\+\+D\+A\+T\+A\+\_\+\+P\+A\+TH}~800
+\item 
+\mbox{\Hypertarget{sqlite__db_8h_a6ee2ac83583e6f7ca2c10e85f023e4c5}\label{sqlite__db_8h_a6ee2ac83583e6f7ca2c10e85f023e4c5}} 
+\#define {\bfseries db\+Data\+Cols}~6
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{sqlite__db_8h_a493583f6fc164cf849745e01e4c04ab5}\label{sqlite__db_8h_a493583f6fc164cf849745e01e4c04ab5}} 
+typedef struct data {\bfseries data}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{sqlite__db_8h_ac98528be435037214845112c2d54b7aa}\label{sqlite__db_8h_ac98528be435037214845112c2d54b7aa}} 
+struct {\bfseries \+\_\+\+\_\+attribute\+\_\+\+\_\+} ((\+\_\+\+\_\+packed\+\_\+\+\_\+)) data
+\item 
+data $\ast$ \mbox{\hyperlink{sqlite__db_8h_a275f309c6c9394ced77c5afe8d71b076}{database\+\_\+create\+\_\+data\+\_\+entry}} (unsigned long long epoch)
+\begin{DoxyCompactList}\small\item\em Gets the full path to a write/readable file in the datafolder (this does not check if it exists) \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{sqlite__db_8h_a04c6112a3b71062a98a9af667615d4f7}{database\+\_\+get\+\_\+file\+\_\+path}} (char $\ast$write\+File)
+\begin{DoxyCompactList}\small\item\em Gets the full path to a write/readable file in the datafolder (this does not check if it exists) \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{sqlite__db_8h_ac926ffee26566466b2de08480bb199fd}{database\+\_\+open\+\_\+database}} ()
+\begin{DoxyCompactList}\small\item\em open the database to allow for reading and storing of data \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{sqlite__db_8h_aea292499b9d3847068b10ed4cec32aa5}{database\+\_\+close\+\_\+database}} ()
+\begin{DoxyCompactList}\small\item\em close the database \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{sqlite__db_8h_a11d2ce5e4b06e00e3b7180dd38537e57}{database\+\_\+insert\+\_\+data}} (int count, sensor\+\_\+event\+\_\+s $\ast$ev, sensor\+\_\+type\+\_\+e sensor\+Type)
+\begin{DoxyCompactList}\small\item\em writes sensor data to the database file in the datafolder of the watch \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{sqlite__db_8h_a49f176c52a1569dcfb06cf39e9b76854}{database\+\_\+get\+\_\+data}} (const char $\ast$sensor\+\_\+name, unsigned long long time1, unsigned long long time2, char $\ast$ndata, int buffersize, int $\ast$written\+Rows)
+\begin{DoxyCompactList}\small\item\em puts data from database between time1 and time2 and from sensor sensor\+\_\+name in passed buffer \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{sqlite__db_8h_a0178a9523ba0857ce9b8edf279c045b1}{database\+\_\+open\+\_\+table}} ()
+\begin{DoxyCompactList}\small\item\em open a table within the database \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{sqlite__db_8h_a866431066bbb24bf43a3622564e50209}\label{sqlite__db_8h_a866431066bbb24bf43a3622564e50209}} 
+static const unsigned char {\bfseries table\+Name} \mbox{[}$\,$\mbox{]} = \{\char`\"{}Data\+Table\char`\"{}\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation of the database on the watch. 
+
+\begin{DoxyDate}{Date}
+Jan 10, 2020 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{sqlite__db_8h_aea292499b9d3847068b10ed4cec32aa5}\label{sqlite__db_8h_aea292499b9d3847068b10ed4cec32aa5}} 
+\index{sqlite\_db.h@{sqlite\_db.h}!database\_close\_database@{database\_close\_database}}
+\index{database\_close\_database@{database\_close\_database}!sqlite\_db.h@{sqlite\_db.h}}
+\doxysubsubsection{\texorpdfstring{database\_close\_database()}{database\_close\_database()}}
+{\footnotesize\ttfamily int database\+\_\+close\+\_\+database (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+close the database 
+
+\begin{DoxyReturn}{Returns}
+succes state 
+\end{DoxyReturn}
+\mbox{\Hypertarget{sqlite__db_8h_a275f309c6c9394ced77c5afe8d71b076}\label{sqlite__db_8h_a275f309c6c9394ced77c5afe8d71b076}} 
+\index{sqlite\_db.h@{sqlite\_db.h}!database\_create\_data\_entry@{database\_create\_data\_entry}}
+\index{database\_create\_data\_entry@{database\_create\_data\_entry}!sqlite\_db.h@{sqlite\_db.h}}
+\doxysubsubsection{\texorpdfstring{database\_create\_data\_entry()}{database\_create\_data\_entry()}}
+{\footnotesize\ttfamily data$\ast$ database\+\_\+create\+\_\+data\+\_\+entry (\begin{DoxyParamCaption}\item[{unsigned long long}]{epoch }\end{DoxyParamCaption})}
+
+
+
+Gets the full path to a write/readable file in the datafolder (this does not check if it exists) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Write\+File} & name of the file to get the full path from \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{sqlite__db_8h_a49f176c52a1569dcfb06cf39e9b76854}\label{sqlite__db_8h_a49f176c52a1569dcfb06cf39e9b76854}} 
+\index{sqlite\_db.h@{sqlite\_db.h}!database\_get\_data@{database\_get\_data}}
+\index{database\_get\_data@{database\_get\_data}!sqlite\_db.h@{sqlite\_db.h}}
+\doxysubsubsection{\texorpdfstring{database\_get\_data()}{database\_get\_data()}}
+{\footnotesize\ttfamily int database\+\_\+get\+\_\+data (\begin{DoxyParamCaption}\item[{const char $\ast$}]{sensor\+\_\+name,  }\item[{unsigned long long}]{time1,  }\item[{unsigned long long}]{time2,  }\item[{char $\ast$}]{ndata,  }\item[{int}]{buffersize,  }\item[{int $\ast$}]{written\+Rows }\end{DoxyParamCaption})}
+
+
+
+puts data from database between time1 and time2 and from sensor sensor\+\_\+name in passed buffer 
+
+The buffer is filled with struct data 
+\begin{DoxyParams}{Parameters}
+{\em sensor\+\_\+name} & sensor of which to get the data, name is in string form (e.\+g. \char`\"{}\+A\+C\+C\+E\+L\+E\+R\+O\+M\+E\+T\+E\+R\char`\"{}) @time1 1 of the between dates, supplied as milliseconds since epoch @time2 2 of the between dates, supplied as milliseconds since epoch @$\ast$ndata pointer to buffer that is to be filled @buffersize size of the supplied buffer in bytes @$\ast$written\+Rows the amount of rows that were written to the buffer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+succes state 
+\end{DoxyReturn}
+\mbox{\Hypertarget{sqlite__db_8h_a04c6112a3b71062a98a9af667615d4f7}\label{sqlite__db_8h_a04c6112a3b71062a98a9af667615d4f7}} 
+\index{sqlite\_db.h@{sqlite\_db.h}!database\_get\_file\_path@{database\_get\_file\_path}}
+\index{database\_get\_file\_path@{database\_get\_file\_path}!sqlite\_db.h@{sqlite\_db.h}}
+\doxysubsubsection{\texorpdfstring{database\_get\_file\_path()}{database\_get\_file\_path()}}
+{\footnotesize\ttfamily char$\ast$ database\+\_\+get\+\_\+file\+\_\+path (\begin{DoxyParamCaption}\item[{char $\ast$}]{write\+File }\end{DoxyParamCaption})}
+
+
+
+Gets the full path to a write/readable file in the datafolder (this does not check if it exists) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Write\+File} & name of the file to get the full path from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+pointer to char array containing filepath 
+\end{DoxyReturn}
+\mbox{\Hypertarget{sqlite__db_8h_a11d2ce5e4b06e00e3b7180dd38537e57}\label{sqlite__db_8h_a11d2ce5e4b06e00e3b7180dd38537e57}} 
+\index{sqlite\_db.h@{sqlite\_db.h}!database\_insert\_data@{database\_insert\_data}}
+\index{database\_insert\_data@{database\_insert\_data}!sqlite\_db.h@{sqlite\_db.h}}
+\doxysubsubsection{\texorpdfstring{database\_insert\_data()}{database\_insert\_data()}}
+{\footnotesize\ttfamily int database\+\_\+insert\+\_\+data (\begin{DoxyParamCaption}\item[{int}]{count,  }\item[{sensor\+\_\+event\+\_\+s $\ast$}]{ev,  }\item[{sensor\+\_\+type\+\_\+e}]{sensor\+Type }\end{DoxyParamCaption})}
+
+
+
+writes sensor data to the database file in the datafolder of the watch 
+
+
+\begin{DoxyParams}{Parameters}
+{\em count} & amount of fields in the data \\
+\hline
+{\em val\+Arr} & pointer to the data from the sensor \\
+\hline
+{\em sensor\+Type} & name of the sensor that wants to log data \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{sqlite__db_8h_ac926ffee26566466b2de08480bb199fd}\label{sqlite__db_8h_ac926ffee26566466b2de08480bb199fd}} 
+\index{sqlite\_db.h@{sqlite\_db.h}!database\_open\_database@{database\_open\_database}}
+\index{database\_open\_database@{database\_open\_database}!sqlite\_db.h@{sqlite\_db.h}}
+\doxysubsubsection{\texorpdfstring{database\_open\_database()}{database\_open\_database()}}
+{\footnotesize\ttfamily int database\+\_\+open\+\_\+database (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+open the database to allow for reading and storing of data 
+
+\begin{DoxyReturn}{Returns}
+succes state 
+\end{DoxyReturn}
+\mbox{\Hypertarget{sqlite__db_8h_a0178a9523ba0857ce9b8edf279c045b1}\label{sqlite__db_8h_a0178a9523ba0857ce9b8edf279c045b1}} 
+\index{sqlite\_db.h@{sqlite\_db.h}!database\_open\_table@{database\_open\_table}}
+\index{database\_open\_table@{database\_open\_table}!sqlite\_db.h@{sqlite\_db.h}}
+\doxysubsubsection{\texorpdfstring{database\_open\_table()}{database\_open\_table()}}
+{\footnotesize\ttfamily int database\+\_\+open\+\_\+table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+open a table within the database 
+
+\begin{DoxyReturn}{Returns}
+succes state 
+\end{DoxyReturn}

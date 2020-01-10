@@ -1,8 +1,10 @@
 /**
- * Low-level networking code
- * TODO: Add openSSL
+ * @file network.c
  * @author Peter Bosch <me@pbx.sh>
+ * @brief Low-Level networking code
+ * TODO: Add openSSL
  */
+
 #include <sys/ioctl.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>

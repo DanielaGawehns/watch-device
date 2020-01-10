@@ -1,38 +1,24 @@
+/**
+ * @file sensorbasicui.c
+ * @date 10 Jan 2020
+ * @brief Main file for the smartwatch app
+ */
+
 #include "sensorbasicui.h"
 #include "data.h" //used for sensor support
-#include <device/power.h>
 #include "scheduler.h"
 #include "protocol.h"
 #include "network.h"
-#include <sqlite3.h> //used for database
 #include "netcore.h"
 #include "sqlite_db.h"
-
-#define MAX_SIZE_DATA_PATH 800
-
-int
-OpenDatabase();
-
-int
-CloseDatabase();
-
-int
-OpenTable();
-
-int
-InsertDataInDatabase();
-
-char*
-GetDataFromDatabase();
-
-typedef struct data datatest; //refer to struct data with type data
+#include <sqlite3.h> //used for database
+#include <device/power.h>
 
 typedef struct appdata {
 	Evas_Object *win;
 	Evas_Object *conform;
 	Evas_Object *label;
 } appdata_s;
-
 
 appdata_s * curAppdata;
 

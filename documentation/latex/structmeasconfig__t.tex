@@ -1,0 +1,77 @@
+\hypertarget{structmeasconfig__t}{}\doxysection{measconfig\+\_\+t Struct Reference}
+\label{structmeasconfig__t}\index{measconfig\_t@{measconfig\_t}}
+\doxysubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structmeasconfig__t_a9c8cbcb78c6788b6966890bee52db17b}{magic}}
+\item 
+char \mbox{\hyperlink{structmeasconfig__t_a776e54ec8f2e0d72370b199179c05b4f}{reference}} \mbox{[}128\mbox{]}
+\item 
+long long int \mbox{\hyperlink{structmeasconfig__t_a0cb58c7f168879f732ab2c3f959ec7ea}{time\+\_\+start}}
+\item 
+long long int \mbox{\hyperlink{structmeasconfig__t_a932607e396bb2d8d657a79b456c115e3}{time\+\_\+end}}
+\item 
+int \mbox{\hyperlink{structmeasconfig__t_a4191f53fcbbf10099df5316fb27fb57d}{nquant}}
+\item 
+unsigned int \mbox{\hyperlink{structmeasconfig__t_a30aabb3db0a7b3ee53bc22b07383895d}{quant\+\_\+sz}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structmeasconfig__t_a00933aa8abf2d01a957b2cd05fe91392}{checksum}}
+\item 
+quantity\+\_\+t \mbox{\hyperlink{structmeasconfig__t_af20969fc2d1e97bea73790dfad75ab1d}{quant}} \mbox{[}0\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Field Documentation}
+\mbox{\Hypertarget{structmeasconfig__t_a00933aa8abf2d01a957b2cd05fe91392}\label{structmeasconfig__t_a00933aa8abf2d01a957b2cd05fe91392}} 
+\index{measconfig\_t@{measconfig\_t}!checksum@{checksum}}
+\index{checksum@{checksum}!measconfig\_t@{measconfig\_t}}
+\doxysubsubsection{\texorpdfstring{checksum}{checksum}}
+{\footnotesize\ttfamily uint32\+\_\+t measconfig\+\_\+t\+::checksum}
+
+Checksum over the config. Computed using the C\+R\+C32 algorithm, with this field set to zero for the calculation. \mbox{\Hypertarget{structmeasconfig__t_a9c8cbcb78c6788b6966890bee52db17b}\label{structmeasconfig__t_a9c8cbcb78c6788b6966890bee52db17b}} 
+\index{measconfig\_t@{measconfig\_t}!magic@{magic}}
+\index{magic@{magic}!measconfig\_t@{measconfig\_t}}
+\doxysubsubsection{\texorpdfstring{magic}{magic}}
+{\footnotesize\ttfamily uint32\+\_\+t measconfig\+\_\+t\+::magic}
+
+Magic number. Used to recognize the start of a config file. Should always be set to C\+O\+N\+F\+I\+G\+\_\+\+M\+A\+G\+IC \mbox{\Hypertarget{structmeasconfig__t_a4191f53fcbbf10099df5316fb27fb57d}\label{structmeasconfig__t_a4191f53fcbbf10099df5316fb27fb57d}} 
+\index{measconfig\_t@{measconfig\_t}!nquant@{nquant}}
+\index{nquant@{nquant}!measconfig\_t@{measconfig\_t}}
+\doxysubsubsection{\texorpdfstring{nquant}{nquant}}
+{\footnotesize\ttfamily int measconfig\+\_\+t\+::nquant}
+
+The number of quantities measured \mbox{\Hypertarget{structmeasconfig__t_af20969fc2d1e97bea73790dfad75ab1d}\label{structmeasconfig__t_af20969fc2d1e97bea73790dfad75ab1d}} 
+\index{measconfig\_t@{measconfig\_t}!quant@{quant}}
+\index{quant@{quant}!measconfig\_t@{measconfig\_t}}
+\doxysubsubsection{\texorpdfstring{quant}{quant}}
+{\footnotesize\ttfamily quantity\+\_\+t measconfig\+\_\+t\+::quant\mbox{[}0\mbox{]}}
+
+Quantity information \mbox{\Hypertarget{structmeasconfig__t_a30aabb3db0a7b3ee53bc22b07383895d}\label{structmeasconfig__t_a30aabb3db0a7b3ee53bc22b07383895d}} 
+\index{measconfig\_t@{measconfig\_t}!quant\_sz@{quant\_sz}}
+\index{quant\_sz@{quant\_sz}!measconfig\_t@{measconfig\_t}}
+\doxysubsubsection{\texorpdfstring{quant\_sz}{quant\_sz}}
+{\footnotesize\ttfamily unsigned int measconfig\+\_\+t\+::quant\+\_\+sz}
+
+Quantity entry size \mbox{\Hypertarget{structmeasconfig__t_a776e54ec8f2e0d72370b199179c05b4f}\label{structmeasconfig__t_a776e54ec8f2e0d72370b199179c05b4f}} 
+\index{measconfig\_t@{measconfig\_t}!reference@{reference}}
+\index{reference@{reference}!measconfig\_t@{measconfig\_t}}
+\doxysubsubsection{\texorpdfstring{reference}{reference}}
+{\footnotesize\ttfamily char measconfig\+\_\+t\+::reference\mbox{[}128\mbox{]}}
+
+The reference name for the measurement run. This value will be recorded in the measurement data and, together with the timestamps, serves to identify the measurement session. \mbox{\Hypertarget{structmeasconfig__t_a932607e396bb2d8d657a79b456c115e3}\label{structmeasconfig__t_a932607e396bb2d8d657a79b456c115e3}} 
+\index{measconfig\_t@{measconfig\_t}!time\_end@{time\_end}}
+\index{time\_end@{time\_end}!measconfig\_t@{measconfig\_t}}
+\doxysubsubsection{\texorpdfstring{time\_end}{time\_end}}
+{\footnotesize\ttfamily long long int measconfig\+\_\+t\+::time\+\_\+end}
+
+The end time for the measurement run. Unit\+: milliseconds since 00\+:00 January 1st 1970 \mbox{\Hypertarget{structmeasconfig__t_a0cb58c7f168879f732ab2c3f959ec7ea}\label{structmeasconfig__t_a0cb58c7f168879f732ab2c3f959ec7ea}} 
+\index{measconfig\_t@{measconfig\_t}!time\_start@{time\_start}}
+\index{time\_start@{time\_start}!measconfig\_t@{measconfig\_t}}
+\doxysubsubsection{\texorpdfstring{time\_start}{time\_start}}
+{\footnotesize\ttfamily long long int measconfig\+\_\+t\+::time\+\_\+start}
+
+The start time for the measurements requested Unit\+: milliseconds since 00\+:00 January 1st 1970 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/mnt/c/\+Users/\+R\+J/\+Desktop/\+Tizen\+Tijgers/watch-\/device/inc/protocol\+\_\+defs.\+h\end{DoxyCompactItemize}

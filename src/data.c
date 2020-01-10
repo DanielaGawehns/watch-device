@@ -1,3 +1,9 @@
+/**
+ * @file data.c
+ * @date 10 Jan 2020
+ * @brief File implementing the communication with the sensors on the watch device
+ */
+
 /*
  * This code is an alteration on the by Tizen Studio Provided sample code used in their sample apps.
  * All code from the original file is distributed under the license specified underneath this statement.
@@ -59,11 +65,9 @@ const char *sensor_strings[SENSOR_COUNT] = {
 	"STRING/SENSOR NOT ADDED"
 };
 
-
 /**
- * @brief sensor data struct used to manage each sensor's listener and handle
+ *  @brief sensor data struct used to manage each sensor's listener and handle
  */
-
 typedef struct _sensor_data {
 	sensor_h handle;
 	sensor_listener_h listener;

@@ -1,3 +1,9 @@
+/**
+ * @file sensorbasicui.h
+ * @date 10 Jan 2020
+ * @brief Main file for the smartwatch app
+ */
+
 #ifndef __sensorbasicui_H__
 #define __sensorbasicui_H__
 
@@ -12,6 +18,8 @@
 #undef  LOG_TAG
 #endif
 #define LOG_TAG "sensorbasicui"
+
+#define MAX_SIZE_DATA_PATH 800
 
 #if !defined(PACKAGE)
 #define PACKAGE "org.example.sensorbasicui"

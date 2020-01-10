@@ -1,0 +1,63 @@
+\hypertarget{scheduler_8h}{}\doxysection{/mnt/c/\+Users/\+R\+J/\+Desktop/\+Tizen\+Tijgers/watch-\/device/inc/scheduler.h File Reference}
+\label{scheduler_8h}\index{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/inc/scheduler.h@{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/inc/scheduler.h}}
+
+
+Contains implementation of a simple class that enable scheduling of schedule\+\_\+units.  
+
+
+{\ttfamily \#include \char`\"{}stdbool.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$sys/time.\+h$>$}\newline
+{\ttfamily \#include $<$Ecore.\+h$>$}\newline
+{\ttfamily \#include $<$dlog.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}protocol.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structscheduler}{scheduler}}
+\item 
+struct \mbox{\hyperlink{structschedule__unit}{schedule\+\_\+unit}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{scheduler_8h_af4992085c1fd7e359e2a34c7d000705e}\label{scheduler_8h_af4992085c1fd7e359e2a34c7d000705e}} 
+\#define {\bfseries S\+E\+N\+S\+O\+R\+R\+E\+S\+E\+R\+V\+ED}~50
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{scheduler_8h_aac0aeebd0964c9a33d145f80601e32a8}\label{scheduler_8h_aac0aeebd0964c9a33d145f80601e32a8}} 
+typedef struct \mbox{\hyperlink{structschedule__unit}{schedule\+\_\+unit}} {\bfseries schedule\+\_\+unit}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{scheduler_8h_a6c3f36f84669bf534700eca993c869d2}\label{scheduler_8h_a6c3f36f84669bf534700eca993c869d2}} 
+bool {\bfseries scheduler\+\_\+initialize} ()
+\item 
+\mbox{\Hypertarget{scheduler_8h_a9adaf4fe848b4f6d2cad9c9675455895}\label{scheduler_8h_a9adaf4fe848b4f6d2cad9c9675455895}} 
+void {\bfseries scheduler\+\_\+finalize} ()
+\item 
+\mbox{\Hypertarget{scheduler_8h_a8fa32ad8706d6a52e3b25eb273308a4a}\label{scheduler_8h_a8fa32ad8706d6a52e3b25eb273308a4a}} 
+void {\bfseries scheduler\+\_\+unit\+\_\+add} (\mbox{\hyperlink{structschedule__unit}{schedule\+\_\+unit}} const $\ast$const new\+\_\+unit)
+\item 
+\mbox{\Hypertarget{scheduler_8h_abd36178aad721cfea95df006325161d7}\label{scheduler_8h_abd36178aad721cfea95df006325161d7}} 
+bool {\bfseries scheduler\+\_\+unit\+\_\+id\+\_\+remove} (int unit\+\_\+id)
+\item 
+\mbox{\Hypertarget{scheduler_8h_a384acdd052a653a093cd382ea3b4fdd0}\label{scheduler_8h_a384acdd052a653a093cd382ea3b4fdd0}} 
+void {\bfseries scheduler\+\_\+print\+\_\+unit} (\mbox{\hyperlink{structschedule__unit}{schedule\+\_\+unit}} $\ast$unit)
+\item 
+\mbox{\Hypertarget{scheduler_8h_a4eb4dcbb88cc9d3b80f9b7c57b15cfa4}\label{scheduler_8h_a4eb4dcbb88cc9d3b80f9b7c57b15cfa4}} 
+void {\bfseries print\+\_\+schedule} ()
+\item 
+\mbox{\Hypertarget{scheduler_8h_a2df5da99bed4eafa6740c3ebb2921a36}\label{scheduler_8h_a2df5da99bed4eafa6740c3ebb2921a36}} 
+void {\bfseries scheduler\+\_\+stop\+\_\+main\+\_\+ecore\+\_\+loop} ()
+\item 
+\mbox{\Hypertarget{scheduler_8h_a1a0c535f99feded84dadef3b83b534cf}\label{scheduler_8h_a1a0c535f99feded84dadef3b83b534cf}} 
+void {\bfseries scheduler\+\_\+start\+\_\+main\+\_\+ecore\+\_\+loop} (double interval\+In\+Sec)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Contains implementation of a simple class that enable scheduling of schedule\+\_\+units. 
+

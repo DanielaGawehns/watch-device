@@ -1,3 +1,10 @@
+/**
+ * @file netlog.c
+ * @author Peter Bosch <me@pbx.sh>
+ * @date Jan 10, 2020
+ * @brief logging of errors on the smartwatch
+ */
+
 #include <stdio.h>
 #include <stdarg.h>
 #include <dlog.h> //dlog

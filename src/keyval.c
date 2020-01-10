@@ -1,8 +1,8 @@
-/*
- * keyval.c
- *
- *  Created on: Jan 4th, 2020
- *      Author: pbx
+/**
+ * @file keyval.c
+ * @author Peter Bosch <me@pbx.sh>
+ * @date Jan 4th, 2020
+ * @brief keyval
  */
 
 /* enable strchrnul */

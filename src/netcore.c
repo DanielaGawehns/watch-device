@@ -1,3 +1,7 @@
+/**
+ * @file netcore.c
+ * @brief ecore implementation of network
+ */
 
 #include <Ecore.h> //ecore
 #include <dlog.h>

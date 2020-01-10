@@ -1,0 +1,366 @@
+\hypertarget{protocol_8h}{}\doxysection{/mnt/c/\+Users/\+R\+J/\+Desktop/\+Tizen\+Tijgers/watch-\/device/inc/protocol.h File Reference}
+\label{protocol_8h}\index{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/inc/protocol.h@{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/inc/protocol.h}}
+
+
+implementation of protocol  
+
+
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdarg.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{protocol_8h_a277f7abca2044f354abe265252cb9252}\label{protocol_8h_a277f7abca2044f354abe265252cb9252}} 
+\#define {\bfseries P\+R\+O\+T\+O\+C\+O\+L\+\_\+\+V\+E\+R\+S\+I\+ON}~(1)
+\item 
+\mbox{\Hypertarget{protocol_8h_a8d9f33708d3a7142df20353a2791466e}\label{protocol_8h_a8d9f33708d3a7142df20353a2791466e}} 
+\#define {\bfseries P\+R\+O\+T\+O\+C\+O\+L\+\_\+\+A\+CK}~(0x06)
+\item 
+\mbox{\Hypertarget{protocol_8h_aba0bfacfa7657845b8e8034ff5335117}\label{protocol_8h_aba0bfacfa7657845b8e8034ff5335117}} 
+\#define {\bfseries M\+E\+S\+S\+A\+G\+E\+\_\+\+P\+I\+NG}~(0)
+\item 
+\mbox{\Hypertarget{protocol_8h_a7ff5f65ae2a976ff61bb97c3a5a4ff3f}\label{protocol_8h_a7ff5f65ae2a976ff61bb97c3a5a4ff3f}} 
+\#define {\bfseries M\+E\+S\+S\+A\+G\+E\+\_\+\+R\+E\+P\+LY}~(1)
+\item 
+\mbox{\Hypertarget{protocol_8h_adb531e2c0592a3cbf0f6adb6c3dd4166}\label{protocol_8h_adb531e2c0592a3cbf0f6adb6c3dd4166}} 
+\#define {\bfseries M\+E\+S\+S\+A\+G\+E\+\_\+\+G\+E\+T\+\_\+\+V\+A\+L\+U\+ES}~(2)
+\item 
+\mbox{\Hypertarget{protocol_8h_a5e32cdc5495a4a2b4fab783e9eaae1ec}\label{protocol_8h_a5e32cdc5495a4a2b4fab783e9eaae1ec}} 
+\#define {\bfseries M\+E\+S\+S\+A\+G\+E\+\_\+\+S\+E\+T\+\_\+\+V\+A\+L\+U\+ES}~(3)
+\item 
+\mbox{\Hypertarget{protocol_8h_aeb981c9dfcc6b0cb4a7e710e63bd041d}\label{protocol_8h_aeb981c9dfcc6b0cb4a7e710e63bd041d}} 
+\#define {\bfseries M\+E\+S\+S\+A\+G\+E\+\_\+\+I\+N\+C\+R\+E\+M\+E\+NT}~(4)
+\item 
+\mbox{\Hypertarget{protocol_8h_a01e8dc611f35153c814ad23ef0e76468}\label{protocol_8h_a01e8dc611f35153c814ad23ef0e76468}} 
+\#define {\bfseries M\+E\+S\+S\+A\+G\+E\+\_\+\+P\+L\+A\+Y\+B\+A\+CK}~(5)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{protocol_8h_ab898071398b359603a35c202e9c65f3b}{\+\_\+\+\_\+attribute\+\_\+\+\_\+}} ((packed))
+\item 
+\mbox{\Hypertarget{protocol_8h_a32958ee0939becb1516a926af591bbc0}\label{protocol_8h_a32958ee0939becb1516a926af591bbc0}} 
+void {\bfseries prot\+\_\+handle\+\_\+error} ()
+\item 
+\mbox{\Hypertarget{protocol_8h_a7d29a07aa99b9c03d4db5b18e8dc2e25}\label{protocol_8h_a7d29a07aa99b9c03d4db5b18e8dc2e25}} 
+void {\bfseries prot\+\_\+printerr} (const char $\ast$format, va\+\_\+list list)
+\item 
+int \mbox{\hyperlink{protocol_8h_aa646044f2cb33dfeb0214f404efb71d4}{prot\+\_\+handshake\+\_\+send}} ()
+\item 
+int \mbox{\hyperlink{protocol_8h_af4bf27eadfc3d879ac0f6f8ed5c73354}{prot\+\_\+handshake\+\_\+recv}} ()
+\item 
+int \mbox{\hyperlink{protocol_8h_aa9a41710bf2553e2542ca02643c6a75c}{prot\+\_\+send}} (int seq, int type, int nparam, message\+\_\+param $\ast$param)
+\item 
+void \mbox{\hyperlink{protocol_8h_a72ee957e4d0f441ebed3fa3c8d69ce6b}{prot\+\_\+freeparam}} (int nparam, message\+\_\+param $\ast$param)
+\item 
+int \mbox{\hyperlink{protocol_8h_a6d8ab162a5ff386b6d5e348a73fa9e33}{prot\+\_\+recv}} (int $\ast$seq, int $\ast$type, int $\ast$nparam, message\+\_\+param $\ast$$\ast$param)
+\item 
+void \mbox{\hyperlink{protocol_8h_a51a142b915c04186c093cb3043dd0b89}{prot\+\_\+process}} ()
+\item 
+int \mbox{\hyperlink{protocol_8h_af9377975631c489497099231c6d16bca}{prot\+\_\+send\+\_\+reply}} (int seq, int status, const char $\ast$msg, int nparam, message\+\_\+param $\ast$param)
+\item 
+\mbox{\Hypertarget{protocol_8h_a0ab1fc1bbe9b76b04029faee661de1a9}\label{protocol_8h_a0ab1fc1bbe9b76b04029faee661de1a9}} 
+int {\bfseries prot\+\_\+send\+\_\+increment} (const char $\ast$sensor, double time, int ndata, double $\ast$data)
+\item 
+int \mbox{\hyperlink{protocol_8h_a971785609560523f8cb67142b66dcb38}{prot\+\_\+set\+\_\+param\+\_\+i}} (message\+\_\+param $\ast$param, int value)
+\item 
+int \mbox{\hyperlink{protocol_8h_abfe0ebf3c8364f9fdb01917b9f2eae46}{prot\+\_\+set\+\_\+param\+\_\+d}} (message\+\_\+param $\ast$param, double value)
+\item 
+int \mbox{\hyperlink{protocol_8h_aa3e0c3b17142def3674f4ff2f8a9d7e7}{prot\+\_\+set\+\_\+param\+\_\+s}} (message\+\_\+param $\ast$param, const char $\ast$value)
+\item 
+int \mbox{\hyperlink{protocol_8h_af86dd578e5d28ad195ec6496f1ece917}{prot\+\_\+set\+\_\+param\+\_\+l}} (message\+\_\+param $\ast$param, long long value)
+\item 
+\mbox{\Hypertarget{protocol_8h_a3fd8ab37a2501fbc04c208a0ed40c283}\label{protocol_8h_a3fd8ab37a2501fbc04c208a0ed40c283}} 
+int {\bfseries prot\+\_\+create\+\_\+param\+\_\+list} (char $\ast$$\ast$status, int $\ast$nparam, message\+\_\+param $\ast$$\ast$param)
+\item 
+int \mbox{\hyperlink{protocol_8h_a04454a3c199b21478eeacc40f9dac317}{prot\+\_\+create\+\_\+param\+\_\+1s}} (char $\ast$$\ast$status, int $\ast$nparam, message\+\_\+param $\ast$$\ast$param, const char $\ast$value)
+\begin{DoxyCompactList}\small\item\em Creates a parameter list with one string parameter and returns. If this is succesful, the status output will be set to \char`\"{}\+O\+K\char`\"{}, otherwise, the status output will be set to contain a friendly error message. This function can be used as a convenient chainreturn on functions. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{protocol_8h_a8802d75658cc64b3d4290875b519e0bd}{prot\+\_\+create\+\_\+param\+\_\+1i}} (char $\ast$$\ast$status, int $\ast$nparam, message\+\_\+param $\ast$$\ast$param, int value)
+\begin{DoxyCompactList}\small\item\em Creates a parameter list with one integer parameter and returns. If this is succesful, the status output will be set to \char`\"{}\+O\+K\char`\"{}, otherwise, the status output will be set to contain a friendly error message. This function can be used as a convenient chainreturn on functions. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{protocol_8h_a557730dfea73b83b20a791c0aa6b0ee6}{prot\+\_\+create\+\_\+param\+\_\+1d}} (char $\ast$$\ast$status, int $\ast$nparam, message\+\_\+param $\ast$$\ast$param, double value)
+\begin{DoxyCompactList}\small\item\em Creates a parameter list with one double parameter and returns. If this is succesful, the status output will be set to \char`\"{}\+O\+K\char`\"{}, otherwise, the status output will be set to contain a friendly error message. This function can be used as a convenient chainreturn on functions. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{protocol_8h_a14f77e808ac85866414eb3340c0918d1}{prot\+\_\+create\+\_\+param\+\_\+2d}} (char $\ast$$\ast$status, int $\ast$nparam, message\+\_\+param $\ast$$\ast$param, double val1, double val2)
+\begin{DoxyCompactList}\small\item\em Creates a parameter list with two double parameters and returns. If this is succesful, the status output will be set to \char`\"{}\+O\+K\char`\"{}, otherwise, the status output will be set to contain a friendly error message. This function can be used as a convenient chainreturn on functions. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{protocol_8h_a28d0967d37f0d0cda1402e810113e78e}{prot\+\_\+encode\+\_\+long}} (void $\ast$output, long long value)
+\item 
+long long \mbox{\hyperlink{protocol_8h_ac91bfb7a7d5de52e489d1fb2339c7cd9}{prot\+\_\+decode\+\_\+long}} (const void $\ast$output)
+\item 
+void \mbox{\hyperlink{protocol_8h_a47f4af73f908442522d0fc58e068b607}{prot\+\_\+encode\+\_\+int}} (void $\ast$output, int value)
+\item 
+int \mbox{\hyperlink{protocol_8h_ab8a4559ab9d0a346aa3b779c44d33f01}{prot\+\_\+decode\+\_\+int}} (const void $\ast$output)
+\item 
+void \mbox{\hyperlink{protocol_8h_a6891c34c923b0552f53f217b5aad235b}{prot\+\_\+encode\+\_\+double}} (void $\ast$output, double value)
+\item 
+double \mbox{\hyperlink{protocol_8h_a9d9aff1d3f43078551e0e26e7d99dbd7}{prot\+\_\+decode\+\_\+double}} (const void $\ast$output)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{protocol_8h_accabd45b44ff2682acae2641fb1f25cc}\label{protocol_8h_accabd45b44ff2682acae2641fb1f25cc}} 
+{\bfseries message\+\_\+header}
+\item 
+\mbox{\Hypertarget{protocol_8h_a8f7195f711556d694d6b43fc1520581f}\label{protocol_8h_a8f7195f711556d694d6b43fc1520581f}} 
+{\bfseries message\+\_\+param}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+implementation of protocol 
+
+\begin{DoxyAuthor}{Author}
+Peter Bosch \href{mailto:me@pbx.sh}{\texttt{ me@pbx.\+sh}} 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Dec 6, 2019
+\end{DoxyDate}
+\begin{DoxyAuthor}{Author}
+pbx 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Dec 6, 2019 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{protocol_8h_ab898071398b359603a35c202e9c65f3b}\label{protocol_8h_ab898071398b359603a35c202e9c65f3b}} 
+\index{protocol.h@{protocol.h}!\_\_attribute\_\_@{\_\_attribute\_\_}}
+\index{\_\_attribute\_\_@{\_\_attribute\_\_}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{\_\_attribute\_\_()}{\_\_attribute\_\_()}}
+{\footnotesize\ttfamily struct \+\_\+\+\_\+attribute\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{(packed)}]{ }\end{DoxyParamCaption})}
+
+Packet header structure
+
+Parameter structure for network protocol Sequence ID
+
+Packet ID
+
+Number of message\+\_\+param structures following this header\mbox{\Hypertarget{protocol_8h_a557730dfea73b83b20a791c0aa6b0ee6}\label{protocol_8h_a557730dfea73b83b20a791c0aa6b0ee6}} 
+\index{protocol.h@{protocol.h}!prot\_create\_param\_1d@{prot\_create\_param\_1d}}
+\index{prot\_create\_param\_1d@{prot\_create\_param\_1d}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_create\_param\_1d()}{prot\_create\_param\_1d()}}
+{\footnotesize\ttfamily int prot\+\_\+create\+\_\+param\+\_\+1d (\begin{DoxyParamCaption}\item[{char $\ast$$\ast$}]{status,  }\item[{int $\ast$}]{nparam,  }\item[{message\+\_\+param $\ast$$\ast$}]{param,  }\item[{double}]{value }\end{DoxyParamCaption})}
+
+
+
+Creates a parameter list with one double parameter and returns. If this is succesful, the status output will be set to \char`\"{}\+O\+K\char`\"{}, otherwise, the status output will be set to contain a friendly error message. This function can be used as a convenient chainreturn on functions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em status} & Friendly status message output \\
+\hline
+{\em nparam} & Parameter count output \\
+\hline
+{\em param} & Parameter list pointer output \\
+\hline
+{\em value} & The value to copy into the parameter list. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 when successful. or -\/1 if not. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{protocol_8h_a8802d75658cc64b3d4290875b519e0bd}\label{protocol_8h_a8802d75658cc64b3d4290875b519e0bd}} 
+\index{protocol.h@{protocol.h}!prot\_create\_param\_1i@{prot\_create\_param\_1i}}
+\index{prot\_create\_param\_1i@{prot\_create\_param\_1i}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_create\_param\_1i()}{prot\_create\_param\_1i()}}
+{\footnotesize\ttfamily int prot\+\_\+create\+\_\+param\+\_\+1i (\begin{DoxyParamCaption}\item[{char $\ast$$\ast$}]{status,  }\item[{int $\ast$}]{nparam,  }\item[{message\+\_\+param $\ast$$\ast$}]{param,  }\item[{int}]{value }\end{DoxyParamCaption})}
+
+
+
+Creates a parameter list with one integer parameter and returns. If this is succesful, the status output will be set to \char`\"{}\+O\+K\char`\"{}, otherwise, the status output will be set to contain a friendly error message. This function can be used as a convenient chainreturn on functions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em status} & Friendly status message output \\
+\hline
+{\em nparam} & Parameter count output \\
+\hline
+{\em param} & Parameter list pointer output \\
+\hline
+{\em value} & The value to copy into the parameter list. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 when successful. or -\/1 if not. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{protocol_8h_a04454a3c199b21478eeacc40f9dac317}\label{protocol_8h_a04454a3c199b21478eeacc40f9dac317}} 
+\index{protocol.h@{protocol.h}!prot\_create\_param\_1s@{prot\_create\_param\_1s}}
+\index{prot\_create\_param\_1s@{prot\_create\_param\_1s}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_create\_param\_1s()}{prot\_create\_param\_1s()}}
+{\footnotesize\ttfamily int prot\+\_\+create\+\_\+param\+\_\+1s (\begin{DoxyParamCaption}\item[{char $\ast$$\ast$}]{status,  }\item[{int $\ast$}]{nparam,  }\item[{message\+\_\+param $\ast$$\ast$}]{param,  }\item[{const char $\ast$}]{value }\end{DoxyParamCaption})}
+
+
+
+Creates a parameter list with one string parameter and returns. If this is succesful, the status output will be set to \char`\"{}\+O\+K\char`\"{}, otherwise, the status output will be set to contain a friendly error message. This function can be used as a convenient chainreturn on functions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em status} & Friendly status message output \\
+\hline
+{\em nparam} & Parameter count output \\
+\hline
+{\em param} & Parameter list pointer output \\
+\hline
+{\em value} & The value to copy into the parameter list. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 when successful. or -\/1 if not. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{protocol_8h_a14f77e808ac85866414eb3340c0918d1}\label{protocol_8h_a14f77e808ac85866414eb3340c0918d1}} 
+\index{protocol.h@{protocol.h}!prot\_create\_param\_2d@{prot\_create\_param\_2d}}
+\index{prot\_create\_param\_2d@{prot\_create\_param\_2d}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_create\_param\_2d()}{prot\_create\_param\_2d()}}
+{\footnotesize\ttfamily int prot\+\_\+create\+\_\+param\+\_\+2d (\begin{DoxyParamCaption}\item[{char $\ast$$\ast$}]{status,  }\item[{int $\ast$}]{nparam,  }\item[{message\+\_\+param $\ast$$\ast$}]{param,  }\item[{double}]{val1,  }\item[{double}]{val2 }\end{DoxyParamCaption})}
+
+
+
+Creates a parameter list with two double parameters and returns. If this is succesful, the status output will be set to \char`\"{}\+O\+K\char`\"{}, otherwise, the status output will be set to contain a friendly error message. This function can be used as a convenient chainreturn on functions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em status} & Friendly status message output \\
+\hline
+{\em nparam} & Parameter count output \\
+\hline
+{\em param} & Parameter list pointer output \\
+\hline
+{\em value} & The value to copy into the parameter list. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 when successful. or -\/1 if not. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{protocol_8h_a9d9aff1d3f43078551e0e26e7d99dbd7}\label{protocol_8h_a9d9aff1d3f43078551e0e26e7d99dbd7}} 
+\index{protocol.h@{protocol.h}!prot\_decode\_double@{prot\_decode\_double}}
+\index{prot\_decode\_double@{prot\_decode\_double}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_decode\_double()}{prot\_decode\_double()}}
+{\footnotesize\ttfamily double prot\+\_\+decode\+\_\+double (\begin{DoxyParamCaption}\item[{const void $\ast$}]{output }\end{DoxyParamCaption})}
+
+Decode a double from a memory buffer \mbox{\Hypertarget{protocol_8h_ab8a4559ab9d0a346aa3b779c44d33f01}\label{protocol_8h_ab8a4559ab9d0a346aa3b779c44d33f01}} 
+\index{protocol.h@{protocol.h}!prot\_decode\_int@{prot\_decode\_int}}
+\index{prot\_decode\_int@{prot\_decode\_int}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_decode\_int()}{prot\_decode\_int()}}
+{\footnotesize\ttfamily int prot\+\_\+decode\+\_\+int (\begin{DoxyParamCaption}\item[{const void $\ast$}]{output }\end{DoxyParamCaption})}
+
+Decode an int from a memory buffer \mbox{\Hypertarget{protocol_8h_ac91bfb7a7d5de52e489d1fb2339c7cd9}\label{protocol_8h_ac91bfb7a7d5de52e489d1fb2339c7cd9}} 
+\index{protocol.h@{protocol.h}!prot\_decode\_long@{prot\_decode\_long}}
+\index{prot\_decode\_long@{prot\_decode\_long}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_decode\_long()}{prot\_decode\_long()}}
+{\footnotesize\ttfamily long long prot\+\_\+decode\+\_\+long (\begin{DoxyParamCaption}\item[{const void $\ast$}]{output }\end{DoxyParamCaption})}
+
+Decode a long long from a memory buffer \mbox{\Hypertarget{protocol_8h_a6891c34c923b0552f53f217b5aad235b}\label{protocol_8h_a6891c34c923b0552f53f217b5aad235b}} 
+\index{protocol.h@{protocol.h}!prot\_encode\_double@{prot\_encode\_double}}
+\index{prot\_encode\_double@{prot\_encode\_double}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_encode\_double()}{prot\_encode\_double()}}
+{\footnotesize\ttfamily void prot\+\_\+encode\+\_\+double (\begin{DoxyParamCaption}\item[{void $\ast$}]{output,  }\item[{double}]{value }\end{DoxyParamCaption})}
+
+Encode a double to a memory buffer \mbox{\Hypertarget{protocol_8h_a47f4af73f908442522d0fc58e068b607}\label{protocol_8h_a47f4af73f908442522d0fc58e068b607}} 
+\index{protocol.h@{protocol.h}!prot\_encode\_int@{prot\_encode\_int}}
+\index{prot\_encode\_int@{prot\_encode\_int}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_encode\_int()}{prot\_encode\_int()}}
+{\footnotesize\ttfamily void prot\+\_\+encode\+\_\+int (\begin{DoxyParamCaption}\item[{void $\ast$}]{output,  }\item[{int}]{value }\end{DoxyParamCaption})}
+
+Encode an int to a memory buffer \mbox{\Hypertarget{protocol_8h_a28d0967d37f0d0cda1402e810113e78e}\label{protocol_8h_a28d0967d37f0d0cda1402e810113e78e}} 
+\index{protocol.h@{protocol.h}!prot\_encode\_long@{prot\_encode\_long}}
+\index{prot\_encode\_long@{prot\_encode\_long}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_encode\_long()}{prot\_encode\_long()}}
+{\footnotesize\ttfamily void prot\+\_\+encode\+\_\+long (\begin{DoxyParamCaption}\item[{void $\ast$}]{output,  }\item[{long long}]{value }\end{DoxyParamCaption})}
+
+Encode a long long to a memory buffer \mbox{\Hypertarget{protocol_8h_a72ee957e4d0f441ebed3fa3c8d69ce6b}\label{protocol_8h_a72ee957e4d0f441ebed3fa3c8d69ce6b}} 
+\index{protocol.h@{protocol.h}!prot\_freeparam@{prot\_freeparam}}
+\index{prot\_freeparam@{prot\_freeparam}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_freeparam()}{prot\_freeparam()}}
+{\footnotesize\ttfamily void prot\+\_\+freeparam (\begin{DoxyParamCaption}\item[{int}]{nparam,  }\item[{message\+\_\+param $\ast$}]{param }\end{DoxyParamCaption})}
+
+Frees a message\+\_\+param struct \mbox{\Hypertarget{protocol_8h_af4bf27eadfc3d879ac0f6f8ed5c73354}\label{protocol_8h_af4bf27eadfc3d879ac0f6f8ed5c73354}} 
+\index{protocol.h@{protocol.h}!prot\_handshake\_recv@{prot\_handshake\_recv}}
+\index{prot\_handshake\_recv@{prot\_handshake\_recv}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_handshake\_recv()}{prot\_handshake\_recv()}}
+{\footnotesize\ttfamily int prot\+\_\+handshake\+\_\+recv (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This function receives the handshake from the host \begin{DoxyReturn}{Returns}
+0 when successful, 1 when delayed or -\/1 if an error occurred. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{protocol_8h_aa646044f2cb33dfeb0214f404efb71d4}\label{protocol_8h_aa646044f2cb33dfeb0214f404efb71d4}} 
+\index{protocol.h@{protocol.h}!prot\_handshake\_send@{prot\_handshake\_send}}
+\index{prot\_handshake\_send@{prot\_handshake\_send}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_handshake\_send()}{prot\_handshake\_send()}}
+{\footnotesize\ttfamily int prot\+\_\+handshake\+\_\+send (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This function performs the handshake with the host \begin{DoxyReturn}{Returns}
+0 when successful. or -\/1 if not. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{protocol_8h_a51a142b915c04186c093cb3043dd0b89}\label{protocol_8h_a51a142b915c04186c093cb3043dd0b89}} 
+\index{protocol.h@{protocol.h}!prot\_process@{prot\_process}}
+\index{prot\_process@{prot\_process}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_process()}{prot\_process()}}
+{\footnotesize\ttfamily void prot\+\_\+process (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Handle incoming packets if any \mbox{\Hypertarget{protocol_8h_a6d8ab162a5ff386b6d5e348a73fa9e33}\label{protocol_8h_a6d8ab162a5ff386b6d5e348a73fa9e33}} 
+\index{protocol.h@{protocol.h}!prot\_recv@{prot\_recv}}
+\index{prot\_recv@{prot\_recv}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_recv()}{prot\_recv()}}
+{\footnotesize\ttfamily int prot\+\_\+recv (\begin{DoxyParamCaption}\item[{int $\ast$}]{seq,  }\item[{int $\ast$}]{type,  }\item[{int $\ast$}]{nparam,  }\item[{message\+\_\+param $\ast$$\ast$}]{param }\end{DoxyParamCaption})}
+
+Receive a message \begin{DoxyReturn}{Returns}
+0 when successful. or -\/1 if not. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{protocol_8h_aa9a41710bf2553e2542ca02643c6a75c}\label{protocol_8h_aa9a41710bf2553e2542ca02643c6a75c}} 
+\index{protocol.h@{protocol.h}!prot\_send@{prot\_send}}
+\index{prot\_send@{prot\_send}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_send()}{prot\_send()}}
+{\footnotesize\ttfamily int prot\+\_\+send (\begin{DoxyParamCaption}\item[{int}]{seq,  }\item[{int}]{type,  }\item[{int}]{nparam,  }\item[{message\+\_\+param $\ast$}]{param }\end{DoxyParamCaption})}
+
+Sends a message \begin{DoxyReturn}{Returns}
+0 when successful. or -\/1 if not. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{protocol_8h_af9377975631c489497099231c6d16bca}\label{protocol_8h_af9377975631c489497099231c6d16bca}} 
+\index{protocol.h@{protocol.h}!prot\_send\_reply@{prot\_send\_reply}}
+\index{prot\_send\_reply@{prot\_send\_reply}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_send\_reply()}{prot\_send\_reply()}}
+{\footnotesize\ttfamily int prot\+\_\+send\+\_\+reply (\begin{DoxyParamCaption}\item[{int}]{seq,  }\item[{int}]{status,  }\item[{const char $\ast$}]{msg,  }\item[{int}]{nparam,  }\item[{message\+\_\+param $\ast$}]{param }\end{DoxyParamCaption})}
+
+Sends a reply packet. 
+\begin{DoxyParams}{Parameters}
+{\em seq} & The sequence ID of the packet we are responding to \\
+\hline
+{\em status} & The status code to send \\
+\hline
+{\em msg} & The status message to send \\
+\hline
+{\em nparam} & The number of parameters to send \\
+\hline
+{\em param} & The parameters to send \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+When succesful, 0. If failure occurred, $<$0. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{protocol_8h_abfe0ebf3c8364f9fdb01917b9f2eae46}\label{protocol_8h_abfe0ebf3c8364f9fdb01917b9f2eae46}} 
+\index{protocol.h@{protocol.h}!prot\_set\_param\_d@{prot\_set\_param\_d}}
+\index{prot\_set\_param\_d@{prot\_set\_param\_d}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_set\_param\_d()}{prot\_set\_param\_d()}}
+{\footnotesize\ttfamily int prot\+\_\+set\+\_\+param\+\_\+d (\begin{DoxyParamCaption}\item[{message\+\_\+param $\ast$}]{param,  }\item[{double}]{value }\end{DoxyParamCaption})}
+
+Sets a param to a double value. This allocates a buffer so that the params can always be freed, regardless of source \mbox{\Hypertarget{protocol_8h_a971785609560523f8cb67142b66dcb38}\label{protocol_8h_a971785609560523f8cb67142b66dcb38}} 
+\index{protocol.h@{protocol.h}!prot\_set\_param\_i@{prot\_set\_param\_i}}
+\index{prot\_set\_param\_i@{prot\_set\_param\_i}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_set\_param\_i()}{prot\_set\_param\_i()}}
+{\footnotesize\ttfamily int prot\+\_\+set\+\_\+param\+\_\+i (\begin{DoxyParamCaption}\item[{message\+\_\+param $\ast$}]{param,  }\item[{int}]{value }\end{DoxyParamCaption})}
+
+Sets a param to an integer value. This allocates a buffer so that the params can always be freed, regardless of source \mbox{\Hypertarget{protocol_8h_af86dd578e5d28ad195ec6496f1ece917}\label{protocol_8h_af86dd578e5d28ad195ec6496f1ece917}} 
+\index{protocol.h@{protocol.h}!prot\_set\_param\_l@{prot\_set\_param\_l}}
+\index{prot\_set\_param\_l@{prot\_set\_param\_l}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_set\_param\_l()}{prot\_set\_param\_l()}}
+{\footnotesize\ttfamily int prot\+\_\+set\+\_\+param\+\_\+l (\begin{DoxyParamCaption}\item[{message\+\_\+param $\ast$}]{param,  }\item[{long long}]{value }\end{DoxyParamCaption})}
+
+Sets a param to a long value. This allocates a buffer so that the params can always be freed, regardless of source
+
+Sets a param to a long long value. This allocates a buffer so that the params can always be freed, regardless of source \mbox{\Hypertarget{protocol_8h_aa3e0c3b17142def3674f4ff2f8a9d7e7}\label{protocol_8h_aa3e0c3b17142def3674f4ff2f8a9d7e7}} 
+\index{protocol.h@{protocol.h}!prot\_set\_param\_s@{prot\_set\_param\_s}}
+\index{prot\_set\_param\_s@{prot\_set\_param\_s}!protocol.h@{protocol.h}}
+\doxysubsubsection{\texorpdfstring{prot\_set\_param\_s()}{prot\_set\_param\_s()}}
+{\footnotesize\ttfamily int prot\+\_\+set\+\_\+param\+\_\+s (\begin{DoxyParamCaption}\item[{message\+\_\+param $\ast$}]{param,  }\item[{const char $\ast$}]{value }\end{DoxyParamCaption})}
+
+Sets a param to a string value. This allocates a buffer so that the params can always be freed, regardless of source 

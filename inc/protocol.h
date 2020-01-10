@@ -1,8 +1,8 @@
-/*
- * protocol.h
- *
- *  Created on: Dec 6, 2019
- *      Author: pbx
+/**
+ * @file protocol.h
+ * @author Peter Bosch <me@pbx.sh>
+ * @date Dec 6, 2019
+ * @brief implementation of protocol
  */
 
 #ifndef PROTOCOL_H_
