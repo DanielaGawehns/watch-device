@@ -117,6 +117,6 @@ void init_syskv()
 	kv_sys = keyval_create_ns( "system" );
 	assert( keyval_add_p( "", kv_sys ) == 0 );
 	assert( keyval_create_add_k_leaf( kv_sys, "uid", "string", uid_get, NULL, NULL ) != NULL );
-	assert( keyval_create_add_k_leaf( kv_sys, "battery", "int", uid_get, NULL, NULL ) != NULL );
+	assert( keyval_create_add_k_leaf( kv_sys, "battery", "int", battery_get, NULL, NULL ) != NULL );
 
 }

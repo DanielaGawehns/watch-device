@@ -221,6 +221,9 @@ int prot_send_reply( int seq, int status, const char *msg,
 allocerr:
 	prot_freeparam( 2, out_param );
 
+	if ( r < 0 )
+		prot_error("Could not send packet");
+
 	return r;
 
 }
@@ -264,6 +267,9 @@ int prot_send_increment( const char *sensor, double time,
 	/* Free the new param list */
 allocerr:
 	prot_freeparam( out_nparam, out_param );
+
+	if ( r < 0 )
+		prot_error("Could not send packet");
 
 	return r;
 
@@ -312,8 +318,16 @@ void prot_process() {
 		cmd_set_values( seq, (const char *) param[0].data, nparam - 1, param + 1 );
 		break;
 
+	case MESSAGE_GET_PLAYBACK:
+		if ( nparam < 2 ) {
+			prot_error("Mismatched parameter count for MESSAGE_GET_PLAYBACK: %i", nparam);
+			break;
+		}
+		cmd_get_playback( seq, prot_decode_long(param[0].data), prot_decode_long(param[1].data) );
+		break;
+
 	default:
-		prot_error("Unknown message: %i", nparam);
+		prot_error("Unknown message: %i", type);
 		break;
 	}
 

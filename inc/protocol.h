@@ -49,6 +49,7 @@ typedef struct __attribute__((packed)) {
 #define MESSAGE_SET_VALUES      (3)
 #define MESSAGE_INCREMENT       (4)
 #define MESSAGE_PLAYBACK        (5)
+#define MESSAGE_GET_PLAYBACK    (6)
 
 void prot_handle_error();
 

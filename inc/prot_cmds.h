@@ -33,4 +33,9 @@ void cmd_set_values( int seq, const char *path, int nparam, message_param *param
  */
 void cmd_live_interval  ( double interval );
 
+/**
+ * Called by the protocol handler when a MESSAGE_GET_PLAYBACK comes in
+ */
+void cmd_get_playback( int seq, long long time_start, long long time_end );
+
 #endif

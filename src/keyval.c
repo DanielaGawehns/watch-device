@@ -196,12 +196,12 @@ int keyval_set( const char *path, char **status,
 	if ( !rem_path ) {
 		/* We found the node */
 		if ( kv->child ) {
-			/* Can't get something that is not a leaf */
-			*status = strdup( "Tried to `get` a namespace" );
+			/* Can't set something that is not a leaf */
+			*status = strdup( "Tried to `set` a namespace" );
 			return KV_EISDIR;
-		} else if ( !kv->get ) {
-			/* Get is not implemented for this node */
-			*status = strdup( "Tried to `get` something that is not implemented" );
+		} else if ( !kv->set ) {
+			/* Set is not implemented for this node */
+			*status = strdup( "Tried to `set` something that is not implemented" );
 			return KV_ENOSYS;
 		}
 		return kv->set( kv, status, nparam, param );

@@ -222,3 +222,8 @@ database_open_table(){
 	}
 	return ret;
 }
+
+void cmd_get_playback( int seq, long long time_start, long long time_end ){
+	dlog_print(DLOG_INFO, LOG_TAG, "Request measurements between %lli and %lli", time_start, time_end); //print info
+
+}

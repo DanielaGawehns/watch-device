@@ -381,6 +381,7 @@ static void _sensor_event_cb(sensor_h _sensor, sensor_event_s *event, void *data
 	else if ( sensor->id == SENSOR_PROXIMITY)
 		_timer_start((int)event->values[0]); /* Why? */
 
+	dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] got data for sensor", __FILE__, __LINE__ );
 	s_info.sensor_update_cb( sensor->id, event );		//call the "all sensors"-callback function, (the function that was set to handle all sensor data updates at data_initialize)
 
 }
