@@ -1,0 +1,297 @@
+\hypertarget{sensorbasicui_8c}{}\doxysection{/mnt/c/\+Users/\+R\+J/\+Desktop/\+Tizen\+Tijgers/watch-\/device/src/sensorbasicui.c File Reference}
+\label{sensorbasicui_8c}\index{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/src/sensorbasicui.c@{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/src/sensorbasicui.c}}
+
+
+Main file for the smartwatch app.  
+
+
+{\ttfamily \#include \char`\"{}sensorbasicui.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}data.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}scheduler.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}protocol.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}network.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}netcore.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}sqlite\+\_\+db.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$sqlite3.\+h$>$}\newline
+{\ttfamily \#include $<$device/power.\+h$>$}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structappdata}{appdata}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{sensorbasicui_8c_a5406c12cc563bb3d13094d9a2c0df832}\label{sensorbasicui_8c_a5406c12cc563bb3d13094d9a2c0df832}} 
+typedef struct \mbox{\hyperlink{structappdata}{appdata}} {\bfseries appdata\+\_\+s}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{sensorbasicui_8c_a3b88cde2a94f59c5b7080c731c885e66}\label{sensorbasicui_8c_a3b88cde2a94f59c5b7080c731c885e66}} 
+static void {\bfseries win\+\_\+delete\+\_\+request\+\_\+cb} (void $\ast$data, Evas\+\_\+\+Object $\ast$obj, void $\ast$event\+\_\+info)
+\item 
+\mbox{\Hypertarget{sensorbasicui_8c_a3f3dcf8ac0db48dd173319da21b7c2c6}\label{sensorbasicui_8c_a3f3dcf8ac0db48dd173319da21b7c2c6}} 
+static void {\bfseries win\+\_\+back\+\_\+cb} (void $\ast$data, Evas\+\_\+\+Object $\ast$obj, void $\ast$event\+\_\+info)
+\item 
+static void \mbox{\hyperlink{sensorbasicui_8c_a3dd59277b4e82ea93aa0de2ccb706f5b}{create\+\_\+base\+\_\+gui}} (\mbox{\hyperlink{structappdata}{appdata\+\_\+s}} $\ast$ad)
+\begin{DoxyCompactList}\small\item\em creates the gui for the watchface \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{sensorbasicui_8c_a5d7d07ca6800467a5f48bb898e5c5bb5}{Handle\+\_\+\+Sensor\+\_\+\+Update\+\_\+\+Cb}} (sensor\+\_\+type\+\_\+e sensor\+Type, sensor\+\_\+event\+\_\+s $\ast$ev)
+\begin{DoxyCompactList}\small\item\em function that is called when a sensor records data \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{sensorbasicui_8c_adf5d763eb429489be7d8e658118405e3}{init\+\_\+syskv}} ()
+\item 
+static bool \mbox{\hyperlink{sensorbasicui_8c_a68fda123e2c1a36442f1799355b83998}{app\+\_\+create}} (void $\ast$data)
+\begin{DoxyCompactList}\small\item\em initialize function for view and sensor \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{sensorbasicui_8c_a1f6f862f25f35074e4f75dbc8285557c}{app\+\_\+control}} (app\+\_\+control\+\_\+h app\+\_\+control, void $\ast$data)
+\begin{DoxyCompactList}\small\item\em handles launch request \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{sensorbasicui_8c_a9f25d7d2da5ab669761243fc2d359362}{app\+\_\+pause}} (void $\ast$data)
+\begin{DoxyCompactList}\small\item\em handles when application goes to the background \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{sensorbasicui_8c_a62300463de7be5538c2c071edc8decae}{app\+\_\+resume}} (void $\ast$data)
+\begin{DoxyCompactList}\small\item\em handles when application goes back to the foreground \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{sensorbasicui_8c_a1a410d3c84f9112dd16e65eda07cf5ff}{app\+\_\+terminate}} (void $\ast$data)
+\begin{DoxyCompactList}\small\item\em handles when the application is exited \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{sensorbasicui_8c_aca7e91de8efd7394fb22bcd4d2af18c2}{ui\+\_\+app\+\_\+lang\+\_\+changed}} (app\+\_\+event\+\_\+info\+\_\+h event\+\_\+info, void $\ast$user\+\_\+data)
+\begin{DoxyCompactList}\small\item\em handles language change \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{sensorbasicui_8c_a586898c8b12a8ebef8d9ac765339822d}{ui\+\_\+app\+\_\+orient\+\_\+changed}} (app\+\_\+event\+\_\+info\+\_\+h event\+\_\+info, void $\ast$user\+\_\+data)
+\begin{DoxyCompactList}\small\item\em handles change of orientation of device \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{sensorbasicui_8c_ae970fbbcec7fb5d9301cef1817fdd18a}{ui\+\_\+app\+\_\+region\+\_\+changed}} (app\+\_\+event\+\_\+info\+\_\+h event\+\_\+info, void $\ast$user\+\_\+data)
+\begin{DoxyCompactList}\small\item\em handles region change \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{sensorbasicui_8c_ac4bf8f20d757fabff45a5dcdcf905017}{ui\+\_\+app\+\_\+low\+\_\+battery}} (app\+\_\+event\+\_\+info\+\_\+h event\+\_\+info, void $\ast$user\+\_\+data)
+\begin{DoxyCompactList}\small\item\em handles when battery power becomes low \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{sensorbasicui_8c_ab379ebbb3b6fe22d5f23a33621534f9e}{ui\+\_\+app\+\_\+low\+\_\+memory}} (app\+\_\+event\+\_\+info\+\_\+h event\+\_\+info, void $\ast$user\+\_\+data)
+\begin{DoxyCompactList}\small\item\em handles when watch is low on memory \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{sensorbasicui_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{sensorbasicui_8c_ad62be08f107a6496110227ee0e142c61}\label{sensorbasicui_8c_ad62be08f107a6496110227ee0e142c61}} 
+\mbox{\hyperlink{structappdata}{appdata\+\_\+s}} $\ast$ {\bfseries cur\+Appdata}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Main file for the smartwatch app. 
+
+\begin{DoxyDate}{Date}
+10 Jan 2020 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{sensorbasicui_8c_a1f6f862f25f35074e4f75dbc8285557c}\label{sensorbasicui_8c_a1f6f862f25f35074e4f75dbc8285557c}} 
+\index{sensorbasicui.c@{sensorbasicui.c}!app\_control@{app\_control}}
+\index{app\_control@{app\_control}!sensorbasicui.c@{sensorbasicui.c}}
+\doxysubsubsection{\texorpdfstring{app\_control()}{app\_control()}}
+{\footnotesize\ttfamily static void app\+\_\+control (\begin{DoxyParamCaption}\item[{app\+\_\+control\+\_\+h}]{app\+\_\+control,  }\item[{void $\ast$}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+handles launch request 
+
+
+\begin{DoxyParams}{Parameters}
+{\em app\+\_\+control\+\_\+h} & handle for handling launch requests from other applications \\
+\hline
+{\em data} & pointer to application data \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{sensorbasicui_8c_a68fda123e2c1a36442f1799355b83998}\label{sensorbasicui_8c_a68fda123e2c1a36442f1799355b83998}} 
+\index{sensorbasicui.c@{sensorbasicui.c}!app\_create@{app\_create}}
+\index{app\_create@{app\_create}!sensorbasicui.c@{sensorbasicui.c}}
+\doxysubsubsection{\texorpdfstring{app\_create()}{app\_create()}}
+{\footnotesize\ttfamily static bool app\+\_\+create (\begin{DoxyParamCaption}\item[{void $\ast$}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+initialize function for view and sensor 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & pointer to application data \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+success state 
+\end{DoxyReturn}
+\mbox{\Hypertarget{sensorbasicui_8c_a9f25d7d2da5ab669761243fc2d359362}\label{sensorbasicui_8c_a9f25d7d2da5ab669761243fc2d359362}} 
+\index{sensorbasicui.c@{sensorbasicui.c}!app\_pause@{app\_pause}}
+\index{app\_pause@{app\_pause}!sensorbasicui.c@{sensorbasicui.c}}
+\doxysubsubsection{\texorpdfstring{app\_pause()}{app\_pause()}}
+{\footnotesize\ttfamily static void app\+\_\+pause (\begin{DoxyParamCaption}\item[{void $\ast$}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+handles when application goes to the background 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & pointer to application data \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{sensorbasicui_8c_a62300463de7be5538c2c071edc8decae}\label{sensorbasicui_8c_a62300463de7be5538c2c071edc8decae}} 
+\index{sensorbasicui.c@{sensorbasicui.c}!app\_resume@{app\_resume}}
+\index{app\_resume@{app\_resume}!sensorbasicui.c@{sensorbasicui.c}}
+\doxysubsubsection{\texorpdfstring{app\_resume()}{app\_resume()}}
+{\footnotesize\ttfamily static void app\+\_\+resume (\begin{DoxyParamCaption}\item[{void $\ast$}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+handles when application goes back to the foreground 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & pointer to application data \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{sensorbasicui_8c_a1a410d3c84f9112dd16e65eda07cf5ff}\label{sensorbasicui_8c_a1a410d3c84f9112dd16e65eda07cf5ff}} 
+\index{sensorbasicui.c@{sensorbasicui.c}!app\_terminate@{app\_terminate}}
+\index{app\_terminate@{app\_terminate}!sensorbasicui.c@{sensorbasicui.c}}
+\doxysubsubsection{\texorpdfstring{app\_terminate()}{app\_terminate()}}
+{\footnotesize\ttfamily static void app\+\_\+terminate (\begin{DoxyParamCaption}\item[{void $\ast$}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+handles when the application is exited 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & pointer to application data \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{sensorbasicui_8c_a3dd59277b4e82ea93aa0de2ccb706f5b}\label{sensorbasicui_8c_a3dd59277b4e82ea93aa0de2ccb706f5b}} 
+\index{sensorbasicui.c@{sensorbasicui.c}!create\_base\_gui@{create\_base\_gui}}
+\index{create\_base\_gui@{create\_base\_gui}!sensorbasicui.c@{sensorbasicui.c}}
+\doxysubsubsection{\texorpdfstring{create\_base\_gui()}{create\_base\_gui()}}
+{\footnotesize\ttfamily static void create\+\_\+base\+\_\+gui (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structappdata}{appdata\+\_\+s}} $\ast$}]{ad }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+creates the gui for the watchface 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ad} & application data \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{sensorbasicui_8c_a5d7d07ca6800467a5f48bb898e5c5bb5}\label{sensorbasicui_8c_a5d7d07ca6800467a5f48bb898e5c5bb5}} 
+\index{sensorbasicui.c@{sensorbasicui.c}!Handle\_Sensor\_Update\_Cb@{Handle\_Sensor\_Update\_Cb}}
+\index{Handle\_Sensor\_Update\_Cb@{Handle\_Sensor\_Update\_Cb}!sensorbasicui.c@{sensorbasicui.c}}
+\doxysubsubsection{\texorpdfstring{Handle\_Sensor\_Update\_Cb()}{Handle\_Sensor\_Update\_Cb()}}
+{\footnotesize\ttfamily void Handle\+\_\+\+Sensor\+\_\+\+Update\+\_\+\+Cb (\begin{DoxyParamCaption}\item[{sensor\+\_\+type\+\_\+e}]{sensor\+Type,  }\item[{sensor\+\_\+event\+\_\+s $\ast$}]{ev }\end{DoxyParamCaption})}
+
+
+
+function that is called when a sensor records data 
+
+\begin{DoxyVerb} @brief Gets the full path to a write/readable file in the datafolder (this does not check if it exists)
+ @param WriteFile: name of the file to get the full path from
+ @return pointer to char array containing filepath
+&zwj;/
+\end{DoxyVerb}
+ char $\ast$ get\+\_\+filepath(char $\ast$ write\+File)\{ char $\ast$ final\+Path = (char$\ast$) malloc(\+M\+A\+X\+\_\+\+S\+I\+Z\+E\+\_\+\+D\+A\+T\+A\+\_\+\+P\+A\+T\+H $\ast$ sizeof(char)); //\mbox{[}M\+A\+X\+\_\+\+S\+I\+Z\+E\+\_\+\+D\+A\+T\+A\+\_\+\+P\+A\+TH\mbox{]} = \{0,\}; //max path size is 800, initialize all chars to 0 char $\ast$ data\+Path = app\+\_\+get\+\_\+data\+\_\+path(); //get pointer to data path if(sizeof(data\+Path) $>$ 0)\{ //if datapath exists snprintf(final\+Path, M\+A\+X\+\_\+\+S\+I\+Z\+E\+\_\+\+D\+A\+T\+A\+\_\+\+P\+A\+TH, \char`\"{}\%s\%s\char`\"{}, data\+Path, write\+File); free(data\+Path); \} return final\+Path; \}
+
+/$\ast$$\ast$ 
+\begin{DoxyParams}{Parameters}
+{\em sensor\+Type} & name of the sensor that wants to log data \\
+\hline
+{\em ev} & contains the data from the sensor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{sensorbasicui_8c_adf5d763eb429489be7d8e658118405e3}\label{sensorbasicui_8c_adf5d763eb429489be7d8e658118405e3}} 
+\index{sensorbasicui.c@{sensorbasicui.c}!init\_syskv@{init\_syskv}}
+\index{init\_syskv@{init\_syskv}!sensorbasicui.c@{sensorbasicui.c}}
+\doxysubsubsection{\texorpdfstring{init\_syskv()}{init\_syskv()}}
+{\footnotesize\ttfamily void init\+\_\+syskv (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Initialize system namesapce for the key value store \mbox{\Hypertarget{sensorbasicui_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{sensorbasicui_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{sensorbasicui.c@{sensorbasicui.c}!main@{main}}
+\index{main@{main}!sensorbasicui.c@{sensorbasicui.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+Prevent OS from terminating app when OS requires more resources\mbox{\Hypertarget{sensorbasicui_8c_aca7e91de8efd7394fb22bcd4d2af18c2}\label{sensorbasicui_8c_aca7e91de8efd7394fb22bcd4d2af18c2}} 
+\index{sensorbasicui.c@{sensorbasicui.c}!ui\_app\_lang\_changed@{ui\_app\_lang\_changed}}
+\index{ui\_app\_lang\_changed@{ui\_app\_lang\_changed}!sensorbasicui.c@{sensorbasicui.c}}
+\doxysubsubsection{\texorpdfstring{ui\_app\_lang\_changed()}{ui\_app\_lang\_changed()}}
+{\footnotesize\ttfamily static void ui\+\_\+app\+\_\+lang\+\_\+changed (\begin{DoxyParamCaption}\item[{app\+\_\+event\+\_\+info\+\_\+h}]{event\+\_\+info,  }\item[{void $\ast$}]{user\+\_\+data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+handles language change 
+
+
+\begin{DoxyParams}{Parameters}
+{\em event\+\_\+info} & \\
+\hline
+{\em user\+\_\+data} & pointer to user data \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{sensorbasicui_8c_ac4bf8f20d757fabff45a5dcdcf905017}\label{sensorbasicui_8c_ac4bf8f20d757fabff45a5dcdcf905017}} 
+\index{sensorbasicui.c@{sensorbasicui.c}!ui\_app\_low\_battery@{ui\_app\_low\_battery}}
+\index{ui\_app\_low\_battery@{ui\_app\_low\_battery}!sensorbasicui.c@{sensorbasicui.c}}
+\doxysubsubsection{\texorpdfstring{ui\_app\_low\_battery()}{ui\_app\_low\_battery()}}
+{\footnotesize\ttfamily static void ui\+\_\+app\+\_\+low\+\_\+battery (\begin{DoxyParamCaption}\item[{app\+\_\+event\+\_\+info\+\_\+h}]{event\+\_\+info,  }\item[{void $\ast$}]{user\+\_\+data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+handles when battery power becomes low 
+
+
+\begin{DoxyParams}{Parameters}
+{\em event\+\_\+info} & \\
+\hline
+{\em user\+\_\+data} & pointer to user data \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{sensorbasicui_8c_ab379ebbb3b6fe22d5f23a33621534f9e}\label{sensorbasicui_8c_ab379ebbb3b6fe22d5f23a33621534f9e}} 
+\index{sensorbasicui.c@{sensorbasicui.c}!ui\_app\_low\_memory@{ui\_app\_low\_memory}}
+\index{ui\_app\_low\_memory@{ui\_app\_low\_memory}!sensorbasicui.c@{sensorbasicui.c}}
+\doxysubsubsection{\texorpdfstring{ui\_app\_low\_memory()}{ui\_app\_low\_memory()}}
+{\footnotesize\ttfamily static void ui\+\_\+app\+\_\+low\+\_\+memory (\begin{DoxyParamCaption}\item[{app\+\_\+event\+\_\+info\+\_\+h}]{event\+\_\+info,  }\item[{void $\ast$}]{user\+\_\+data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+handles when watch is low on memory 
+
+
+\begin{DoxyParams}{Parameters}
+{\em event\+\_\+info} & \\
+\hline
+{\em user\+\_\+data} & pointer to user data \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{sensorbasicui_8c_a586898c8b12a8ebef8d9ac765339822d}\label{sensorbasicui_8c_a586898c8b12a8ebef8d9ac765339822d}} 
+\index{sensorbasicui.c@{sensorbasicui.c}!ui\_app\_orient\_changed@{ui\_app\_orient\_changed}}
+\index{ui\_app\_orient\_changed@{ui\_app\_orient\_changed}!sensorbasicui.c@{sensorbasicui.c}}
+\doxysubsubsection{\texorpdfstring{ui\_app\_orient\_changed()}{ui\_app\_orient\_changed()}}
+{\footnotesize\ttfamily static void ui\+\_\+app\+\_\+orient\+\_\+changed (\begin{DoxyParamCaption}\item[{app\+\_\+event\+\_\+info\+\_\+h}]{event\+\_\+info,  }\item[{void $\ast$}]{user\+\_\+data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+handles change of orientation of device 
+
+
+\begin{DoxyParams}{Parameters}
+{\em event\+\_\+info} & \\
+\hline
+{\em user\+\_\+data} & pointer to user data \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{sensorbasicui_8c_ae970fbbcec7fb5d9301cef1817fdd18a}\label{sensorbasicui_8c_ae970fbbcec7fb5d9301cef1817fdd18a}} 
+\index{sensorbasicui.c@{sensorbasicui.c}!ui\_app\_region\_changed@{ui\_app\_region\_changed}}
+\index{ui\_app\_region\_changed@{ui\_app\_region\_changed}!sensorbasicui.c@{sensorbasicui.c}}
+\doxysubsubsection{\texorpdfstring{ui\_app\_region\_changed()}{ui\_app\_region\_changed()}}
+{\footnotesize\ttfamily static void ui\+\_\+app\+\_\+region\+\_\+changed (\begin{DoxyParamCaption}\item[{app\+\_\+event\+\_\+info\+\_\+h}]{event\+\_\+info,  }\item[{void $\ast$}]{user\+\_\+data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+handles region change 
+
+
+\begin{DoxyParams}{Parameters}
+{\em event\+\_\+info} & \\
+\hline
+{\em user\+\_\+data} & pointer to user data \\
+\hline
+\end{DoxyParams}

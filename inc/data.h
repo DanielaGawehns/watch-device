@@ -1,3 +1,8 @@
+/**
+ * @file data.h
+ * @brief File implementing the communication with the sensors on the watch device
+ */
+
 /*
  * Copyright (c) 2016 Samsung Electronics Co., Ltd. All rights reserved.
  *

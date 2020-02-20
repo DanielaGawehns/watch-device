@@ -1,8 +1,8 @@
-/*
- * protocol.h
- *
- *  Created on: Dec 6, 2019
- *      Author: pbx
+/**
+ * @file prot_cmds.h
+ * @author Peter Bosch <me@pbx.sh>
+ * @date Dec 6, 2019
+ * @brief protocol commands
  */
 
 #ifndef PROT_CMDS_H_

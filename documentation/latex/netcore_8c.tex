@@ -1,0 +1,70 @@
+\hypertarget{netcore_8c}{}\doxysection{/mnt/c/\+Users/\+R\+J/\+Desktop/\+Tizen\+Tijgers/watch-\/device/src/netcore.c File Reference}
+\label{netcore_8c}\index{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/src/netcore.c@{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/src/netcore.c}}
+
+
+ecore implementation of network  
+
+
+{\ttfamily \#include $<$Ecore.\+h$>$}\newline
+{\ttfamily \#include $<$dlog.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}network.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}protocol.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{netcore_8c_a4a9d62748fe197fed85ff53b67ca3956}\label{netcore_8c_a4a9d62748fe197fed85ff53b67ca3956}} 
+\#define {\bfseries S\+T\+A\+T\+E\+\_\+\+D\+I\+S\+C\+O\+N\+N\+E\+CT}~(0)
+\item 
+\mbox{\Hypertarget{netcore_8c_a2429d721fca4cd5c3b42df80df3dfad2}\label{netcore_8c_a2429d721fca4cd5c3b42df80df3dfad2}} 
+\#define {\bfseries S\+T\+A\+T\+E\+\_\+\+B\+C\+A\+S\+T\+\_\+\+S\+T\+A\+RT}~(1)
+\item 
+\mbox{\Hypertarget{netcore_8c_acdb95e1e209bc837c3c5810c2879d7bc}\label{netcore_8c_acdb95e1e209bc837c3c5810c2879d7bc}} 
+\#define {\bfseries S\+T\+A\+T\+E\+\_\+\+B\+C\+A\+S\+T\+\_\+\+A\+C\+T\+I\+VE}~(2)
+\item 
+\mbox{\Hypertarget{netcore_8c_a64111506f6338d6e101b12f3f9960087}\label{netcore_8c_a64111506f6338d6e101b12f3f9960087}} 
+\#define {\bfseries S\+T\+A\+T\+E\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+C\+O\+NN}~(3)
+\item 
+\mbox{\Hypertarget{netcore_8c_a35a4972bbc40f7487b8f3c9d4ab3d156}\label{netcore_8c_a35a4972bbc40f7487b8f3c9d4ab3d156}} 
+\#define {\bfseries S\+T\+A\+T\+E\+\_\+\+H\+A\+N\+D\+S\+H\+A\+KE}~(4)
+\item 
+\mbox{\Hypertarget{netcore_8c_a695dd637b37252af2a517ba8bae8d2c4}\label{netcore_8c_a695dd637b37252af2a517ba8bae8d2c4}} 
+\#define {\bfseries S\+T\+A\+T\+E\+\_\+\+A\+C\+T\+I\+VE}~(5)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{netcore_8c_a842279734d969d40cf097e4bb5d00544}\label{netcore_8c_a842279734d969d40cf097e4bb5d00544}} 
+void {\bfseries netcore\+\_\+stop} ()
+\item 
+\mbox{\Hypertarget{netcore_8c_a127ed13095e4d1a69a08f78ab8069ce7}\label{netcore_8c_a127ed13095e4d1a69a08f78ab8069ce7}} 
+Eina\+\_\+\+Bool {\bfseries netcore\+\_\+process} (void $\ast$data)
+\item 
+\mbox{\Hypertarget{netcore_8c_a32958ee0939becb1516a926af591bbc0}\label{netcore_8c_a32958ee0939becb1516a926af591bbc0}} 
+void {\bfseries prot\+\_\+handle\+\_\+error} ()
+\item 
+\mbox{\Hypertarget{netcore_8c_abb7bb586539cc837087474fa8a788747}\label{netcore_8c_abb7bb586539cc837087474fa8a788747}} 
+int {\bfseries netcore\+\_\+send\+\_\+increment} (const char $\ast$sensor, double time, int ndata, double $\ast$data)
+\item 
+\mbox{\Hypertarget{netcore_8c_a233d11efe7f976dc73f57636797484cc}\label{netcore_8c_a233d11efe7f976dc73f57636797484cc}} 
+void {\bfseries netcore\+\_\+start\+\_\+timer} ()
+\item 
+\mbox{\Hypertarget{netcore_8c_a98b932d6bd956a7738a4ce33d30f749b}\label{netcore_8c_a98b932d6bd956a7738a4ce33d30f749b}} 
+void {\bfseries netcore\+\_\+init} ()
+\item 
+\mbox{\Hypertarget{netcore_8c_ac66784428c167bb5dc31f7add4d1d8a6}\label{netcore_8c_ac66784428c167bb5dc31f7add4d1d8a6}} 
+int {\bfseries netcore\+\_\+connect} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{netcore_8c_a77b3b0f2af47f8498b76ec87e07febfd}\label{netcore_8c_a77b3b0f2af47f8498b76ec87e07febfd}} 
+Ecore\+\_\+\+Timer $\ast$ {\bfseries netcore\+\_\+timer}
+\item 
+\mbox{\Hypertarget{netcore_8c_a7485b6002a572a45066cdc49fc9eef0a}\label{netcore_8c_a7485b6002a572a45066cdc49fc9eef0a}} 
+static int {\bfseries netcore\+\_\+state} = S\+T\+A\+T\+E\+\_\+\+D\+I\+S\+C\+O\+N\+N\+E\+CT
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ecore implementation of network 
+

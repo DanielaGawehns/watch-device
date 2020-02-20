@@ -1,0 +1,71 @@
+\hypertarget{systemkv_8c}{}\doxysection{/mnt/c/\+Users/\+R\+J/\+Desktop/\+Tizen\+Tijgers/watch-\/device/src/systemkv.c File Reference}
+\label{systemkv_8c}\index{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/src/systemkv.c@{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/src/systemkv.c}}
+{\ttfamily \#include $<$sys/ioctl.\+h$>$}\newline
+{\ttfamily \#include $<$net/if.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/in.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$device/battery.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}keyval.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}protocol.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{systemkv_8c_ab15aa9d14ffc0f112980c4e1904cc088}{generate\+\_\+uid}} ()
+\item 
+static int \mbox{\hyperlink{systemkv_8c_aca50a21a5d26268f84e7a7c14e14503c}{uid\+\_\+get}} (\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$kv, char $\ast$$\ast$status, int $\ast$nparam, message\+\_\+param $\ast$$\ast$param)
+\item 
+static int \mbox{\hyperlink{systemkv_8c_aad9fb997cbbfb8c3b16bb6aac7f72d05}{battery\+\_\+get}} (\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$kv, char $\ast$$\ast$status, int $\ast$nparam, message\+\_\+param $\ast$$\ast$param)
+\item 
+void \mbox{\hyperlink{systemkv_8c_adf5d763eb429489be7d8e658118405e3}{init\+\_\+syskv}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{systemkv_8c_a5df02b0ae668e5fb2a0e9134f189df34}\label{systemkv_8c_a5df02b0ae668e5fb2a0e9134f189df34}} 
+\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$ {\bfseries kv\+\_\+sys}
+\item 
+\mbox{\Hypertarget{systemkv_8c_ab25dba4ff8772763dfe242aba0dbfa79}\label{systemkv_8c_ab25dba4ff8772763dfe242aba0dbfa79}} 
+static char {\bfseries unique\+\_\+id} \mbox{[}40\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Peter Bosch \href{mailto:me@pbx.sh}{\texttt{ me@pbx.\+sh}} 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Jan 10, 2020 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{systemkv_8c_aad9fb997cbbfb8c3b16bb6aac7f72d05}\label{systemkv_8c_aad9fb997cbbfb8c3b16bb6aac7f72d05}} 
+\index{systemkv.c@{systemkv.c}!battery\_get@{battery\_get}}
+\index{battery\_get@{battery\_get}!systemkv.c@{systemkv.c}}
+\doxysubsubsection{\texorpdfstring{battery\_get()}{battery\_get()}}
+{\footnotesize\ttfamily static int battery\+\_\+get (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$}]{kv,  }\item[{char $\ast$$\ast$}]{status,  }\item[{int $\ast$}]{nparam,  }\item[{message\+\_\+param $\ast$$\ast$}]{param }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+system.\+battery getter, see \mbox{\hyperlink{keyval_8h}{keyval.\+h}} \mbox{\Hypertarget{systemkv_8c_ab15aa9d14ffc0f112980c4e1904cc088}\label{systemkv_8c_ab15aa9d14ffc0f112980c4e1904cc088}} 
+\index{systemkv.c@{systemkv.c}!generate\_uid@{generate\_uid}}
+\index{generate\_uid@{generate\_uid}!systemkv.c@{systemkv.c}}
+\doxysubsubsection{\texorpdfstring{generate\_uid()}{generate\_uid()}}
+{\footnotesize\ttfamily static void generate\+\_\+uid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Polls the watch M\+AC address and sets it as the unique ID. If this fails, the U\+ID is set to Error\+Assigning\+U\+ID. \mbox{\Hypertarget{systemkv_8c_adf5d763eb429489be7d8e658118405e3}\label{systemkv_8c_adf5d763eb429489be7d8e658118405e3}} 
+\index{systemkv.c@{systemkv.c}!init\_syskv@{init\_syskv}}
+\index{init\_syskv@{init\_syskv}!systemkv.c@{systemkv.c}}
+\doxysubsubsection{\texorpdfstring{init\_syskv()}{init\_syskv()}}
+{\footnotesize\ttfamily void init\+\_\+syskv (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Initialize system namesapce for the key value store \mbox{\Hypertarget{systemkv_8c_aca50a21a5d26268f84e7a7c14e14503c}\label{systemkv_8c_aca50a21a5d26268f84e7a7c14e14503c}} 
+\index{systemkv.c@{systemkv.c}!uid\_get@{uid\_get}}
+\index{uid\_get@{uid\_get}!systemkv.c@{systemkv.c}}
+\doxysubsubsection{\texorpdfstring{uid\_get()}{uid\_get()}}
+{\footnotesize\ttfamily static int uid\+\_\+get (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$}]{kv,  }\item[{char $\ast$$\ast$}]{status,  }\item[{int $\ast$}]{nparam,  }\item[{message\+\_\+param $\ast$$\ast$}]{param }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+system.\+uid getter, see \mbox{\hyperlink{keyval_8h}{keyval.\+h}} 

@@ -1,0 +1,180 @@
+\hypertarget{keyval_8h}{}\doxysection{/mnt/c/\+Users/\+R\+J/\+Desktop/\+Tizen\+Tijgers/watch-\/device/inc/keyval.h File Reference}
+\label{keyval_8h}\index{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/inc/keyval.h@{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/inc/keyval.h}}
+
+
+keyval  
+
+
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}protocol.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structkeyval__s}{keyval\+\_\+s}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{keyval_8h_a08394aab6499e075d5cfc36d773aff2c}\label{keyval_8h_a08394aab6499e075d5cfc36d773aff2c}} 
+\#define {\bfseries K\+V\+\_\+\+E\+N\+O\+E\+NT}~(-\/1)
+\item 
+\mbox{\Hypertarget{keyval_8h_a030a3cf66b53d6b61fc2f1034a1d3b43}\label{keyval_8h_a030a3cf66b53d6b61fc2f1034a1d3b43}} 
+\#define {\bfseries K\+V\+\_\+\+E\+I\+S\+D\+IR}~(-\/2)
+\item 
+\mbox{\Hypertarget{keyval_8h_a1f91c8e8dea0d42ff56a38869d5457ca}\label{keyval_8h_a1f91c8e8dea0d42ff56a38869d5457ca}} 
+\#define {\bfseries K\+V\+\_\+\+E\+N\+O\+S\+YS}~(-\/3)
+\item 
+\mbox{\Hypertarget{keyval_8h_a1ec2a8fc66da369ee1c0383b96fc00d9}\label{keyval_8h_a1ec2a8fc66da369ee1c0383b96fc00d9}} 
+\#define {\bfseries K\+V\+\_\+\+E\+N\+O\+M\+EM}~(-\/4)
+\item 
+\mbox{\Hypertarget{keyval_8h_a4fc79b706943b97b9dfee218fd3e5a2d}\label{keyval_8h_a4fc79b706943b97b9dfee218fd3e5a2d}} 
+\#define {\bfseries K\+V\+\_\+\+E\+I\+N\+V\+AL}~(-\/5)
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{keyval_8h_aa8729093abd6e14bee44dc9d85c3719d}\label{keyval_8h_aa8729093abd6e14bee44dc9d85c3719d}} 
+typedef struct \mbox{\hyperlink{structkeyval__s}{keyval\+\_\+s}} {\bfseries keyval}
+\item 
+\mbox{\Hypertarget{keyval_8h_a848519bdc2913a807497222ca4b1ad50}\label{keyval_8h_a848519bdc2913a807497222ca4b1ad50}} 
+typedef int($\ast$ {\bfseries kv\+\_\+get}) (\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$kv, char $\ast$$\ast$status, int $\ast$nparam, message\+\_\+param $\ast$$\ast$param)
+\item 
+\mbox{\Hypertarget{keyval_8h_ad99222fb7d64a987e59ae99adcef9a6b}\label{keyval_8h_ad99222fb7d64a987e59ae99adcef9a6b}} 
+typedef int($\ast$ {\bfseries kv\+\_\+set}) (\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$kv, char $\ast$$\ast$status, int nparam, message\+\_\+param $\ast$param)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{keyval_8h_abbef51d2c4b17efe2e32a1ae6681cdea}{keyval\+\_\+get}} (const char $\ast$path, char $\ast$$\ast$status, int $\ast$nparam, message\+\_\+param $\ast$$\ast$param)
+\item 
+int \mbox{\hyperlink{keyval_8h_a5bfd8553e4d176d8da2899913db13662}{keyval\+\_\+set}} (const char $\ast$path, char $\ast$$\ast$status, int nparam, message\+\_\+param $\ast$param)
+\item 
+int \mbox{\hyperlink{keyval_8h_a07255bda41fb3707931ef5c6283a94f2}{keyval\+\_\+add\+\_\+p}} (const char $\ast$parent\+\_\+path, \mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$child)
+\item 
+int \mbox{\hyperlink{keyval_8h_a76e9b1e2b3b407230df56f69d791a4cf}{keyval\+\_\+add\+\_\+k}} (\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$parent, \mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$child)
+\item 
+\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$ \mbox{\hyperlink{keyval_8h_a9d8d5f213308bdb3d1749f896d7e3c64}{keyval\+\_\+create\+\_\+ns}} (const char $\ast$name)
+\item 
+\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$ \mbox{\hyperlink{keyval_8h_a30afa38302686618b549e2ce14897ebc}{keyval\+\_\+create\+\_\+leaf}} (const char $\ast$name, const char $\ast$type, kv\+\_\+get getter, kv\+\_\+set setter, void $\ast$impl)
+\item 
+\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$ \mbox{\hyperlink{keyval_8h_a12019ad2465f586f45dbe7816ea53e08}{keyval\+\_\+create\+\_\+add\+\_\+k\+\_\+leaf}} (\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$parent, const char $\ast$name, const char $\ast$type, kv\+\_\+get getter, kv\+\_\+set setter, void $\ast$impl)
+\item 
+void \mbox{\hyperlink{keyval_8h_a20d5e379a722023c843133d5d57fb8f6}{keyval\+\_\+init}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{keyval_8h_a5c359bec49015e692186ecc78c9f6e30}\label{keyval_8h_a5c359bec49015e692186ecc78c9f6e30}} 
+\mbox{\hyperlink{structkeyval__s}{keyval}} {\bfseries keyval\+\_\+root}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+keyval 
+
+\begin{DoxyAuthor}{Author}
+Peter Bosch \href{mailto:me@pbx.sh}{\texttt{ me@pbx.\+sh}} 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Jan 4th, 2020 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{keyval_8h_a76e9b1e2b3b407230df56f69d791a4cf}\label{keyval_8h_a76e9b1e2b3b407230df56f69d791a4cf}} 
+\index{keyval.h@{keyval.h}!keyval\_add\_k@{keyval\_add\_k}}
+\index{keyval\_add\_k@{keyval\_add\_k}!keyval.h@{keyval.h}}
+\doxysubsubsection{\texorpdfstring{keyval\_add\_k()}{keyval\_add\_k()}}
+{\footnotesize\ttfamily int keyval\+\_\+add\+\_\+k (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$}]{parent,  }\item[{\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$}]{child }\end{DoxyParamCaption})}
+
+Add a child keyval to a node by path \begin{DoxyReturn}{Returns}
+If successful\+: 0, K\+V\+\_\+\+E$\ast$ constants ($<$0) when failed 
+\end{DoxyReturn}
+\mbox{\Hypertarget{keyval_8h_a07255bda41fb3707931ef5c6283a94f2}\label{keyval_8h_a07255bda41fb3707931ef5c6283a94f2}} 
+\index{keyval.h@{keyval.h}!keyval\_add\_p@{keyval\_add\_p}}
+\index{keyval\_add\_p@{keyval\_add\_p}!keyval.h@{keyval.h}}
+\doxysubsubsection{\texorpdfstring{keyval\_add\_p()}{keyval\_add\_p()}}
+{\footnotesize\ttfamily int keyval\+\_\+add\+\_\+p (\begin{DoxyParamCaption}\item[{const char $\ast$}]{parent\+\_\+path,  }\item[{\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$}]{child }\end{DoxyParamCaption})}
+
+Add a child keyval to a node by path \begin{DoxyReturn}{Returns}
+If successful\+: 0, K\+V\+\_\+\+E$\ast$ constants ($<$0) when failed 
+\end{DoxyReturn}
+\mbox{\Hypertarget{keyval_8h_a12019ad2465f586f45dbe7816ea53e08}\label{keyval_8h_a12019ad2465f586f45dbe7816ea53e08}} 
+\index{keyval.h@{keyval.h}!keyval\_create\_add\_k\_leaf@{keyval\_create\_add\_k\_leaf}}
+\index{keyval\_create\_add\_k\_leaf@{keyval\_create\_add\_k\_leaf}!keyval.h@{keyval.h}}
+\doxysubsubsection{\texorpdfstring{keyval\_create\_add\_k\_leaf()}{keyval\_create\_add\_k\_leaf()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structkeyval__s}{keyval}}$\ast$ keyval\+\_\+create\+\_\+add\+\_\+k\+\_\+leaf (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structkeyval__s}{keyval}} $\ast$}]{parent,  }\item[{const char $\ast$}]{name,  }\item[{const char $\ast$}]{type,  }\item[{kv\+\_\+get}]{getter,  }\item[{kv\+\_\+set}]{setter,  }\item[{void $\ast$}]{impl }\end{DoxyParamCaption})}
+
+Creates a leaf node with a set and get callback and adds it to a parent node by label 
+\begin{DoxyParams}{Parameters}
+{\em name} & The name (not path) for the node to create \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{keyval_8h_a30afa38302686618b549e2ce14897ebc}\label{keyval_8h_a30afa38302686618b549e2ce14897ebc}} 
+\index{keyval.h@{keyval.h}!keyval\_create\_leaf@{keyval\_create\_leaf}}
+\index{keyval\_create\_leaf@{keyval\_create\_leaf}!keyval.h@{keyval.h}}
+\doxysubsubsection{\texorpdfstring{keyval\_create\_leaf()}{keyval\_create\_leaf()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structkeyval__s}{keyval}}$\ast$ keyval\+\_\+create\+\_\+leaf (\begin{DoxyParamCaption}\item[{const char $\ast$}]{name,  }\item[{const char $\ast$}]{type,  }\item[{kv\+\_\+get}]{getter,  }\item[{kv\+\_\+set}]{setter,  }\item[{void $\ast$}]{impl }\end{DoxyParamCaption})}
+
+Creates a leaf node with a set and get callback 
+\begin{DoxyParams}{Parameters}
+{\em name} & The name (not path) for the node to create \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{keyval_8h_a9d8d5f213308bdb3d1749f896d7e3c64}\label{keyval_8h_a9d8d5f213308bdb3d1749f896d7e3c64}} 
+\index{keyval.h@{keyval.h}!keyval\_create\_ns@{keyval\_create\_ns}}
+\index{keyval\_create\_ns@{keyval\_create\_ns}!keyval.h@{keyval.h}}
+\doxysubsubsection{\texorpdfstring{keyval\_create\_ns()}{keyval\_create\_ns()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structkeyval__s}{keyval}}$\ast$ keyval\+\_\+create\+\_\+ns (\begin{DoxyParamCaption}\item[{const char $\ast$}]{name }\end{DoxyParamCaption})}
+
+Creates a namespace (non-\/leaf node) 
+\begin{DoxyParams}{Parameters}
+{\em name} & The name (not path) for the node to create \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{keyval_8h_abbef51d2c4b17efe2e32a1ae6681cdea}\label{keyval_8h_abbef51d2c4b17efe2e32a1ae6681cdea}} 
+\index{keyval.h@{keyval.h}!keyval\_get@{keyval\_get}}
+\index{keyval\_get@{keyval\_get}!keyval.h@{keyval.h}}
+\doxysubsubsection{\texorpdfstring{keyval\_get()}{keyval\_get()}}
+{\footnotesize\ttfamily int keyval\+\_\+get (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path,  }\item[{char $\ast$$\ast$}]{status,  }\item[{int $\ast$}]{nparam,  }\item[{message\+\_\+param $\ast$$\ast$}]{param }\end{DoxyParamCaption})}
+
+Gets the value of a node 
+\begin{DoxyParams}{Parameters}
+{\em path} & The node path to get \\
+\hline
+{\em status} & Status string output (or N\+U\+LL, when out of memory), to be freed by caller. \\
+\hline
+{\em nparam} & Number of values returned \\
+\hline
+{\em param} & Value list output, to be freed using prot\+\_\+freeparams. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+If successful\+: 0, K\+V\+\_\+\+E$\ast$ constants ($<$0) when failed 
+\end{DoxyReturn}
+\mbox{\Hypertarget{keyval_8h_a20d5e379a722023c843133d5d57fb8f6}\label{keyval_8h_a20d5e379a722023c843133d5d57fb8f6}} 
+\index{keyval.h@{keyval.h}!keyval\_init@{keyval\_init}}
+\index{keyval\_init@{keyval\_init}!keyval.h@{keyval.h}}
+\doxysubsubsection{\texorpdfstring{keyval\_init()}{keyval\_init()}}
+{\footnotesize\ttfamily void keyval\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Initializes the key value abstraction layer \mbox{\Hypertarget{keyval_8h_a5bfd8553e4d176d8da2899913db13662}\label{keyval_8h_a5bfd8553e4d176d8da2899913db13662}} 
+\index{keyval.h@{keyval.h}!keyval\_set@{keyval\_set}}
+\index{keyval\_set@{keyval\_set}!keyval.h@{keyval.h}}
+\doxysubsubsection{\texorpdfstring{keyval\_set()}{keyval\_set()}}
+{\footnotesize\ttfamily int keyval\+\_\+set (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path,  }\item[{char $\ast$$\ast$}]{status,  }\item[{int}]{nparam,  }\item[{message\+\_\+param $\ast$}]{param }\end{DoxyParamCaption})}
+
+Sets the value of a node 
+\begin{DoxyParams}{Parameters}
+{\em path} & The node path to set \\
+\hline
+{\em status} & Status string output (or N\+U\+LL, when out of memory), to be freed by caller. \\
+\hline
+{\em nparam} & Number of values to set \\
+\hline
+{\em param} & Value list \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+If successful\+: 0, K\+V\+\_\+\+E$\ast$ constants ($<$0) when failed 
+\end{DoxyReturn}

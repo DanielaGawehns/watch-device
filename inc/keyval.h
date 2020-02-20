@@ -1,8 +1,8 @@
-/*
- * keyval.h
- *
- *  Created on: Jan 4th, 2020
- *      Author: pbx
+/**
+ * @file keyval.h
+ * @author Peter Bosch <me@pbx.sh>
+ * @date Jan 4th, 2020
+ * @brief keyval
  */
 
 #ifndef KEYVAL_H_

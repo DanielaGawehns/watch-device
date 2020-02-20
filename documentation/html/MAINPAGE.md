@@ -1,0 +1,1 @@
+This is the documentation page for the smartwatch native app.

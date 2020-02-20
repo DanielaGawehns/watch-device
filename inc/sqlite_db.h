@@ -1,3 +1,9 @@
+/**
+ * @file sqlite_db.h
+ * @date Jan 10, 2020
+ * @brief Implementation of the database on the watch
+ */
+
 #if !defined(_SQLITE_DB_H)
 #define _SQLITE_DB_H
 

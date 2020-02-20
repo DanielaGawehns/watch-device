@@ -1,0 +1,61 @@
+\hypertarget{prot__cmds_8h}{}\doxysection{/mnt/c/\+Users/\+R\+J/\+Desktop/\+Tizen\+Tijgers/watch-\/device/inc/prot\+\_\+cmds.h File Reference}
+\label{prot__cmds_8h}\index{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/inc/prot\_cmds.h@{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/inc/prot\_cmds.h}}
+
+
+protocol commands  
+
+
+{\ttfamily \#include \char`\"{}protocol.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{prot__cmds_8h_af9377975631c489497099231c6d16bca}\label{prot__cmds_8h_af9377975631c489497099231c6d16bca}} 
+int {\bfseries prot\+\_\+send\+\_\+reply} (int seq, int status, const char $\ast$msg, int nparam, message\+\_\+param $\ast$param)
+\item 
+void \mbox{\hyperlink{prot__cmds_8h_afcbb0d228eb6e0071a2c6fc9f1cad484}{cmd\+\_\+sensor\+\_\+interval}} (const char $\ast$sensor\+\_\+name, double interval)
+\item 
+void \mbox{\hyperlink{prot__cmds_8h_a0ab6df31d3f152dbe7bf923e434f0d4b}{cmd\+\_\+get\+\_\+values}} (int seq, const char $\ast$path)
+\item 
+void \mbox{\hyperlink{prot__cmds_8h_a2d45834f3e4a2fbd4bdf22c6c75d7afd}{cmd\+\_\+set\+\_\+values}} (int seq, const char $\ast$path, int nparam, message\+\_\+param $\ast$param)
+\item 
+void \mbox{\hyperlink{prot__cmds_8h_a7751ff46821e688daedc33ada15f68d2}{cmd\+\_\+live\+\_\+interval}} (double interval)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+protocol commands 
+
+\begin{DoxyAuthor}{Author}
+Peter Bosch \href{mailto:me@pbx.sh}{\texttt{ me@pbx.\+sh}} 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Dec 6, 2019 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{prot__cmds_8h_a0ab6df31d3f152dbe7bf923e434f0d4b}\label{prot__cmds_8h_a0ab6df31d3f152dbe7bf923e434f0d4b}} 
+\index{prot\_cmds.h@{prot\_cmds.h}!cmd\_get\_values@{cmd\_get\_values}}
+\index{cmd\_get\_values@{cmd\_get\_values}!prot\_cmds.h@{prot\_cmds.h}}
+\doxysubsubsection{\texorpdfstring{cmd\_get\_values()}{cmd\_get\_values()}}
+{\footnotesize\ttfamily void cmd\+\_\+get\+\_\+values (\begin{DoxyParamCaption}\item[{int}]{seq,  }\item[{const char $\ast$}]{path }\end{DoxyParamCaption})}
+
+Called by the protocol handler when a M\+E\+S\+S\+A\+G\+E\+\_\+\+S\+E\+T\+\_\+\+V\+A\+L\+U\+ES comes in \mbox{\Hypertarget{prot__cmds_8h_a7751ff46821e688daedc33ada15f68d2}\label{prot__cmds_8h_a7751ff46821e688daedc33ada15f68d2}} 
+\index{prot\_cmds.h@{prot\_cmds.h}!cmd\_live\_interval@{cmd\_live\_interval}}
+\index{cmd\_live\_interval@{cmd\_live\_interval}!prot\_cmds.h@{prot\_cmds.h}}
+\doxysubsubsection{\texorpdfstring{cmd\_live\_interval()}{cmd\_live\_interval()}}
+{\footnotesize\ttfamily void cmd\+\_\+live\+\_\+interval (\begin{DoxyParamCaption}\item[{double}]{interval }\end{DoxyParamCaption})}
+
+Called by the protocol handler when a M\+E\+S\+S\+A\+G\+E\+\_\+\+L\+I\+V\+E\+\_\+\+I\+N\+T\+E\+R\+V\+AL comes in. \mbox{\Hypertarget{prot__cmds_8h_afcbb0d228eb6e0071a2c6fc9f1cad484}\label{prot__cmds_8h_afcbb0d228eb6e0071a2c6fc9f1cad484}} 
+\index{prot\_cmds.h@{prot\_cmds.h}!cmd\_sensor\_interval@{cmd\_sensor\_interval}}
+\index{cmd\_sensor\_interval@{cmd\_sensor\_interval}!prot\_cmds.h@{prot\_cmds.h}}
+\doxysubsubsection{\texorpdfstring{cmd\_sensor\_interval()}{cmd\_sensor\_interval()}}
+{\footnotesize\ttfamily void cmd\+\_\+sensor\+\_\+interval (\begin{DoxyParamCaption}\item[{const char $\ast$}]{sensor\+\_\+name,  }\item[{double}]{interval }\end{DoxyParamCaption})}
+
+Called by the protocol handler when a M\+E\+S\+S\+A\+G\+E\+\_\+\+S\+E\+N\+S\+O\+R\+\_\+\+I\+N\+T\+E\+R\+V\+AL comes in \mbox{\Hypertarget{prot__cmds_8h_a2d45834f3e4a2fbd4bdf22c6c75d7afd}\label{prot__cmds_8h_a2d45834f3e4a2fbd4bdf22c6c75d7afd}} 
+\index{prot\_cmds.h@{prot\_cmds.h}!cmd\_set\_values@{cmd\_set\_values}}
+\index{cmd\_set\_values@{cmd\_set\_values}!prot\_cmds.h@{prot\_cmds.h}}
+\doxysubsubsection{\texorpdfstring{cmd\_set\_values()}{cmd\_set\_values()}}
+{\footnotesize\ttfamily void cmd\+\_\+set\+\_\+values (\begin{DoxyParamCaption}\item[{int}]{seq,  }\item[{const char $\ast$}]{path,  }\item[{int}]{nparam,  }\item[{message\+\_\+param $\ast$}]{param }\end{DoxyParamCaption})}
+
+Called by the protocol handler when a M\+E\+S\+S\+A\+G\+E\+\_\+\+S\+E\+T\+\_\+\+V\+A\+L\+U\+ES comes in 

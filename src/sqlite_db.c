@@ -1,3 +1,8 @@
+/**
+ * @file sqlite_db.c
+ * @date Jan 10, 2020
+ * @brief Implementation of the database on the watch
+ */
 
 #include <sqlite3.h> //used for database
 #include "sensorbasicui.h"
@@ -5,13 +10,10 @@
 #include <sqlite3.h> //used for database
 #include "sqlite_db.h"
 
-
-
 //TODO: more tidy when placed in datastructure
 sqlite3 *db; /* Database handle */
 bool openedDatabase = false; //opened database
 bool openedTable = false; //made sure data table exists
-
 
 /**
  * @brief Gets the full path to a write/readable file in the datafolder (this does not check if it exists)

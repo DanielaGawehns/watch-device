@@ -1,8 +1,8 @@
-/*
- * network.h
- *
- *  Created on: Nov 27, 2019
- *      Author: pbx
+/**
+ * @file network.h
+ * @author Peter Bosch <me@pbx.sh>
+ * @date Nov 27, 2019
+ * @brief implementation of network
  */
 
 #ifndef NETWORK_H_

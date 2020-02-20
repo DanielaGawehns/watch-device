@@ -1,0 +1,112 @@
+\hypertarget{network_8c}{}\doxysection{/mnt/c/\+Users/\+R\+J/\+Desktop/\+Tizen\+Tijgers/watch-\/device/src/network.c File Reference}
+\label{network_8c}\index{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/src/network.c@{/mnt/c/Users/RJ/Desktop/TizenTijgers/watch-\/device/src/network.c}}
+
+
+Low-\/\+Level networking code T\+O\+DO\+: Add open\+S\+SL.  
+
+
+{\ttfamily \#include $<$sys/ioctl.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$fcntl.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}network.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{network_8c_a53866cf213c2b2ea49bce93552ac766f}\label{network_8c_a53866cf213c2b2ea49bce93552ac766f}} 
+void {\bfseries network\+\_\+init} ()
+\item 
+\mbox{\Hypertarget{network_8c_a25b961479e7dd7e16709349971bb33a1}\label{network_8c_a25b961479e7dd7e16709349971bb33a1}} 
+int {\bfseries ulst\+\_\+init} ()
+\item 
+\mbox{\Hypertarget{network_8c_a63fa4e0cd81ddd3d49bfd9ff148f3b54}\label{network_8c_a63fa4e0cd81ddd3d49bfd9ff148f3b54}} 
+int {\bfseries broadcast\+\_\+init} ()
+\item 
+\mbox{\Hypertarget{network_8c_af5a47afeb7681b9ddf95b34373d22908}\label{network_8c_af5a47afeb7681b9ddf95b34373d22908}} 
+int {\bfseries broadcast\+\_\+send} ()
+\item 
+\mbox{\Hypertarget{network_8c_a9df2ff537b33e7d4d42f95d4acfee66b}\label{network_8c_a9df2ff537b33e7d4d42f95d4acfee66b}} 
+int {\bfseries broadcast\+\_\+recv} ()
+\item 
+\mbox{\Hypertarget{network_8c_a03d3c5c6c45f86dc2cf0dded7ca05e42}\label{network_8c_a03d3c5c6c45f86dc2cf0dded7ca05e42}} 
+void {\bfseries broadcast\+\_\+stop} ()
+\item 
+\mbox{\Hypertarget{network_8c_ab82c3c7d68c32e00dc991ff987686322}\label{network_8c_ab82c3c7d68c32e00dc991ff987686322}} 
+int {\bfseries broadcast\+\_\+start} ()
+\item 
+\mbox{\Hypertarget{network_8c_a1ef3276bd98473ce4e85b0470dd784cf}\label{network_8c_a1ef3276bd98473ce4e85b0470dd784cf}} 
+int {\bfseries broadcast\+\_\+hello} ()
+\item 
+\mbox{\Hypertarget{network_8c_a7afa9771d2674d4b0f7ad01cea73a592}\label{network_8c_a7afa9771d2674d4b0f7ad01cea73a592}} 
+int {\bfseries client\+\_\+connect} ()
+\item 
+\mbox{\Hypertarget{network_8c_a80d65ec9c8c0d46008dc3b81d9528e3b}\label{network_8c_a80d65ec9c8c0d46008dc3b81d9528e3b}} 
+void {\bfseries client\+\_\+close} ()
+\item 
+\mbox{\Hypertarget{network_8c_acf66d3382afd9865f5ffcbbfb850bdff}\label{network_8c_acf66d3382afd9865f5ffcbbfb850bdff}} 
+int {\bfseries client\+\_\+write} (const void $\ast$data, size\+\_\+t size)
+\item 
+int \mbox{\hyperlink{network_8c_aef9267642a461331c3f405cdba82eb96}{client\+\_\+available}} ()
+\item 
+int \mbox{\hyperlink{network_8c_a2f73ed3fdb4954d3ef66319f9dcfde83}{client\+\_\+read}} (void $\ast$data, size\+\_\+t size)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{network_8c_a469e2f5dd4fb3e5925c1d2def23753da}\label{network_8c_a469e2f5dd4fb3e5925c1d2def23753da}} 
+int {\bfseries udp\+\_\+sock}
+\item 
+\mbox{\Hypertarget{network_8c_a916d3b0d60fc0f1bc17677f6c738cc93}\label{network_8c_a916d3b0d60fc0f1bc17677f6c738cc93}} 
+int {\bfseries ulst\+\_\+sock}
+\item 
+\mbox{\Hypertarget{network_8c_a55be49d11e79b4e21a602f36d024c6ed}\label{network_8c_a55be49d11e79b4e21a602f36d024c6ed}} 
+int {\bfseries clnt\+\_\+sock}
+\item 
+\mbox{\Hypertarget{network_8c_acae97a5fe5a81aa62d781846cb25d0bc}\label{network_8c_acae97a5fe5a81aa62d781846cb25d0bc}} 
+struct sockaddr\+\_\+in {\bfseries bcast\+\_\+addr}
+\item 
+\mbox{\Hypertarget{network_8c_ac66504b709aadeb04fd1b63afd2b7e53}\label{network_8c_ac66504b709aadeb04fd1b63afd2b7e53}} 
+struct sockaddr\+\_\+in {\bfseries any\+\_\+addr}
+\item 
+\mbox{\Hypertarget{network_8c_aa7136c236ccd50b9d290ce07d346c47e}\label{network_8c_aa7136c236ccd50b9d290ce07d346c47e}} 
+struct sockaddr\+\_\+in {\bfseries srv\+\_\+addr}
+\item 
+\mbox{\Hypertarget{network_8c_a9d347632145bafa110911728edaaca4b}\label{network_8c_a9d347632145bafa110911728edaaca4b}} 
+const char $\ast$ {\bfseries srv\+\_\+ident} = \char`\"{}Watch\+Srvr\+Ping\char`\"{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Low-\/\+Level networking code T\+O\+DO\+: Add open\+S\+SL. 
+
+\begin{DoxyAuthor}{Author}
+Peter Bosch \href{mailto:me@pbx.sh}{\texttt{ me@pbx.\+sh}} 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{network_8c_aef9267642a461331c3f405cdba82eb96}\label{network_8c_aef9267642a461331c3f405cdba82eb96}} 
+\index{network.c@{network.c}!client\_available@{client\_available}}
+\index{client\_available@{client\_available}!network.c@{network.c}}
+\doxysubsubsection{\texorpdfstring{client\_available()}{client\_available()}}
+{\footnotesize\ttfamily int client\+\_\+available (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Polls the number of bytes \mbox{\Hypertarget{network_8c_a2f73ed3fdb4954d3ef66319f9dcfde83}\label{network_8c_a2f73ed3fdb4954d3ef66319f9dcfde83}} 
+\index{network.c@{network.c}!client\_read@{client\_read}}
+\index{client\_read@{client\_read}!network.c@{network.c}}
+\doxysubsubsection{\texorpdfstring{client\_read()}{client\_read()}}
+{\footnotesize\ttfamily int client\+\_\+read (\begin{DoxyParamCaption}\item[{void $\ast$}]{data,  }\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+Read data from the network connection 
+\begin{DoxyParams}{Parameters}
+{\em data} & The buffer to fill with data \\
+\hline
+{\em size} & The number of bytes to read \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 
+\end{DoxyReturn}

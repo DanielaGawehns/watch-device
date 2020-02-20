@@ -1,3 +1,10 @@
+/**
+ * @file protocol.h
+ * @author pbx
+ * @date Dec 6, 2019
+ * @brief implementation of protocol
+ */
+
 #include <string.h>
 #include <errno.h>
 #include <assert.h>

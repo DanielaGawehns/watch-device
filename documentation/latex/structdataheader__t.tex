@@ -1,0 +1,93 @@
+\hypertarget{structdataheader__t}{}\doxysection{dataheader\+\_\+t Struct Reference}
+\label{structdataheader__t}\index{dataheader\_t@{dataheader\_t}}
+\doxysubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structdataheader__t_acb1116841d3baa832050792656373e4e}{magic}}
+\item 
+char \mbox{\hyperlink{structdataheader__t_a368c25898267c193e57f0db5c0350e1f}{reference}} \mbox{[}128\mbox{]}
+\item 
+long long int \mbox{\hyperlink{structdataheader__t_ac32b807e517ff9d0acc6a50136610321}{time\+\_\+start}}
+\item 
+long long int \mbox{\hyperlink{structdataheader__t_a3191a7749876a21871648c452beb3b99}{time\+\_\+end}}
+\item 
+int \mbox{\hyperlink{structdataheader__t_a394402f20dc2a11975ae0358fec7a4b3}{nquant}}
+\item 
+int \mbox{\hyperlink{structdataheader__t_af4fa7f995daa68b48ad8b8a18585175c}{ndata}}
+\item 
+unsigned int \mbox{\hyperlink{structdataheader__t_a6575f645a5e54f7e0ad3ecdd89a90f6d}{quant\+\_\+sz}}
+\item 
+unsigned int \mbox{\hyperlink{structdataheader__t_a065f897bcdd6358c3f622986720551df}{meas\+\_\+sz}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structdataheader__t_a114e2e6a460c5886e57cb34933e01a89}{checksum}}
+\item 
+quantity\+\_\+t \mbox{\hyperlink{structdataheader__t_a5490c58226a1238de5aa5c569ab2da07}{quant}} \mbox{[}0\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Field Documentation}
+\mbox{\Hypertarget{structdataheader__t_a114e2e6a460c5886e57cb34933e01a89}\label{structdataheader__t_a114e2e6a460c5886e57cb34933e01a89}} 
+\index{dataheader\_t@{dataheader\_t}!checksum@{checksum}}
+\index{checksum@{checksum}!dataheader\_t@{dataheader\_t}}
+\doxysubsubsection{\texorpdfstring{checksum}{checksum}}
+{\footnotesize\ttfamily uint32\+\_\+t dataheader\+\_\+t\+::checksum}
+
+Checksum over the header. Computed using the C\+R\+C32 algorithm, with this field set to zero for the calculation. \mbox{\Hypertarget{structdataheader__t_acb1116841d3baa832050792656373e4e}\label{structdataheader__t_acb1116841d3baa832050792656373e4e}} 
+\index{dataheader\_t@{dataheader\_t}!magic@{magic}}
+\index{magic@{magic}!dataheader\_t@{dataheader\_t}}
+\doxysubsubsection{\texorpdfstring{magic}{magic}}
+{\footnotesize\ttfamily uint32\+\_\+t dataheader\+\_\+t\+::magic}
+
+Magic number. Used to recognize the start of a data record, in case we lose sync (malformed or truncated data) we can resync on this. Should always be set to H\+E\+A\+D\+E\+R\+\_\+\+M\+A\+G\+IC \mbox{\Hypertarget{structdataheader__t_a065f897bcdd6358c3f622986720551df}\label{structdataheader__t_a065f897bcdd6358c3f622986720551df}} 
+\index{dataheader\_t@{dataheader\_t}!meas\_sz@{meas\_sz}}
+\index{meas\_sz@{meas\_sz}!dataheader\_t@{dataheader\_t}}
+\doxysubsubsection{\texorpdfstring{meas\_sz}{meas\_sz}}
+{\footnotesize\ttfamily unsigned int dataheader\+\_\+t\+::meas\+\_\+sz}
+
+Measurement size \mbox{\Hypertarget{structdataheader__t_af4fa7f995daa68b48ad8b8a18585175c}\label{structdataheader__t_af4fa7f995daa68b48ad8b8a18585175c}} 
+\index{dataheader\_t@{dataheader\_t}!ndata@{ndata}}
+\index{ndata@{ndata}!dataheader\_t@{dataheader\_t}}
+\doxysubsubsection{\texorpdfstring{ndata}{ndata}}
+{\footnotesize\ttfamily int dataheader\+\_\+t\+::ndata}
+
+Data point count \mbox{\Hypertarget{structdataheader__t_a394402f20dc2a11975ae0358fec7a4b3}\label{structdataheader__t_a394402f20dc2a11975ae0358fec7a4b3}} 
+\index{dataheader\_t@{dataheader\_t}!nquant@{nquant}}
+\index{nquant@{nquant}!dataheader\_t@{dataheader\_t}}
+\doxysubsubsection{\texorpdfstring{nquant}{nquant}}
+{\footnotesize\ttfamily int dataheader\+\_\+t\+::nquant}
+
+The number of quantities measured \mbox{\Hypertarget{structdataheader__t_a5490c58226a1238de5aa5c569ab2da07}\label{structdataheader__t_a5490c58226a1238de5aa5c569ab2da07}} 
+\index{dataheader\_t@{dataheader\_t}!quant@{quant}}
+\index{quant@{quant}!dataheader\_t@{dataheader\_t}}
+\doxysubsubsection{\texorpdfstring{quant}{quant}}
+{\footnotesize\ttfamily quantity\+\_\+t dataheader\+\_\+t\+::quant\mbox{[}0\mbox{]}}
+
+Quantity information \mbox{\Hypertarget{structdataheader__t_a6575f645a5e54f7e0ad3ecdd89a90f6d}\label{structdataheader__t_a6575f645a5e54f7e0ad3ecdd89a90f6d}} 
+\index{dataheader\_t@{dataheader\_t}!quant\_sz@{quant\_sz}}
+\index{quant\_sz@{quant\_sz}!dataheader\_t@{dataheader\_t}}
+\doxysubsubsection{\texorpdfstring{quant\_sz}{quant\_sz}}
+{\footnotesize\ttfamily unsigned int dataheader\+\_\+t\+::quant\+\_\+sz}
+
+Quantity entry size \mbox{\Hypertarget{structdataheader__t_a368c25898267c193e57f0db5c0350e1f}\label{structdataheader__t_a368c25898267c193e57f0db5c0350e1f}} 
+\index{dataheader\_t@{dataheader\_t}!reference@{reference}}
+\index{reference@{reference}!dataheader\_t@{dataheader\_t}}
+\doxysubsubsection{\texorpdfstring{reference}{reference}}
+{\footnotesize\ttfamily char dataheader\+\_\+t\+::reference\mbox{[}128\mbox{]}}
+
+The reference name for the measurement run. This value is set in the measurement configuration and, together with the timestamps, serves to identify the measurement session. \mbox{\Hypertarget{structdataheader__t_a3191a7749876a21871648c452beb3b99}\label{structdataheader__t_a3191a7749876a21871648c452beb3b99}} 
+\index{dataheader\_t@{dataheader\_t}!time\_end@{time\_end}}
+\index{time\_end@{time\_end}!dataheader\_t@{dataheader\_t}}
+\doxysubsubsection{\texorpdfstring{time\_end}{time\_end}}
+{\footnotesize\ttfamily long long int dataheader\+\_\+t\+::time\+\_\+end}
+
+The end time for the data described by this header. Unit\+: milliseconds since 00\+:00 January 1st 1970 \mbox{\Hypertarget{structdataheader__t_ac32b807e517ff9d0acc6a50136610321}\label{structdataheader__t_ac32b807e517ff9d0acc6a50136610321}} 
+\index{dataheader\_t@{dataheader\_t}!time\_start@{time\_start}}
+\index{time\_start@{time\_start}!dataheader\_t@{dataheader\_t}}
+\doxysubsubsection{\texorpdfstring{time\_start}{time\_start}}
+{\footnotesize\ttfamily long long int dataheader\+\_\+t\+::time\+\_\+start}
+
+The start time for the data described by this header. Unit\+: milliseconds since 00\+:00 January 1st 1970 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/mnt/c/\+Users/\+R\+J/\+Desktop/\+Tizen\+Tijgers/watch-\/device/inc/protocol\+\_\+defs.\+h\end{DoxyCompactItemize}
