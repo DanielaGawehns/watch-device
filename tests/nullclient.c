@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <stdlib.h>
-
+#include <stdio.h>
 int client_connect( ) {
 	assert( !"SHOULD NOT BE CALLED" );
 	return 0;
@@ -33,3 +33,8 @@ int client_read( void *data, size_t size ) {
 	assert( !"SHOULD NOT BE CALLED" );
 	return 0;
 }
+void prot_handle_error()
+{
+   fprintf(stderr,"protocol error\n");   
+}
+

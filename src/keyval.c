@@ -161,7 +161,7 @@ int keyval_get( const char *path, char **status,
 		return 0;
 
 	}
-
+  printf("foo: %s\n",rem_path);
 	*status = strdup( "Could not find node" );
 	return KV_ENOENT;
 

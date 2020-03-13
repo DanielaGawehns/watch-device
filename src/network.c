@@ -13,6 +13,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "network.h"
+#include <openssl/ssl.h>
 
 int                udp_sock;
 int                ulst_sock;
@@ -177,97 +178,5 @@ int broadcast_hello() {
 	broadcast_stop();
 	if ( s < 0 )
 		return -1;
-}
-
-int client_connect() {
-	int r;
-    struct timeval timeout;
-	clnt_sock = socket( AF_INET, SOCK_STREAM, 0 );
-
-	if ( clnt_sock < 0 ) {
-		net_log_err( "Failed to open TCP socket: %s (%i)",
-				strerror(errno), errno);
-		return -1;
-	}
-
-	r = fcntl( clnt_sock, F_SETFL, 0 );
-
-	if ( r < 0 ) {
-		net_log_err( "Failed to blocking mode: %s (%i)",
-				strerror(errno), errno);
-		close( clnt_sock );
-		return -1;
-	}
-
-	timeout.tv_sec = 1;
-	timeout.tv_usec = 750000;
-
-	r = setsockopt( clnt_sock, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
-
-	if ( r < 0 ) {
-		net_log_err( "Failed to set timeout: %s (%i)",
-				strerror(errno), errno);
-		close( clnt_sock );
-		return -1;
-	}
-
-	r = connect( clnt_sock, 
-	             (struct sockaddr *) &srv_addr, sizeof srv_addr );
-
-	if ( r < 0 ) {
-		net_log_err( "Failed to connect TCP socket: %s (%i)",
-					strerror(errno), errno);
-		return -1;
-	}
-
-	return 0;
-
-}
-
-
-void client_close() {
-	close( clnt_sock );
-}
-
-int client_write( const void *data, size_t size ) {
-	ssize_t ws, off;
-	for ( off = 0; off < size; off += ws ) {
-		ws = send( clnt_sock, data + off, size - off, 0 );
-		if ( ws < 0 ) {
-			net_log_err( "Failed to send data over TCP: %s (%i)",
-					strerror(errno), errno);
-			close( clnt_sock );
-			return -1;
-		}
-	}
-	return 0;
-}
-
-int client_available( ) {
-	int av, r;
-	r = ioctl( clnt_sock, FIONREAD, &av );
-	//TODO: Handle error
-	return av;
-}
-
-
-/**
- * 
- *
- *
- */
-int client_read( void *data, size_t size ) {
-	ssize_t ws, off;
-	for ( off = 0; off < size; off += ws ) {
-		ws = recv( clnt_sock, data + off, size - off, 0 );
-		if ( ws < 0 && errno != EAGAIN ) {
-			net_log_err( "Failed to receive data over TCP: %s (%i)",
-					strerror(errno), errno);
-			close( clnt_sock );
-			return -1;
-		} else if ( ws < 0 )
-			ws = 0;
-	}
-	return 0;
 }
 

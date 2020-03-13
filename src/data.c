@@ -90,14 +90,12 @@ static struct data_info {
 	sensor_data_t sensors[SENSOR_COUNT];
 	unsigned int sensor_interval_ms[SENSOR_COUNT]; 	//custom: interval for sensor checking
 	Update_Sensor_Values_Cb sensor_update_cb;	//callback function that is called when a sensor reads new data, set when initializing this class at (data_initialize)
-	Ecore_Timer *timer; //used for proximity sensor
 } s_info = {
 	.sensors = { {0}, },
 	.sensor_activity = { false, }, //custom: initialize sensors on inactive
 	.sensor_interval_ms = { 0, },
 	.current_sensor = 0,
 	.sensor_update_cb = NULL,
-	.timer = NULL,
 };
 
 
@@ -109,19 +107,6 @@ static void _initialize_sensors(void);
  * @brief predefinition
  */
 static void _sensor_event_cb(sensor_h sensor, sensor_event_s *event, void *data);
-/**
- * @brief predefinition
- */
-static void _timer_stop(void);
-/**
- * @brief predefinition
- */
-static void _timer_start(int value);
-/**
- * @brief predefinition
- */
-static void _set_hrm_values(sensor_event_s *event);
-
 
 /**
  * TODO: the functions hereafter are custom added, handy web: https://developer.tizen.org/dev-guide/2.3.1/org.tizen.tutorials/html/native/system/sensor_tutorial_n.htm
@@ -297,75 +282,6 @@ char *data_get_sensor_vendor(sensor_type_e type)
 }
 
 
-
-/**
- * @brief A ecore timer callback used when the proximity timer is the current one. This is needed because the proximity sensor works differently than most of the other sensors.
- * @param data
- * @return
- */
-static Eina_Bool _proximity_timer_cb(void *data)
-{
-
-	//float value = (int)data;
-	//TODO: s_info.sensor_update_cb(1, &value, SENSOR_PROXIMITY); //TODO: Upon implementation of a proximity sensor, this functionality needs to be added
-
-	return ECORE_CALLBACK_RENEW;
-}
-
-/**
- * @brief Function used to delete the proximity timer.
- */
-static void _timer_stop(void)
-{
-	if (s_info.timer) {
-		ecore_timer_del(s_info.timer);
-		s_info.timer = NULL;
-	}
-}
-
-/**
- * @brief Function used to create the proximity timer.
- * @param value Value provided by the proximity sensor.
- */
-static void _timer_start(int value)
-{
-	s_info.timer = ecore_timer_add(LISTENER_TIMEOUT_FINAL / 1000.0, _proximity_timer_cb, (void *)value);
-}
-
-/**
- * @brief Function used when the hrm sensor is the current one. The hrm sensor works differently than most of the other sensors.
- * @param event The event object storing the sensor data.
- */
-static void _set_hrm_values(sensor_event_s *event)
-{
-	static int timeout = 0;
-	static int draw_phase = 0;
-	float min = 0;
-	float max = 0;
-
-	data_get_sensor_range(SENSOR_HRM, &min, &max);
-
-	event->value_count = 2;
-
-	if (timeout >= (int)event->values[2]) {
-		timeout = 0;
-		draw_phase = 2;
-	} else {
-		timeout += LISTENER_TIMEOUT_FINAL;
-	}
-
-	if (draw_phase == 2) {
-		event->values[1] = max;
-		draw_phase--;
-	} else if (draw_phase == 1) {
-		event->values[1] = (max + min) / 4.0;
-		draw_phase--;
-	} else {
-		event->values[1] = (max + min) / 2.0;
-	}
-}
-
-
 /**
  * @brief Callback invoked by a sensor's listener.
  * @param sensor The sensor's handle.
@@ -377,19 +293,16 @@ static void _sensor_event_cb(sensor_h _sensor, sensor_event_s *event, void *data
 
 	sensor_data_t *sensor = data;
 
-	_timer_stop();
-	if ( sensor->id == SENSOR_HRM )
-		_set_hrm_values(event);
-	else if ( sensor->id == SENSOR_PRESSURE)
-		event->value_count = 1;
-	else if ( sensor->id == SENSOR_PROXIMITY)
-		_timer_start((int)event->values[0]); /* Why? */
-
+  if ( sensor->id == SENSOR_PRESSURE)
+		event->value_count = 1; /* Why? */
 	dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] got data for sensor", __FILE__, __LINE__ );
-	s_info.sensor_update_cb( sensor->id, event );		//call the "all sensors"-callback function, (the function that was set to handle all sensor data updates at data_initialize)
+	s_info.sensor_update_cb( sensor->id, event );
 
 }
-
+/******************** start of sensor keyval implementation *******************/
+/**
+ * The root key for the sensor hierarchy
+ */
 static keyval *sensor_ns;
 
 int kvdata_name_get( keyval *kv, char **status, int *nparam, message_param **param )
@@ -453,6 +366,7 @@ static void init_sensor( int i )
 {
 	int ret;
 	sensor_data_t *sensor = s_info.sensors + i;
+
 	/* Setup sensor fields */
 	sensor->id = i;
 	sensor->name = sensor_strings[i];
@@ -498,9 +412,18 @@ static void init_sensor( int i )
 				///sensor_listener_set_option (s_info.sensors[i].listener, SENSOR_OPTION_ON_IN_SCREEN_OFF); //keep sensors on when screen is off
 	//TODO: make sure this option is not reverted when sensor is turned off then on again
 
-	ret = sensor_listener_set_event_cb( sensor->listener, LISTENER_TIMEOUT, _sensor_event_cb, sensor ); //set the callback on the sensor listener TODO: set listener_timeout
+  /* Set the sensor listener callback to be _sensor_event_cb( sensor ) */
+	ret = sensor_listener_set_event_cb(
+                                      sensor->listener, 
+                                      LISTENER_TIMEOUT, 
+                                      _sensor_event_cb, 
+                                      sensor );
 	if (ret != SENSOR_ERROR_NONE) {
-		dlog_print(DLOG_ERROR, LOG_TAG, "[%s:%d] sensor_listener_set_event_cb() error %s: %s", __FILE__, __LINE__, sensor->name, get_error_message(ret));
+		dlog_print( DLOG_ERROR, LOG_TAG, 
+                "[%s:%d] sensor_listener_set_event_cb() error %s: %s", 
+                __FILE__, __LINE__, 
+                sensor->name, 
+                get_error_message(ret) );
 		return;
 	}
 }
@@ -513,14 +436,18 @@ static void _initialize_sensors(void)
 	int i,ret;
 	sensor_ns = keyval_create_ns( "sensor" );
 	if ( !sensor_ns ) {
-		dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] keyval_create_ns() error \"sensor\"", __FILE__, __LINE__ );
+		dlog_print( DLOG_ERROR, LOG_TAG, 
+                "[%s:%d] keyval_create_ns() error \"sensor\"",
+                __FILE__, __LINE__ );
 		return;
 	}
 
 	/* Register keyval namespace */
 	ret = keyval_add_p( "", sensor_ns );
 	if ( ret < 0 ) {
-		dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] keyval_add_k() error  \"sensor\"", __FILE__, __LINE__ );
+		dlog_print( DLOG_ERROR, LOG_TAG, 
+                "[%s:%d] keyval_add_k() error  \"sensor\"",
+                __FILE__, __LINE__ );
 		return;
 	}
 

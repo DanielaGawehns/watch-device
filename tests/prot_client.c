@@ -8,6 +8,12 @@
 keyval test;
 keyval test_a;
 keyval test_b;
+
+void prot_handle_error()
+{
+   fprintf(stderr,"protocol error\n");   
+}
+
 void print_params( int nparam, message_param *param );
 
 void print_reply( int status, const char *msg );
@@ -45,12 +51,17 @@ void test_get( const char *path ) {
 int main( int argc, char **test )
 {
 	init_kv();
+  network_init();    
+  client_init();  
 	printf("Testing broadcast\n");
+broadcast_start();
 	broadcast_hello();
 	printf("Client connect()\n");
 	client_connect();
 	printf("prot_handshake()\n");
-	prot_handshake();
+	prot_handshake_send();
+	printf("prot_handshake()\n");
+	while (prot_handshake_recv() != 0);
 	printf("prot_run()\n");
 	struct timespec req;
 	req.tv_sec=0;req.tv_nsec=10000000LL;
@@ -58,4 +69,7 @@ int main( int argc, char **test )
 		prot_process();
 		nanosleep(&req,NULL);
 	}
+}
+void cmd_get_playback( int seq, long long time_start, long long time_end ){
+	
 }
