@@ -462,15 +462,28 @@ static void _initialize_sensors(void)
 }
 
 static void _initialize_activity_recog(void){
+	int r;
 	s_info.activity_info.stationary_handle = _initialize_recog_activity(ACTIVITY_STATIONARY);
 	s_info.activity_info.walk_handle = _initialize_recog_activity(ACTIVITY_WALK);
 	s_info.activity_info.run_handle = _initialize_recog_activity(ACTIVITY_RUN);
 	s_info.activity_info.vehicle_handle = _initialize_recog_activity(ACTIVITY_IN_VEHICLE);
 
-	activity_start_recognition(s_info.activity_info.stationary_handle, ACTIVITY_STATIONARY, activity_callback, &s_info.activity_info);
-	activity_start_recognition(s_info.activity_info.walk_handle, ACTIVITY_WALK, activity_callback, &s_info.activity_info);
-	activity_start_recognition(s_info.activity_info.run_handle, ACTIVITY_RUN, activity_callback, &s_info.activity_info);
-	activity_start_recognition(s_info.activity_info.vehicle_handle, ACTIVITY_IN_VEHICLE, activity_callback, &s_info.activity_info);
+	r = activity_start_recognition(s_info.activity_info.stationary_handle, ACTIVITY_STATIONARY, activity_callback, &s_info.activity_info);
+	if(r != ACTIVITY_ERROR_NONE){
+			dlog_print(DLOG_ERROR, LOG_TAG, "Failed to start the activity recognition of activity: stationary");
+	}
+	r = activity_start_recognition(s_info.activity_info.walk_handle, ACTIVITY_WALK, activity_callback, &s_info.activity_info);
+	if(r != ACTIVITY_ERROR_NONE){
+			dlog_print(DLOG_ERROR, LOG_TAG, "Failed to start the activity recognition of activity: walk");
+	}
+	r = activity_start_recognition(s_info.activity_info.run_handle, ACTIVITY_RUN, activity_callback, &s_info.activity_info);
+	if(r != ACTIVITY_ERROR_NONE){
+			dlog_print(DLOG_ERROR, LOG_TAG, "Failed to start the activity recognition of activity: run");
+	}
+	r = activity_start_recognition(s_info.activity_info.vehicle_handle, ACTIVITY_IN_VEHICLE, activity_callback, &s_info.activity_info);
+	if(r != ACTIVITY_ERROR_NONE){
+			dlog_print(DLOG_ERROR, LOG_TAG, "Failed to start the activity recognition of activity: vehicle");
+	}
 	/*if(activity_start_recognition(handle, type, activity_callback, NULL) != ACTIVITY_ERROR_NONE){
 		dlog_print(DLOG_ERROR, LOG_TAG, "Failed to start the activity recognition of activity: %d", type);
 		activity_release(handle);

@@ -202,6 +202,8 @@ int database_init_schema( void ) {
 
 	int status;
 	char *err_msg;
+	const char *pragma_sync_stmt = "PRAGMA synchronous = FULL;";
+
 	const char *init_tbl_stmt = 
 		"CREATE TABLE IF NOT EXISTS wsensor_data ("
 		"	id        INTEGER     NOT NULL PRIMARY KEY,"
@@ -224,6 +226,27 @@ int database_init_schema( void ) {
 	/* Execute the schema statement */
 	status = sqlite3_exec(
 		/* db */       db, 
+		/* sql */      pragma_sync_stmt,
+		/* callback */ NULL,
+		/* arg */      NULL,
+		/* errmsg */   &err_msg );
+
+	/* Report any errors */
+	if ( status != SQLITE_OK ) {
+
+		database_fatal_error(
+			"Could not execute pragma: %i, %s",
+			status,
+			err_msg );
+
+		status = -1;
+
+	} else
+		status = 0;
+
+	/* Execute the schema statement */
+	status = sqlite3_exec(
+		/* db */       db,
 		/* sql */      init_tbl_stmt,
 		/* callback */ NULL,
 		/* arg */      NULL,

@@ -11,7 +11,6 @@
 
 
 #include <activity_recognition.h>
-#include <ActivityStorage.h>
 #include <sensor.h>
 #include <sqlite_db.h>
 #include <dlog.h>
@@ -21,7 +20,7 @@
 #ifdef  LOG_TAG
 #undef  LOG_TAG
 #endif
-#define LOG_TAG "basic_ui_act"
+#define LOG_TAG "sensorbasicui"
 
 /*typedef struct activities{
 	activity_type_e act_type;

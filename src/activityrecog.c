@@ -4,7 +4,7 @@
  *  Created on: May 20, 2020
  *      Author: frederick
  */
-
+#include <sys/time.h>
 #include <activityrecog.h>
 
 void setHandle(activity_h newHandle){
@@ -96,9 +96,20 @@ void activity_callback(activity_type_e activity, const activity_data_h data, dou
 			break;
 	}
 
-	sensor_event_s *ev = createEvent(accuracy, timestamp, activity_info, activity);
+	//sensor_event_s *ev = createEvent(accuracy, timestamp, activity_info, activity);
 
-	database_insert_data(5, ev, SENSOR_CUSTOM);
+	long long time_millis;
+	struct timeval tv;
+	gettimeofday(&tv,NULL);
+	time_millis = tv.tv_sec * 1000LL + tv.tv_usec/1000LL;
+	double thedata[5];
+	thedata[0] = activity_info.run_accuracy;
+	thedata[1] = activity_info.walk_accuracy;
+	thedata[2] = activity_info.stationary_accuracy;
+	thedata[3] = activity_info.vehicle_accuracy;
+	thedata[4] = activity;
+	dlog_print(DLOG_INFO, LOG_TAG, "Send recog data is sent to the database");
+	database_record_data("actreg", time_millis, 5, thedata);
 	dlog_print(DLOG_INFO, LOG_TAG, "Activity recog data is sent to the database");
 
 

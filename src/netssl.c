@@ -14,6 +14,7 @@
 #include "network.h"
 #include <openssl/ssl.h>
 #include <openssl/bio.h>
+#include <openssl/err.h>
 
 extern struct sockaddr_in srv_addr;
 #define TRUSTSTORE_PATH   ("watch.pem")
@@ -24,6 +25,9 @@ static SSL_CTX    * ssl_ctx = NULL;
 static BIO        * ssl_conn = NULL;
 //static BIO_ADDR   * ssl_addr = NULL;
 extern int    clnt_sock;
+
+
+void ssl_log_err (const char *fmt);
 
 int client_ssl_verify(int preverify, X509_STORE_CTX* x509_ctx)
 {
@@ -45,7 +49,7 @@ int client_ssl_verify(int preverify, X509_STORE_CTX* x509_ctx)
     return preverify;
 }
 
-void client_init() {
+int client_init() {
   int res;
   const SSL_METHOD *method;
 
@@ -83,8 +87,10 @@ void client_init() {
 	}*/
 
 }
+
 void ssl_log_err (const char *fmt)
-{ BIO *bio = BIO_new (BIO_s_mem ());
+{
+	BIO *bio = BIO_new (BIO_s_mem ());
   ERR_print_errors (bio);
   char *buf = NULL;
   size_t len = BIO_get_mem_data (bio, &buf);
