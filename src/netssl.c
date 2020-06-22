@@ -2,7 +2,6 @@
  * @file network.c
  * @author Peter Bosch <me@pbx.sh>
  * @brief Low-Level networking code
- * TODO: Add openSSL
  */
 
 #include <sys/ioctl.h>
@@ -141,17 +140,17 @@ int client_connect() {
 
 	ssl_conn = BIO_new_socket( clnt_sock, BIO_NOCLOSE );
 
-  ssl = SSL_new( ssl_ctx );
-  if ( !ssl ) {
+	ssl = SSL_new( ssl_ctx );
+	if ( !ssl ) {
 		ssl_log_err( "Failed to get SSL object: %s");
 		client_close();
 		return -1;
 	}
 
-  SSL_set_bio( ssl, ssl_conn, ssl_conn );
+	SSL_set_bio( ssl, ssl_conn, ssl_conn );
   
-  r = SSL_set_cipher_list( ssl, PREFERRED_CIPHERS );
-  if ( !ssl ) {
+	r = SSL_set_cipher_list( ssl, PREFERRED_CIPHERS );
+	if ( !ssl ) {
 		ssl_log_err( "Failed to set SSL ciphers: %s");
 		client_close();
 		return -1;
@@ -159,9 +158,9 @@ int client_connect() {
 
   //TODO: set_tlsext_host_name
 
-  r = SSL_connect( ssl );
-  if ( r < 0 ) {
-		ssl_log_err( "Failed to set SSL ciphers: %s");
+	r = SSL_connect( ssl );
+	if ( r < 0 ) {
+		ssl_log_err( "Failed to connect SSL object: %s");
 		client_close();
 		return -1;
 	}
@@ -191,9 +190,21 @@ int client_write( const void *data, size_t size ) {
 }
 
 int client_available( ) {
-  char foo;
-  SSL_read( ssl, &foo, 0 );
-  return SSL_pending( ssl );
+	char foo;
+	int err, r;
+	r = SSL_read( ssl, &foo, 0 );
+	if ( r < 0 ) {
+		err = SSL_get_error( ssl, r );
+		if ( err != SSL_ERROR_SYSCALL && 
+             err != SSL_ERROR_WANT_READ &&
+             err != SSL_ERROR_WANT_WRITE )
+			return -1;
+		
+		if ( err == SSL_ERROR_SYSCALL && 
+			 errno != EAGAIN )
+			return -1;			 
+	}
+	return SSL_pending( ssl );
 }
 
 

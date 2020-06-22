@@ -67,6 +67,8 @@ broadcast_start();
 	req.tv_sec=0;req.tv_nsec=10000000LL;
 	for(;;) {
 		prot_process();
+		double d;
+		prot_send_increment( "foo", 1, 1, &d );
 		nanosleep(&req,NULL);
 	}
 }

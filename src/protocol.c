@@ -286,11 +286,15 @@ allocerr:
  * Handle incoming packets if any
  */
 void prot_process() {
-	int seq, type, nparam, r;
+	int seq, type, nparam, r, av;
 	message_param *param;
 
 	/* Do we have at least a full header available? */
-	if ( client_available() < 4 )
+	av = client_available();
+	if ( av == -1 ) {
+		prot_error("Error during protocol avail in prot_process()");
+		return;
+	} else if ( av < 4 )
 		return;
 
 	/* Receive the packet */
