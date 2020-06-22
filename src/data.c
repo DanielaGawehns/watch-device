@@ -43,6 +43,7 @@
 #include <Ecore.h> //ecore
 #include <dlog.h>
 #include "keyval.h"
+#include "activityrecog.h"
 
 /**
  * @brief String names for sensor_type_e values
@@ -62,6 +63,7 @@ const char *sensor_strings[SENSOR_COUNT] = {
 	"TEMPERATURE",
 	"HUMIDITY",
 	"HRM",
+	"CUSTOM",
 	"STRING/SENSOR NOT ADDED"
 };
 
@@ -90,12 +92,14 @@ static struct data_info {
 	sensor_data_t sensors[SENSOR_COUNT];
 	unsigned int sensor_interval_ms[SENSOR_COUNT]; 	//custom: interval for sensor checking
 	Update_Sensor_Values_Cb sensor_update_cb;	//callback function that is called when a sensor reads new data, set when initializing this class at (data_initialize)
+	a_info activity_info;
 } s_info = {
 	.sensors = { {0}, },
 	.sensor_activity = { false, }, //custom: initialize sensors on inactive
 	.sensor_interval_ms = { 0, },
 	.current_sensor = 0,
 	.sensor_update_cb = NULL,
+	.activity_info = {NULL}
 };
 
 
@@ -107,7 +111,7 @@ static void _initialize_sensors(void);
  * @brief predefinition
  */
 static void _sensor_event_cb(sensor_h sensor, sensor_event_s *event, void *data);
-
+static void _initialize_activity_recog(void);
 /**
  * TODO: the functions hereafter are custom added, handy web: https://developer.tizen.org/dev-guide/2.3.1/org.tizen.tutorials/html/native/system/sensor_tutorial_n.htm
  */
@@ -164,6 +168,7 @@ void data_set_sensor_interval(sensor_type_e sensorNr, unsigned int sensorInterva
 bool data_initialize(Update_Sensor_Values_Cb sensor_update_cb)
 {
 	_initialize_sensors();
+	_initialize_activity_recog();
 	s_info.sensor_update_cb = sensor_update_cb;
 	//temp_func(); //for debugging/testing purposes - TODO: delete
 
@@ -416,7 +421,7 @@ static void init_sensor( int i )
 	ret = sensor_listener_set_event_cb(
                                       sensor->listener, 
                                       LISTENER_TIMEOUT, 
-                                      _sensor_event_cb, 
+                                      _sensor_event_cb,
                                       sensor );
 	if (ret != SENSOR_ERROR_NONE) {
 		dlog_print( DLOG_ERROR, LOG_TAG, 
@@ -454,4 +459,22 @@ static void _initialize_sensors(void)
 	for (i = 0; i < SENSOR_COUNT; ++i) {
 		init_sensor( i );
 	}
+}
+
+static void _initialize_activity_recog(void){
+	s_info.activity_info.stationary_handle = _initialize_recog_activity(ACTIVITY_STATIONARY);
+	s_info.activity_info.walk_handle = _initialize_recog_activity(ACTIVITY_WALK);
+	s_info.activity_info.run_handle = _initialize_recog_activity(ACTIVITY_RUN);
+	s_info.activity_info.vehicle_handle = _initialize_recog_activity(ACTIVITY_IN_VEHICLE);
+
+	activity_start_recognition(s_info.activity_info.stationary_handle, ACTIVITY_STATIONARY, activity_callback, &s_info.activity_info);
+	activity_start_recognition(s_info.activity_info.walk_handle, ACTIVITY_WALK, activity_callback, &s_info.activity_info);
+	activity_start_recognition(s_info.activity_info.run_handle, ACTIVITY_RUN, activity_callback, &s_info.activity_info);
+	activity_start_recognition(s_info.activity_info.vehicle_handle, ACTIVITY_IN_VEHICLE, activity_callback, &s_info.activity_info);
+	/*if(activity_start_recognition(handle, type, activity_callback, NULL) != ACTIVITY_ERROR_NONE){
+		dlog_print(DLOG_ERROR, LOG_TAG, "Failed to start the activity recognition of activity: %d", type);
+		activity_release(handle);
+		return;
+	}*/
+
 }

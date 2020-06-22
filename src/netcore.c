@@ -80,7 +80,7 @@ Eina_Bool netcore_process(void *data) {
 			netcore_state = STATE_DISCONNECT;
 	        dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Enter state DISCONNECT", __FILE__, __LINE__);
 			return 1;
-		}e
+		}
 		netcore_state = STATE_ACTIVE;
         dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Enter state ACTIVE", __FILE__, __LINE__);
 	case STATE_ACTIVE:
