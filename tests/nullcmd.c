@@ -26,7 +26,6 @@ void cmd_set_values( int seq, const char *path, int nparam, message_param *param
 	assert( !"SHOULD NOT BE CALLED" );
 }
 
-
 void cmd_get_playback( int seq, long long time_start, long long time_end ){
 	
 }

@@ -3,81 +3,249 @@
  * @date Jan 10, 2020
  * @brief Implementation of the database on the watch
  */
-
+#include <assert.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#define TRUE (1)
+#define FALSE (0)
 #include <sqlite3.h> //used for database
-#include "sensorbasicui.h"
-#include "data.h"//used for sensor support
-#include <sqlite3.h> //used for database
+#include "protocol.h"
 #include "sqlite_db.h"
+#define LOG_TAG "sensorbasicui"
 
-//TODO: more tidy when placed in datastructure
 sqlite3 *db; /* Database handle */
-bool openedDatabase = false; //opened database
-bool openedTable = false; //made sure data table exists
+sqlite3_stmt *db_insert_stmt;
+sqlite3_stmt *db_playback_stmt;
+
+typedef struct {
+	int sensor;
+	int timestamp;
+	int ndata;
+	int data[8];
+} db_row_indices;
+
+db_row_indices db_insert_indices;
+char dbfile_path[MAX_SIZE_DATA_PATH];
+
+int db_initialized = FALSE;
 
 /**
- * @brief Gets the full path to a write/readable file in the datafolder (this does not check if it exists)
- * @param WriteFile: name of the file to get the full path from
+ * @brief Sets up the database path.
+ * @param filename The name of the file to have the database use.
  */
-data *database_create_data_entry(unsigned long long epoch) {
-	data *d = malloc(sizeof(struct data));
-	d->epoch = epoch;
-	memset(d->values, 0, sizeof(d->values));
-	return d;
+void database_setup_path( const char *filename ) {
+	char * data_path = database_get_data_path(); //get pointer to data path
+
+	assert( data_path != NULL );
+
+	//TODO: Do we need the separator here?
+	snprintf(dbfile_path, sizeof dbfile_path, "%s%s", data_path, filename);
+	free(data_path);
+	
 }
-/**
- * @brief Gets the full path to a write/readable file in the datafolder (this does not check if it exists)
- * @param WriteFile: name of the file to get the full path from
- * @return pointer to char array containing filepath
- */
-char * database_get_file_path(char * writeFile){
-	char * finalPath = (char*) malloc(MAX_SIZE_DATA_PATH * sizeof(char)); //[MAX_SIZE_DATA_PATH] = {0,}; //max path size is 800, initialize all chars to 0
-	char * dataPath = app_get_data_path(); //get pointer to data path
-	if(sizeof(dataPath) > 0){ //if datapath exists
-		snprintf(finalPath, MAX_SIZE_DATA_PATH, "%s%s", dataPath, writeFile);
-		free(dataPath);
+
+void database_generate_row_indices( sqlite3_stmt *stmt, db_row_indices *idxs )
+{
+	int i;
+	char cn[10];
+	
+	assert( idxs != NULL );
+
+	idxs->sensor    = sqlite3_bind_parameter_index( stmt, "sensor" );
+	idxs->timestamp = sqlite3_bind_parameter_index( stmt, "timestamp" );
+	idxs->ndata     = sqlite3_bind_parameter_index( stmt, "ndata" );
+
+	for ( i = 0; i < DB_MAX_NDATA; i++ ) {
+
+		snprintf( cn, sizeof cn, "data%i", i );
+
+		idxs->data[i] = sqlite3_bind_parameter_index( stmt, cn );
+
 	}
-	return finalPath;
+
+	//TODO: Validate indices
+
+}
+
+int database_prepare_statements ( void )
+{
+	int status;
+	const char *insert_sql = 
+		"INSERT INTO wsensor_data ("
+		" sensor, timestamp, ndata,"
+		" data0, data1, data2, data3,"
+		" data4, data5, data6, data7 " 
+		") VALUES ("
+		" $sensor, $timestamp, $ndata,"
+		" $data0, $data1, $data2, $data3,"
+		" $data4, $data5, $data6, $data7"
+		");";
+
+	const char *playback_sql =
+		"SELECT "
+		" timestamp, ndata,"
+		" data0, data1, data2, data3,"
+		" data4, data5, data6, data7 " 
+		" FROM wsensor_data "
+		"WHERE timestamp BETWEEN ?1 AND ?2;";
+
+	assert( db != NULL );
+
+	status = sqlite3_prepare_v2(
+		/* db */     db,
+		/* sql */    insert_sql,
+		/* nByte */  strlen( insert_sql ),
+		/* ppStmt */ &db_insert_stmt,
+		/* tail */   NULL );
+
+	if ( status != SQLITE_OK )
+		goto error;
+
+	assert( db_insert_stmt != NULL );
+
+	database_generate_row_indices( db_insert_stmt, &db_insert_indices ); 
+
+	status = sqlite3_prepare_v2(
+		/* db */     db,
+		/* sql */    playback_sql,
+		/* nByte */  strlen( playback_sql ),
+		/* ppStmt */ &db_playback_stmt,
+		/* tail */   NULL );
+
+	if ( status != SQLITE_OK )
+		goto error;
+
+	assert( db_playback_stmt != NULL );
+
+	return 0;
+error:
+	database_fatal_error( 
+		"Could not create statement: %i %s", 
+		status,
+		sqlite3_errmsg(db) );
+	return -1;
+		
+	
 }
 
 /**
  * @brief open the database to allow for reading and storing of data
  * @return succes state
  */
-int
-database_open_database(){
-	int ret = 0;
-	if(!openedDatabase){ //if database is not yet opened TODO: keep database open? Or close after each use
-		sqlite3_shutdown(); //shutdown the database TODO: is this neccesary?
-		char * dbPath = database_get_file_path("test.db"); //get filepath
-		//ret = sqlite3_open_v2(dbPath, &db, SQLITE_OPEN_FULLMUTEX, NULL); //open database (serialized mode - fullmutex) TODO: is this necessary (callback ensures only one acces to database per time)
-		ret = sqlite3_open(dbPath, &db); //open database (serialized mode - fullmutex)
-		if(ret != SQLITE_OK){
-			dlog_print(DLOG_ERROR, LOG_TAG, "ERROR WHILE OPENING DATABASE, ERROR CODE: %i", ret); //print error
-			return ret;
-		}
+int database_open_database( void )
+{
+	int status;
 
-		dlog_print(DLOG_INFO, LOG_TAG, "OPENED DATABASE %s SUCCESFULLY", dbPath); //print error
-		openedDatabase = true;
-	}else{
-		dlog_print(DLOG_INFO, LOG_TAG, "DATABASE ALREADY OPEN"); //if database is already open
+	/* Do not re-initialize the database */
+	if ( db_initialized )
+		return 0;
+
+	database_setup_path("test.db"); //TODO: Better name
+
+	/* Open the SQLite3 database */
+	status = sqlite3_open_v2( 
+		/* path */       dbfile_path, 
+		/* db pointer */ &db, 
+		/* flags */      SQLITE_OPEN_FULLMUTEX | 
+	                         SQLITE_OPEN_READWRITE | 
+	                         SQLITE_OPEN_CREATE, 
+		/* vfs */        NULL );
+
+	/* Check if we were successful */
+	if ( status != SQLITE_OK ) {
+		database_fatal_error( 
+			"Could not open database %s, SQLite3 error was %i", 
+			dbfile_path,
+			status );
+		return -1;
 	}
-	return ret;
+	
+	assert( db != NULL );
+
+	database_init_schema();
+
+	database_prepare_statements();
+
+	db_initialized = TRUE;
+
+	return 0;
 }
 
 /**
  * @brief close the database
  * @return succes state
  */
-int
-database_close_database(){
-	sqlite3_close(db);
-	openedDatabase = false;
-	openedTable = false;
-	dlog_print(DLOG_INFO, LOG_TAG, "CLOSED DATABASE SUCCESFULLY"); //print error
+int database_close_database( void )
+{
+
+	/* Clean up prepared statements */
+	if ( db_insert_stmt )
+		sqlite3_finalize( db_insert_stmt );
+
+	/* Tell SQLite3 to close the database */
+	sqlite3_close( db );
+
+	/* Make sure we do not assume the DB is open anymore */
+	db_initialized = FALSE;
+
+	/* Also clean up the DB pointer */
+	db = NULL;
+
 	return 0;
 }
 
+int database_init_schema( void ) {
+
+	int status;
+	char *err_msg;
+	const char *init_tbl_stmt = 
+		"CREATE TABLE IF NOT EXISTS wsensor_data ("
+		"	id        INTEGER     NOT NULL PRIMARY KEY,"
+		"	sensor	  VARCHAR(32) NOT NULL,"
+		"	timestamp UNSIGNED BIG INT,"
+		"	ndata     INTEGER,"
+		"	data0     REAL,"
+		"	data1     REAL,"
+		"	data2     REAL,"
+		"	data3     REAL,"
+		"	data4     REAL,"
+		"	data5     REAL,"
+		"	data6     REAL,"
+		"	data7     REAL"
+		");";
+
+	/* Assert that we have a database pointer */	
+	assert( db != NULL );
+
+	/* Execute the schema statement */
+	status = sqlite3_exec(
+		/* db */       db, 
+		/* sql */      init_tbl_stmt,
+		/* callback */ NULL,
+		/* arg */      NULL,
+		/* errmsg */   &err_msg );
+
+	/* Report any errors */
+	if ( status != SQLITE_OK ) {
+
+		database_fatal_error(	
+			"Could not execute schema: %i, %s", 
+			status,
+			err_msg );
+
+		status = -1;
+
+	} else
+		status = 0;
+
+	/* Clean up the error message memory */
+	if ( err_msg )
+		free( err_msg );
+
+	return status;
+
+}
 
 /**
  * @brief writes sensor data to the database file in the datafolder of the watch
@@ -85,147 +253,201 @@ database_close_database(){
  * @param valArr pointer to the data from the sensor
  * @param sensorType name of the sensor that wants to log data
  */
-int
-database_insert_data(int count, sensor_event_s *ev,  sensor_type_e sensorType){
-	char dataBuf[2000]; //create buffer for storing the sensor data
-	int ret = SQLITE_OK; //return value
+int database_record_data( 
+	const char *sensor, 
+	long long time, 
+	int ndata, double *data )
+{
+	int status, i;
 
-	struct tm * timeInfo;
-	struct timeval timeValue;
-	gettimeofday(&timeValue, NULL);
-	timeInfo = localtime(&timeValue.tv_sec);
-
-	unsigned long long cur = (unsigned long long)(timeValue.tv_sec) * 1000 + (unsigned long long)(timeValue.tv_usec) / 1000;
-
-	snprintf(dataBuf, sizeof(dataBuf), "\'%s\'",sensor_strings[sensorType]); //put sensortype, into databuffer
-
-	//strftime(dataBuf + strlen(dataBuf), sizeof(dataBuf) - strlen(dataBuf), ",\'%Y-%m-%dT%H:%M:%S", timeInfo); //put day, time (h:m:s) into databuffer
-
-	snprintf(dataBuf + strlen(dataBuf), sizeof(dataBuf) - strlen(dataBuf), ",%llu", cur); //millisec
-	//snprintf(dataBuf + strlen(dataBuf), sizeof(dataBuf) - strlen(dataBuf), ".%i\'", (int) (timeValue.tv_usec / 1000)); //millisec
-
-	for(int i = 0 ; i < count; i++){ //TODO: make sure amount of columns is not exceeded?
-		snprintf(dataBuf + strlen(dataBuf), sizeof(dataBuf) - strlen(dataBuf), ",%f", ev->values[i]); //write all sensordata into buffer
+	assert( db != NULL );
+	assert( db_insert_stmt != NULL );
+	assert( sensor != NULL );
+	assert( data != NULL );
+	assert( ndata < DB_MAX_NDATA );
+	
+	if ( !db_initialized ) {
+		database_data_error( "Database not initialized!" );
+		return -1;
 	}
-	for(int i = count; i < dbDataCols; i++){ //append ',' until all cols are filled	TODO: also edit when making amount of cols modular
-		snprintf(dataBuf + strlen(dataBuf), sizeof(dataBuf) - strlen(dataBuf), ",0" );
+	
+	/* Bind the parameters */
+	status = sqlite3_bind_text( 
+		/* stmt */   db_insert_stmt, 
+		/* index */  db_insert_indices.sensor,
+		/* value */  sensor,
+		/* nBytes */ strlen( sensor ),
+		/* dtor */   SQLITE_TRANSIENT );
+
+	if ( status != SQLITE_OK )
+		goto bind_error;
+	
+	status = sqlite3_bind_int64( 
+		/* stmt */  db_insert_stmt, 
+		/* index */ db_insert_indices.timestamp,
+		/* value */ time );
+
+	if ( status != SQLITE_OK )
+		goto bind_error;
+	
+	status = sqlite3_bind_int( 
+		/* stmt */  db_insert_stmt, 
+		/* index */ db_insert_indices.ndata,
+		/* value */ ndata );
+
+	if ( status != SQLITE_OK )
+		goto bind_error;
+
+	for ( i = 0; i < ndata; i++ ) {
+	
+		status = sqlite3_bind_double( 
+			/* stmt */  db_insert_stmt, 
+			/* index */ db_insert_indices.data[i],
+			/* value */ data[i] );
+
+		if ( status != SQLITE_OK )
+			goto bind_error;
 	}
 
-	//Insert prepared datastring into the database
-	if(openedTable){ //if table has not yet been opened (not sure whether it exists or not
-		char *  statementString = sqlite3_mprintf("INSERT INTO %Q (sensor_name, timestamp, data1, data2, data3, data4, data5, data6) VALUES (%s)", tableName, dataBuf); //insert databuf into table
-		//char *  statementString = sqlite3_mprintf("INSERT INTO %Q (sensor_name, data1, data2, data3, data4, data5) VALUES (%s)", tableName, dataBuf); //insert databuf into table
-		ret = sqlite3_exec(db, statementString, NULL, NULL, NULL);
-		if(ret == SQLITE_OK){
-			//dlog_print(DLOG_INFO, LOG_TAG, "SUCCESFULLY EXECUTED: %s", statementString);
-		}else{
-			dlog_print(DLOG_ERROR, LOG_TAG, "COULD NOT INSERT SENSORDATA IN TABLE %s, ERROR CODE: %i, QUERY: %s ", tableName, ret, statementString); //print info
-		}
-		sqlite3_free(statementString);
-	}else{
-		dlog_print(DLOG_ERROR, LOG_TAG, "TABLE %s WAS NOT OPENED, COULD NOT INSERT SENSORDATA", tableName); //print info
-	}
-	return ret;
+	/* Execute the statement */
+	status = sqlite3_step( db_insert_stmt );
+
+	/* Check if this succeded */
+	if ( status != SQLITE_DONE )
+		goto step_error;
+
+	status = 0;
+	
+cleanup:
+	sqlite3_reset( db_insert_stmt );
+	sqlite3_clear_bindings( db_insert_stmt );
+	//TODO: Check status of these?
+	return status;
+
+bind_error:
+	database_data_error( "Could not bind parameters: %i", status );
+	status = -1;
+	goto cleanup;
+
+step_error:
+	database_data_error( "Could not run statement: %i", status );
+	status = -1;
+	goto cleanup;
+
 }
 
-/**
- * @brief puts data from database between time1 and time2 and from sensor sensor_name in passed buffer
- * @brief The buffer is filled with struct data
- * @param sensor_name sensor of which to get the data, name is in string form (e.g. "ACCELEROMETER")
- * @time1 1 of the between dates, supplied as milliseconds since epoch
- * @time2 2 of the between dates, supplied as milliseconds since epoch
- * @*ndata pointer to buffer that is to be filled
- * @buffersize size of the supplied buffer in bytes
- * @*writtenRows the amount of rows that were written to the buffer
- * @return succes state
- */
+int database_playback_dorow()
+{
+	int i;
+	long long timestamp;
+	int ndata = 0;
+	const char *sensor;
+	double data[ DB_MAX_NDATA ];
 
-//2020-02-02T02:11:33.930
-int
-database_get_data(const char * sensor_name, unsigned long long time1, unsigned long long time2, char *ndata, int buffersize, int *writtenRows){
-	int writtenEntries = 0;
-	int ret = SQLITE_OK; //return value
-	int rowret = SQLITE_OK; //return value for retrieving data from database
-	//Insert prepared datastring into the database
-	if(openedTable){ //if table has not yet been opened (not sure whether it exists or not
-		sqlite3_stmt* stmt;
-		char * statementString = sqlite3_mprintf("SELECT * FROM %Q WHERE sensor_name LIKE %Q AND timestamp BETWEEN %llu AND %llu", tableName, sensor_name, time1, time2); //insert databuf into table
-		ret = sqlite3_prepare_v2(db, statementString, -1, &stmt, NULL);
-		if(ret != SQLITE_OK){
-			dlog_print(DLOG_ERROR, LOG_TAG, "Could not prepare SQL statement");
-		}
-		while(ret == SQLITE_OK && (rowret = sqlite3_step(stmt)) != SQLITE_DONE){ //TODO: safe like this?
-			data* entry = NULL; //new entry
-			if(rowret != SQLITE_ROW){
-				dlog_print(DLOG_ERROR, LOG_TAG, "Row output not available");
-				continue;
-			}
-			else {
-				entry = database_create_data_entry(sqlite3_column_int64(stmt, 1));
-				for(int i = 2; i < dbDataCols; i++){	//loop over columns with data
-					entry->values[i-2] = sqlite3_column_double(stmt, i);
-				}
-				if(entry != NULL){
-					if ((writtenEntries+1)*sizeof(data) > buffersize){
-						ret = SQLITE_NOMEM;
-						dlog_print(DLOG_ERROR, LOG_TAG, "Buffer is full, data retrieval incomplete"); //print info
-					}
-					else {
-						memcpy(ndata, entry, sizeof(data));
-						writtenEntries++;
-						/*data test;
-						memcpy(&test, ndata, sizeof(data));
-						dlog_print(DLOG_DEBUG, LOG_TAG, "Test values: Date: %llu  Value1: %f  Value2: %f  Value3: %f Value4: %f Value5: %f Value6: %f", test.epoch, test.values[0], test.values[1], test.values[2], test.values[3], test.values[4], test.values[5]);
-						*/
-						ndata += sizeof(data);
-					}
-				}
-				else{
-					dlog_print(DLOG_DEBUG, LOG_TAG, "No data was found in row");
-				}
-			}
-			free(entry);
-			entry = NULL;
-		}
-		sqlite3_finalize(stmt);
-		*writtenRows = writtenEntries;
-		if(ret == SQLITE_OK){
-			dlog_print(DLOG_INFO, LOG_TAG, "SUCCESFULLY EXECUTED: %s", statementString);
-		}else{
-			dlog_print(DLOG_ERROR, LOG_TAG, "SENSORDATA IN TABLE %s, ERROR CODE: %i, QUERY: %s ", tableName, ret, statementString); //print info
-		}
-		sqlite3_free(statementString);
-	}else{
-		dlog_print(DLOG_ERROR, LOG_TAG, "TABLE %s WAS NOT OPENED, COULD NOT INSERT SENSORDATA", tableName); //print info
+	/* Get the columns */
+	sensor = sqlite3_column_text( db_playback_stmt, 0 );
+	
+	if ( sensor == NULL )
+		return -1;
+
+	timestamp = sqlite3_column_double( db_playback_stmt, 1 );
+
+	ndata = sqlite3_column_int( db_playback_stmt, 2 );
+
+	if ( ndata > DB_MAX_NDATA ) {
+
+		database_data_error( 
+			"Too many data entries in row: %i", 
+			ndata );
+
+		return -1;
 	}
-	return ret; //TODO
+
+	for ( i = 0; i < ndata; i++ ) {
+
+		data[i] = sqlite3_column_double( db_playback_stmt, i + 3 );
+
+	}	
+
+	/* Send the playback packet */
+
+	return prot_send_playback( sensor, timestamp, ndata, data );
 }
 
-/**
- * @brief open a table within the database
- * @return succes state
- */
-int
-database_open_table(){
-	char * statementString; // = sqlite3_mprintf("SELECT count(name) FROM sqlite_master WHERE type='table' AND name='{%Q}'", tableName); //create statement using opened tablename : if table exists, count >0
-	int ret = SQLITE_OK; //return value
-	if(!openedTable || true){ //if table has not yet been opened (not sure whether it exists or not
-		statementString = sqlite3_mprintf("CREATE TABLE IF NOT EXISTS %s(sensor_name TEXT, timestamp UNSIGNED BIG INT, data1 REAL, data2 REAL, data3 REAL, data4 REAL, data5 REAL, data6 REAL);", tableName); //create create table statement TODO: how many float datacolumns?
-		ret = sqlite3_exec(db, statementString, NULL, NULL, NULL);
-		if(ret == SQLITE_OK){
-			//dlog_print(DLOG_INFO, LOG_TAG, "CREATED/OPENED TABLE %s", tableName); //print info
-			openedTable = true;
-		}else{
-			dlog_print(DLOG_ERROR, LOG_TAG, "COULD NOT CREATE TABLE %s, ERROR CODE: %i ", tableName, ret); //print info
+void cmd_get_playback( int seq, long long time_start, long long time_end )
+{
+	char *statusmsg = NULL;
+	int nparam, status, rowcount = 0;
+	message_param *param = NULL;
+
+	/* Bind the parameters */
+
+	//TODO: Bind parameters
+	
+	status = sqlite3_bind_int64( 
+		/* stmt */  db_playback_stmt, 
+		/* index */ 1,
+		/* value */ time_start );
+
+	if ( status != SQLITE_OK )
+		goto bind_error;
+	
+	status = sqlite3_bind_int64( 
+		/* stmt */  db_playback_stmt, 
+		/* index */ 2,
+		/* value */ time_end );
+
+	if ( status != SQLITE_OK )
+		goto bind_error;
+
+	for ( ;; ) {
+		status = sqlite3_step( db_playback_stmt );
+		if ( status == SQLITE_DONE ) {
+			/* This was the last result */
+			status = 0;
+			break;
+		} else if ( status != SQLITE_ROW ) {
+			/* Something went wrong */
+			status = -1; //TODO: Lookup protocol error codes
+			statusmsg = strdup( "Error during query!" );
+			break;
 		}
-		sqlite3_free(statementString);
-	}else{
-		dlog_print(DLOG_INFO, LOG_TAG, "TABLE %s HAS ALREADY BEEN CREATED/OPENED", tableName); //print info
+		
+		/* We've got a valid row out of the database, play it back */
+		rowcount++;		
+		database_playback_dorow();
+
 	}
-	return ret;
+
+send_reply:
+
+	status = prot_create_param_1i( 
+		&statusmsg, 
+		&nparam, 
+		&param, 
+		rowcount );
+
+	if ( !statusmsg )
+		statusmsg = strdup("NULL STATUS MESSAGE!");
+
+	prot_send_reply( seq, status, statusmsg, nparam, param );
+	
+	if ( param )
+		prot_freeparam( nparam, param );
+
+	if ( statusmsg )
+		free( statusmsg );
+	
+cleanup:
+	sqlite3_reset( db_playback_stmt );
+	sqlite3_clear_bindings( db_playback_stmt );
+	//TODO: Check status of these?
+	return;
+
+bind_error:
+	status = -1;
+	statusmsg = strdup( "Could not bind parameters!" );
+	goto send_reply;
+
 }
 
-void cmd_get_playback( int seq, long long time_start, long long time_end ){
-	dlog_print(DLOG_INFO, LOG_TAG, "Request measurements between %lli and %lli", time_start, time_end); //print info
-
-}

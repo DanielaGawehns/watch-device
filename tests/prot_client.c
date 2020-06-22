@@ -48,13 +48,19 @@ void test_get( const char *path ) {
 	print_params( nparam, param );
 }
 
+char *database_get_data_path( void ) {
+  return strdup("./");
+}
+
 int main( int argc, char **test )
 {
+  double data[8] = {42,32,1337,2112,0,0,0,1234};
+  database_open_database();
 	init_kv();
   network_init();    
   client_init();  
 	printf("Testing broadcast\n");
-broadcast_start();
+  broadcast_start();
 	broadcast_hello();
 	printf("Client connect()\n");
 	client_connect();
@@ -64,14 +70,16 @@ broadcast_start();
 	while (prot_handshake_recv() != 0);
 	printf("prot_run()\n");
 	struct timespec req;
+	struct timespec ts;
 	req.tv_sec=0;req.tv_nsec=10000000LL;
 	for(;;) {
 		prot_process();
 		double d;
 		prot_send_increment( "foo", 1, 1, &d );
 		nanosleep(&req,NULL);
+    struct timeval tv;
+    gettimeofday(&tv,NULL);
+    long long time_millis = tv.tv_sec * 1000LL + tv.tv_usec/1000LL;
+    database_record_data( "TESTSENSOR", time_millis, 8, data );
 	}
-}
-void cmd_get_playback( int seq, long long time_start, long long time_end ){
-	
 }
