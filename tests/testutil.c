@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
+
 void print_params( int nparam, message_param *param )
 {
 	char buf[80];
@@ -21,5 +22,22 @@ void print_params( int nparam, message_param *param )
 
 void print_reply( int status, const char *msg ) {
 	printf("Status: %4i (%s)\n", status, msg);
+}
+
+void database_fatal_error( const char *fmt, ... ) {
+	va_list l;
+
+	va_start( l, fmt );
+	vprintf( fmt, l );
+	va_end( l );
+	
+}
+
+void database_data_error( const char *fmt, ... ) {
+	va_list l;
+
+	va_start( l, fmt );
+	vprintf( fmt, l );
+	va_end( l );	
 }
 

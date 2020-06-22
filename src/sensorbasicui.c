@@ -109,6 +109,10 @@ create_base_gui(appdata_s *ad)
 void
 Handle_Sensor_Update_Cb(sensor_type_e sensorType, sensor_event_s *ev){	//function for handling sensor input:
 	int count = 0;
+  long long time_millis;
+  struct timeval tv;
+  gettimeofday(&tv,NULL);
+  time_millis = tv.tv_sec * 1000LL + tv.tv_usec/1000LL;
 	//dlog_print(DLOG_INFO, LOG_TAG, "Calling the sensor update callback function:");
 	//OpenTable(); //open the table
 	//InsertDataInDatabase(count, valArr, sensorType); //insert sensordata into sqlite database
@@ -144,10 +148,33 @@ Handle_Sensor_Update_Cb(sensor_type_e sensorType, sensor_event_s *ev){	//functio
 	for ( int i = 0; i < ev->value_count; i++ ) {
 		f[i] = ev->values[i];
 	}
-	netcore_send_increment( sensor_strings[sensorType], ev->timestamp/1000., ev->value_count, f  );
+	database_record_data( sensor_strings[sensorType], time_millis, ev->value_count, f  );
+	netcore_send_increment( sensor_strings[sensorType], time_millis, ev->value_count, f  );
 }
 
 void init_syskv();
+
+char *database_get_data_path( void ) {
+  return app_get_data_path();
+}
+
+void database_fatal_error( const char *fmt, ... ) {
+	va_list l;
+
+	va_start( l, fmt );
+	dlog_vprint(DLOG_ERROR, LOG_TAG, fmt, l);
+	va_end( l );
+	
+	database_close_database();
+}
+
+void database_data_error( const char *fmt, ... ) {
+	va_list l;
+
+	va_start( l, fmt );
+	dlog_vprint(DLOG_ERROR, LOG_TAG, fmt, l);
+	va_end( l );	
+}
 
 /**
  * @brief initialize function for view and sensor
@@ -227,6 +254,7 @@ static void
 app_terminate(void *data)
 {
 	/* Release all resources. */
+	database_close_database(); 
 }
 
 /**

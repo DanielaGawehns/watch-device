@@ -107,6 +107,9 @@ int prot_send_reply( int seq, int status, const char *msg,
 int prot_send_increment( const char *sensor, double time,
                       int ndata, double *data );
 
+int prot_send_playback( const char *sensor, long long time,
+                      int ndata, double *data );
+
 /**
  * Sets a param to an integer value.
  * This allocates a buffer so that the params can always
