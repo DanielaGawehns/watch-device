@@ -14,7 +14,7 @@
  /* Buffer size, used in functions */
 #define BUFLEN 800
 #define MAX_SIZE_DATA_PATH 800
-#define DB_MAX_NDATA 6
+#define DB_MAX_NDATA 8
 //------------------
 int database_open_database( void );
 

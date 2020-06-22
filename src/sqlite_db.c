@@ -52,17 +52,20 @@ void database_generate_row_indices( sqlite3_stmt *stmt, db_row_indices *idxs )
 	
 	assert( idxs != NULL );
 
-	idxs->sensor    = sqlite3_bind_parameter_index( stmt, "sensor" );
-	idxs->timestamp = sqlite3_bind_parameter_index( stmt, "timestamp" );
-	idxs->ndata     = sqlite3_bind_parameter_index( stmt, "ndata" );
+	idxs->sensor    = sqlite3_bind_parameter_index( stmt, "$sensor" );
+	idxs->timestamp = sqlite3_bind_parameter_index( stmt, "$timestamp" );
+	idxs->ndata     = sqlite3_bind_parameter_index( stmt, "$ndata" );
 
 	for ( i = 0; i < DB_MAX_NDATA; i++ ) {
 
-		snprintf( cn, sizeof cn, "data%i", i );
+		snprintf( cn, sizeof cn, "$data%i", i );
 
 		idxs->data[i] = sqlite3_bind_parameter_index( stmt, cn );
-
+		assert( idxs->data[i] != 0 );
 	}
+	assert( idxs->sensor != 0 );
+	assert( idxs->timestamp != 0 );
+	assert( idxs->ndata != 0 );
 
 	//TODO: Validate indices
 
@@ -264,7 +267,7 @@ int database_record_data(
 	assert( db_insert_stmt != NULL );
 	assert( sensor != NULL );
 	assert( data != NULL );
-	assert( ndata < DB_MAX_NDATA );
+	assert( ndata <= DB_MAX_NDATA );
 	
 	if ( !db_initialized ) {
 		database_data_error( "Database not initialized!" );
