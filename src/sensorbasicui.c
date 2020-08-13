@@ -117,7 +117,7 @@ Handle_Sensor_Update_Cb(sensor_type_e sensorType, sensor_event_s *ev){	//functio
 	//OpenTable(); //open the table
 	//InsertDataInDatabase(count, valArr, sensorType); //insert sensordata into sqlite database
 	//TODO:log_sensor_data_to_file(count, valArr, sensorType); //log to file
-	database_open_table(); //open the table
+	//database_open_table(); //open the table
 	switch (sensorType) {
 		case 7:
 		case 8:
@@ -143,7 +143,7 @@ Handle_Sensor_Update_Cb(sensor_type_e sensorType, sensor_event_s *ev){	//functio
 			dlog_print(DLOG_ERROR, LOG_TAG, "Sensor Callback handle for %s could not be found", sensor_strings[sensorType]);
 			break;
 	}
-	database_insert_data(count, ev, sensorType); //insert sensordata into sqlite database
+	//database_insert_data(count, ev, sensorType); //insert sensordata into sqlite database
 	double f[32];
 	for ( int i = 0; i < ev->value_count; i++ ) {
 		f[i] = ev->values[i];
@@ -165,7 +165,7 @@ void database_fatal_error( const char *fmt, ... ) {
 	dlog_vprint(DLOG_ERROR, LOG_TAG, fmt, l);
 	va_end( l );
 	
-	database_close_database();
+	//database_close_database();
 }
 
 void database_data_error( const char *fmt, ... ) {
@@ -254,7 +254,7 @@ static void
 app_terminate(void *data)
 {
 	/* Release all resources. */
-	database_close_database(); 
+	//database_close_database();
 }
 
 /**

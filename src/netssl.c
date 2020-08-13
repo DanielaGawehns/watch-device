@@ -25,6 +25,8 @@ static BIO        * ssl_conn = NULL;
 //static BIO_ADDR   * ssl_addr = NULL;
 extern int    clnt_sock;
 
+void ssl_log_err (const char *fmt);
+
 int client_ssl_verify(int preverify, X509_STORE_CTX* x509_ctx)
 {
     int depth = X509_STORE_CTX_get_error_depth(x509_ctx);
@@ -45,7 +47,7 @@ int client_ssl_verify(int preverify, X509_STORE_CTX* x509_ctx)
     return preverify;
 }
 
-void client_init() {
+int client_init() {
   int res;
   const SSL_METHOD *method;
 
@@ -85,7 +87,7 @@ void client_init() {
 }
 void ssl_log_err (const char *fmt)
 { BIO *bio = BIO_new (BIO_s_mem ());
-  ERR_print_errors (bio);
+  //ERR_print_errors (bio);
   char *buf = NULL;
   size_t len = BIO_get_mem_data (bio, &buf);
   char *ret = (char *) calloc (1, 1 + len);
