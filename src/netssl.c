@@ -103,7 +103,21 @@ void ssl_log_err (const char *fmt)
 }
 
 
+unsigned int fffff(char *str)
+{
+    int a, b, c, d;
+    char arr[4];
+    sscanf(str, "%d.%d.%d.%d", &a, &b, &c, &d);
+    arr[0] = a; arr[1] = b; arr[2] = c; arr[3] = d;
+    return *(unsigned int *)arr;
+}
+
+
 int client_connect() {
+	srv_addr.sin_family = AF_INET;
+	srv_addr.sin_port = htons(2114);
+	srv_addr.sin_addr.s_addr = fffff("192.168.1.110");
+
 	int r;
     struct timeval timeout;
 	clnt_sock = socket( AF_INET, SOCK_STREAM, 0 );
