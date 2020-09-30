@@ -1,8 +1,37 @@
+#include <sys/ioctl.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <string.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include "network.h"
+#include <openssl/ssl.h>
+#include <openssl/bio.h>
+#include <openssl/err.h>
+
+extern int    clnt_sock;
+extern struct sockaddr_in srv_addr;
 
 void client_init() {
 }
 
+
+unsigned int fffff(char *str)
+{
+    int a, b, c, d;
+    char arr[4];
+    sscanf(str, "%d.%d.%d.%d", &a, &b, &c, &d);
+    arr[0] = a; arr[1] = b; arr[2] = c; arr[3] = d;
+    return *(unsigned int *)arr;
+}
+
 int client_connect() {
+	srv_addr.sin_family = AF_INET;
+srv_addr.sin_port = htons(2114);
+srv_addr.sin_addr.s_addr = fffff("192.168.1.110");
+
+
 	int r;
     struct timeval timeout;
 	clnt_sock = socket( AF_INET, SOCK_STREAM, 0 );
