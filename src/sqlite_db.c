@@ -7,6 +7,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
+#include <dlog.h>
+#include <stdint.h>
 #define TRUE (1)
 #define FALSE (0)
 #include <sqlite3.h> //used for database
@@ -87,10 +90,7 @@ int database_prepare_statements ( void )
 
 	const char *playback_sql =
 		"SELECT "
-		" (SELECT COUNT(*) FROM wsensor_data),"
-		" timestamp, ndata,"
-		" data0, data1, data2, data3,"
-		" data4, data5, data6, data7 " 
+		" (SELECT COUNT(*) FROM wsensor_data WHERE timestamp BETWEEN ?1 AND ?2), *"
 		" FROM wsensor_data "
 		"WHERE timestamp BETWEEN ?1 AND ?2;";
 
@@ -368,14 +368,14 @@ int database_playback_dorow()
 	double data[ DB_MAX_NDATA ];
 
 	/* Get the columns */
-	sensor = sqlite3_column_text( db_playback_stmt, 1 );
+	sensor = sqlite3_column_text( db_playback_stmt, 2 );
 	
 	if ( sensor == NULL )
 		return -1;
 
-	timestamp = sqlite3_column_double( db_playback_stmt, 2 );
+	timestamp = sqlite3_column_double( db_playback_stmt, 3 );
 
-	ndata = sqlite3_column_int( db_playback_stmt, 3 );
+	ndata = sqlite3_column_int( db_playback_stmt, 4 );
 
 	if ( ndata > DB_MAX_NDATA ) {
 
@@ -388,34 +388,37 @@ int database_playback_dorow()
 
 	for ( i = 0; i < ndata; i++ ) {
 
-		data[i] = sqlite3_column_double( db_playback_stmt, i + 4 );
+		data[i] = sqlite3_column_double( db_playback_stmt, i + 5 );
 
 	}	
 
 	/* Send the playback packet */
 
+	dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] sending playback row ts=%lld ndata=%d { %f, %f, %f }", __FILE__, __LINE__ , timestamp, ndata, data[0], data[1], data[2]);
 	return prot_send_playback( sensor, timestamp, ndata, data );
 }
 
+// seq: the sequence of the message in the connection (REVIEW)
+//
 // if statusmsg is not NULL, an error is sent.  this function takes ownership
 // over statusmsg, and will free it.
 //
 // rowcount is the amount of rows that will be sent to the host.
-void send_playback_reply(int status, char *statusmsg, long long rowcount) {
-	int nparam;
-	message_param *param;
+void send_playback_reply(int seq, int status, char *statusmsg, int64_t rowcount) {
+	int nparam = 0;
+	message_param *param = NULL;
 
-	// if statusmsg is null we want to send an error.
-	if (statusmsg != NULL) {
+	// if statusmsg is not null we want to send an error.
+	if (statusmsg == NULL) {
 		status = prot_create_param_1i( 
 			&statusmsg, 
 			&nparam, 
 			&param, 
 			rowcount );
-	}
 
-	if (statusmsg == NULL) {
-		statusmsg = strdup("NULL STATUS MESSAGE!");
+		if (statusmsg == NULL) {
+			statusmsg = strdup("NULL STATUS MESSAGE!");
+		}
 	}
 
 	prot_send_reply( seq, status, statusmsg, nparam, param );
@@ -429,6 +432,7 @@ void send_playback_reply(int status, char *statusmsg, long long rowcount) {
 
 void cmd_get_playback( int seq, long long time_start, long long time_end )
 {
+	bool first = true;
 	char *statusmsg = NULL;
 	int nparam, status = 0;
 	message_param *param = NULL;
@@ -449,7 +453,6 @@ void cmd_get_playback( int seq, long long time_start, long long time_end )
 	if ( status != SQLITE_OK )
 		goto bind_error;
 
-	bool first = true;
 	for ( ;; ) {
 		status = sqlite3_step( db_playback_stmt );
 
@@ -465,8 +468,9 @@ void cmd_get_playback( int seq, long long time_start, long long time_end )
 		}
 
 		if (first) {
-			long long rowcount = sqlite3_column_int64( db_playback_stmt, 0 );
-			send_playback_reply(status, NULL, rowcount);
+			int64_t rowcount = sqlite3_column_int64( db_playback_stmt, 0 );
+			dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] sending rowcount of %lld", __FILE__, __LINE__ , rowcount);
+			send_playback_reply(seq, status, NULL, rowcount);
 			first = false;
 		}
 
@@ -476,7 +480,12 @@ void cmd_get_playback( int seq, long long time_start, long long time_end )
 	}
 
 send_error_reply:
-	send_playback_reply(status, statusmsg, -1);
+	if (first) {
+		send_playback_reply(seq, status, statusmsg, -1);
+		dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] sent error (status: %d, statusmsg: %s)", __FILE__, __LINE__ , status, statusmsg);
+	} else if (status != 0) {
+		dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] was going to send an error, but can't because first == false (status: %d, statusmsg: %s)", __FILE__, __LINE__ , status, statusmsg);
+	}
 	
 cleanup:
 	sqlite3_reset( db_playback_stmt );
