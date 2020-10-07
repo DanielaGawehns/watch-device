@@ -410,7 +410,7 @@ void send_playback_reply(int seq, int status, char *statusmsg, int64_t rowcount)
 
 	// if statusmsg is not null we want to send an error.
 	if (statusmsg == NULL) {
-		status = prot_create_param_1i( 
+		status = prot_create_param_1l( 
 			&statusmsg, 
 			&nparam, 
 			&param, 
