@@ -28,10 +28,10 @@ Eina_Bool netcore_process(void *data) {
 	int res;
 	switch ( netcore_state ) {
 	case STATE_DISCONNECT:
-		//broadcast_stop();
+		broadcast_stop();
 		client_close();
 		//netcore_stop();
-		netcore_state = STATE_CLIENT_CONN;
+		netcore_state = STATE_BCAST_START;
         dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Enter state BCAST_START", __FILE__, __LINE__);
 		return 1;
 	case STATE_BCAST_START:
@@ -57,7 +57,7 @@ Eina_Bool netcore_process(void *data) {
 		netcore_state = STATE_CLIENT_CONN;
         dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Enter state CLIENT_CONN", __FILE__, __LINE__);
 	case STATE_CLIENT_CONN:
-		//broadcast_stop();
+		broadcast_stop();
 		res = client_connect();
 		if ( res < 0 ) {
 			netcore_state = STATE_DISCONNECT;
@@ -132,7 +132,7 @@ void netcore_init() {
 
 int netcore_connect() {
     dlog_print(DLOG_INFO, LOG_TAG, "[%s:%d] Start connect netcore", __FILE__, __LINE__);
-	netcore_state = STATE_CLIENT_CONN;
+	netcore_state = STATE_BCAST_START;
 	netcore_start_timer();
 	return 0;
 }
