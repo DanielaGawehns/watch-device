@@ -98,7 +98,6 @@ void ssl_log_err (const char *fmt)
   free(ret);
 }
 
-
 int client_connect() {
 	int r;
     struct timeval timeout;
@@ -182,8 +181,8 @@ int client_write( const void *data, size_t size ) {
 	ssize_t ws, off;
 	for ( off = 0; off < size; off += ws ) {
 		ws = SSL_write( ssl, data + off, size - off );
-		if ( ws < 0 ) {
-			ssl_log_err( "Failed to send data over SSL: %s");
+		if ( ws <= 0 ) {
+			ssl_log_err("Failed to send data over SSL: %s");
 			client_close();
 			return -1;
 		}
