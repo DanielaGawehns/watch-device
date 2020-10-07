@@ -87,6 +87,7 @@ int database_prepare_statements ( void )
 
 	const char *playback_sql =
 		"SELECT "
+		" (SELECT COUNT(*) FROM wsensor_data),"
 		" timestamp, ndata,"
 		" data0, data1, data2, data3,"
 		" data4, data5, data6, data7 " 
@@ -101,10 +102,8 @@ int database_prepare_statements ( void )
 		/* nByte */  strlen( insert_sql ),
 		/* ppStmt */ &db_insert_stmt,
 		/* tail */   NULL );
-
 	if ( status != SQLITE_OK )
 		goto error;
-
 	assert( db_insert_stmt != NULL );
 
 	database_generate_row_indices( db_insert_stmt, &db_insert_indices ); 
@@ -115,10 +114,8 @@ int database_prepare_statements ( void )
 		/* nByte */  strlen( playback_sql ),
 		/* ppStmt */ &db_playback_stmt,
 		/* tail */   NULL );
-
 	if ( status != SQLITE_OK )
 		goto error;
-
 	assert( db_playback_stmt != NULL );
 
 	return 0;
@@ -348,14 +345,14 @@ int database_playback_dorow()
 	double data[ DB_MAX_NDATA ];
 
 	/* Get the columns */
-	sensor = sqlite3_column_text( db_playback_stmt, 0 );
+	sensor = sqlite3_column_text( db_playback_stmt, 1 );
 	
 	if ( sensor == NULL )
 		return -1;
 
-	timestamp = sqlite3_column_double( db_playback_stmt, 1 );
+	timestamp = sqlite3_column_double( db_playback_stmt, 2 );
 
-	ndata = sqlite3_column_int( db_playback_stmt, 2 );
+	ndata = sqlite3_column_int( db_playback_stmt, 3 );
 
 	if ( ndata > DB_MAX_NDATA ) {
 
@@ -368,7 +365,7 @@ int database_playback_dorow()
 
 	for ( i = 0; i < ndata; i++ ) {
 
-		data[i] = sqlite3_column_double( db_playback_stmt, i + 3 );
+		data[i] = sqlite3_column_double( db_playback_stmt, i + 4 );
 
 	}	
 
@@ -377,21 +374,48 @@ int database_playback_dorow()
 	return prot_send_playback( sensor, timestamp, ndata, data );
 }
 
+// if statusmsg is not NULL, an error is sent.  this function takes ownership
+// over statusmsg, and will free it.
+//
+// rowcount is the amount of rows that will be sent to the host.
+void send_playback_reply(int status, char *statusmsg, long long rowcount) {
+	int nparam;
+	message_param *param;
+
+	// if statusmsg is null we want to send an error.
+	if (statusmsg != NULL) {
+		status = prot_create_param_1i( 
+			&statusmsg, 
+			&nparam, 
+			&param, 
+			rowcount );
+	}
+
+	if (statusmsg == NULL) {
+		statusmsg = strdup("NULL STATUS MESSAGE!");
+	}
+
+	prot_send_reply( seq, status, statusmsg, nparam, param );
+	
+	if ( param )
+		prot_freeparam( nparam, param );
+
+	if ( statusmsg )
+		free( statusmsg );
+}
+
 void cmd_get_playback( int seq, long long time_start, long long time_end )
 {
 	char *statusmsg = NULL;
-	int nparam, status, rowcount = 0;
+	int nparam, status = 0;
 	message_param *param = NULL;
 
 	/* Bind the parameters */
-
-	//TODO: Bind parameters
 	
 	status = sqlite3_bind_int64( 
 		/* stmt */  db_playback_stmt, 
 		/* index */ 1,
 		/* value */ time_start );
-
 	if ( status != SQLITE_OK )
 		goto bind_error;
 	
@@ -399,12 +423,13 @@ void cmd_get_playback( int seq, long long time_start, long long time_end )
 		/* stmt */  db_playback_stmt, 
 		/* index */ 2,
 		/* value */ time_end );
-
 	if ( status != SQLITE_OK )
 		goto bind_error;
 
+	bool first = true;
 	for ( ;; ) {
 		status = sqlite3_step( db_playback_stmt );
+
 		if ( status == SQLITE_DONE ) {
 			/* This was the last result */
 			status = 0;
@@ -415,31 +440,20 @@ void cmd_get_playback( int seq, long long time_start, long long time_end )
 			statusmsg = strdup( "Error during query!" );
 			break;
 		}
-		
+
+		if (first) {
+			long long rowcount = sqlite3_column_int64( db_playback_stmt, 0 );
+			send_playback_reply(status, NULL, rowcount);
+			first = false;
+		}
+
 		/* We've got a valid row out of the database, play it back */
-		rowcount++;		
 		database_playback_dorow();
 
 	}
 
-send_reply:
-
-	status = prot_create_param_1i( 
-		&statusmsg, 
-		&nparam, 
-		&param, 
-		rowcount );
-
-	if ( !statusmsg )
-		statusmsg = strdup("NULL STATUS MESSAGE!");
-
-	prot_send_reply( seq, status, statusmsg, nparam, param );
-	
-	if ( param )
-		prot_freeparam( nparam, param );
-
-	if ( statusmsg )
-		free( statusmsg );
+send_error_reply:
+	send_playback_reply(status, statusmsg, -1);
 	
 cleanup:
 	sqlite3_reset( db_playback_stmt );
@@ -450,7 +464,7 @@ cleanup:
 bind_error:
 	status = -1;
 	statusmsg = strdup( "Could not bind parameters!" );
-	goto send_reply;
+	goto send_error_reply;
 
 }
 
