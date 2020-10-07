@@ -26,7 +26,6 @@ static BIO        * ssl_conn = NULL;
 //static BIO_ADDR   * ssl_addr = NULL;
 extern int    clnt_sock;
 
-
 void ssl_log_err (const char *fmt);
 
 int client_ssl_verify(int preverify, X509_STORE_CTX* x509_ctx)
@@ -101,7 +100,6 @@ void ssl_log_err (const char *fmt)
 	net_log_err(fmt, ret);
   free(ret);
 }
-
 
 unsigned int fffff(char *str)
 {
@@ -200,8 +198,8 @@ int client_write( const void *data, size_t size ) {
 	ssize_t ws, off;
 	for ( off = 0; off < size; off += ws ) {
 		ws = SSL_write( ssl, data + off, size - off );
-		if ( ws < 0 ) {
-			ssl_log_err( "Failed to send data over SSL: %s");
+		if ( ws <= 0 ) {
+			ssl_log_err("Failed to send data over SSL: %s");
 			client_close();
 			return -1;
 		}

@@ -164,7 +164,7 @@ void database_fatal_error( const char *fmt, ... ) {
 	dlog_vprint(DLOG_ERROR, LOG_TAG, fmt, l);
 	va_end( l );
 	
-	database_close_database();
+	//database_close_database();
 }
 
 void database_data_error( const char *fmt, ... ) {
@@ -253,7 +253,7 @@ static void
 app_terminate(void *data)
 {
 	/* Release all resources. */
-	database_close_database(); 
+	//database_close_database();
 }
 
 /**

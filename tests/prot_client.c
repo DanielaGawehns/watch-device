@@ -7,7 +7,7 @@
 #include "protocol.h"
 keyval test;
 keyval test_a;
-keyval test_b;
+//keyval test_b;
 
 void prot_handle_error()
 {
@@ -23,18 +23,25 @@ int uid_get( keyval *kv, char **status, int *nparam, message_param **param )
 	return prot_create_param_1s( status, nparam, param, "WatchUID!2" );
 }
 
+static int battery_get( keyval *kv, char **status, int *nparam, message_param **param )
+{
+   return prot_create_param_1i( status, nparam, param, 100 );
+}
+
 void init_kv()
 {
 	keyval_init();
 	test.type = "namespace";
 	test.name = "system";
 	keyval *uid = keyval_create_leaf( "uid", "string", uid_get, NULL, NULL );
-	test_b.type = "string";
-	test_b.name = "b";
+	keyval *battery = keyval_create_leaf( "battery", "int", battery_get, NULL, NULL );
+	//test_b.type = "string";
+	//test_b.name = "b";
 	assert( keyval_add_p( "", &test ) == 0 );
 	assert( keyval_add_p( "system", uid ) == 0 );
-	assert( keyval_add_p( "system", &test_b ) == 0 );
-	
+	assert( keyval_add_p( "system", battery ) == 0 );
+	//assert( keyval_add_p( "system", &test_b ) == 0 );
+	//
 }
 
 void test_get( const char *path ) {
