@@ -61,6 +61,7 @@ keyval *keyval_resolve( keyval *kv, const char *path, const char **rem_path )
 	keyval *c;
 
 	for ( ; ; ) {
+		printf("%s\n", path);
 		/* Find the next separator or the \0 */
 		sep = strchrnul( path, '.' );
 
@@ -68,6 +69,7 @@ keyval *keyval_resolve( keyval *kv, const char *path, const char **rem_path )
 		c = keyval_find_child( kv, path, sep - path );
 
 		if ( !c ) {
+			printf("\tno child: %s\n", path);
 			/* If not, return the parent and set rem_path */
 			*rem_path = path;
 			return kv;

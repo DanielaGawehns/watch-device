@@ -30,5 +30,6 @@ char *database_get_data_path( void );
 void database_fatal_error( const char *fmt, ... );
 
 void database_data_error( const char *fmt, ... );
+int database_close_database( void );
 
 #endif

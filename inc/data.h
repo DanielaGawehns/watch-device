@@ -30,7 +30,7 @@
 #define LOG_TAG "sensorbasicui"
 
 //DEFINES: (were originally in data.c)
-#define SENSOR_COUNT 15
+#define SENSOR_COUNT 16
 #define MAX_VALUES_PER_SENSOR 4
 
 #define MAX_GYRO_VALUE 571.0
@@ -40,6 +40,8 @@
 
 //ADDED (WAS IN C BEFORE)
 typedef void (*Update_Sensor_Values_Cb)(sensor_type_e sensorType, sensor_event_s *event); //typedef of callback function for sensora
+typedef void (*Update_Activity_Values_CB)();
+
 
 /**
  * Enable or disable a sensor

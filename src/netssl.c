@@ -14,6 +14,7 @@
 #include "network.h"
 #include <openssl/ssl.h>
 #include <openssl/bio.h>
+#include <openssl/err.h>
 
 extern struct sockaddr_in srv_addr;
 #define TRUSTSTORE_PATH   ("watch.pem")
@@ -85,9 +86,11 @@ int client_init() {
 	}*/
 
 }
+
 void ssl_log_err (const char *fmt)
-{ BIO *bio = BIO_new (BIO_s_mem ());
-  //ERR_print_errors (bio);
+{
+	BIO *bio = BIO_new (BIO_s_mem ());
+  ERR_print_errors (bio);
   char *buf = NULL;
   size_t len = BIO_get_mem_data (bio, &buf);
   char *ret = (char *) calloc (1, 1 + len);
@@ -97,7 +100,6 @@ void ssl_log_err (const char *fmt)
 	net_log_err(fmt, ret);
   free(ret);
 }
-
 
 int client_connect() {
 	int r;
@@ -182,8 +184,8 @@ int client_write( const void *data, size_t size ) {
 	ssize_t ws, off;
 	for ( off = 0; off < size; off += ws ) {
 		ws = SSL_write( ssl, data + off, size - off );
-		if ( ws < 0 ) {
-			ssl_log_err( "Failed to send data over SSL: %s");
+		if ( ws <= 0 ) {
+			ssl_log_err("Failed to send data over SSL: %s");
 			client_close();
 			return -1;
 		}

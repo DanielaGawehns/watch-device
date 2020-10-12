@@ -1,3 +1,17 @@
+#include <sys/ioctl.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <string.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include "network.h"
+#include <openssl/ssl.h>
+#include <openssl/bio.h>
+#include <openssl/err.h>
+
+extern int    clnt_sock;
+extern struct sockaddr_in srv_addr;
 
 void client_init() {
 }

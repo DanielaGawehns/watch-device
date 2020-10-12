@@ -7,6 +7,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
+#include <dlog.h>
+#include <stdint.h>
 #define TRUE (1)
 #define FALSE (0)
 #include <sqlite3.h> //used for database
@@ -87,9 +90,7 @@ int database_prepare_statements ( void )
 
 	const char *playback_sql =
 		"SELECT "
-		" timestamp, ndata,"
-		" data0, data1, data2, data3,"
-		" data4, data5, data6, data7 " 
+		" (SELECT COUNT(*) FROM wsensor_data WHERE timestamp BETWEEN ?1 AND ?2), *"
 		" FROM wsensor_data "
 		"WHERE timestamp BETWEEN ?1 AND ?2;";
 
@@ -101,10 +102,8 @@ int database_prepare_statements ( void )
 		/* nByte */  strlen( insert_sql ),
 		/* ppStmt */ &db_insert_stmt,
 		/* tail */   NULL );
-
 	if ( status != SQLITE_OK )
 		goto error;
-
 	assert( db_insert_stmt != NULL );
 
 	database_generate_row_indices( db_insert_stmt, &db_insert_indices ); 
@@ -115,10 +114,8 @@ int database_prepare_statements ( void )
 		/* nByte */  strlen( playback_sql ),
 		/* ppStmt */ &db_playback_stmt,
 		/* tail */   NULL );
-
 	if ( status != SQLITE_OK )
 		goto error;
-
 	assert( db_playback_stmt != NULL );
 
 	return 0;
@@ -202,6 +199,8 @@ int database_init_schema( void ) {
 
 	int status;
 	char *err_msg;
+	const char *pragma_sync_stmt = "PRAGMA synchronous = FULL;";
+
 	const char *init_tbl_stmt = 
 		"CREATE TABLE IF NOT EXISTS wsensor_data ("
 		"	id        INTEGER     NOT NULL PRIMARY KEY,"
@@ -224,6 +223,27 @@ int database_init_schema( void ) {
 	/* Execute the schema statement */
 	status = sqlite3_exec(
 		/* db */       db, 
+		/* sql */      pragma_sync_stmt,
+		/* callback */ NULL,
+		/* arg */      NULL,
+		/* errmsg */   &err_msg );
+
+	/* Report any errors */
+	if ( status != SQLITE_OK ) {
+
+		database_fatal_error(
+			"Could not execute pragma: %i, %s",
+			status,
+			err_msg );
+
+		status = -1;
+
+	} else
+		status = 0;
+
+	/* Execute the schema statement */
+	status = sqlite3_exec(
+		/* db */       db,
 		/* sql */      init_tbl_stmt,
 		/* callback */ NULL,
 		/* arg */      NULL,
@@ -348,14 +368,14 @@ int database_playback_dorow()
 	double data[ DB_MAX_NDATA ];
 
 	/* Get the columns */
-	sensor = sqlite3_column_text( db_playback_stmt, 0 );
+	sensor = sqlite3_column_text( db_playback_stmt, 2 );
 	
 	if ( sensor == NULL )
 		return -1;
 
-	timestamp = sqlite3_column_double( db_playback_stmt, 1 );
+	timestamp = sqlite3_column_double( db_playback_stmt, 3 );
 
-	ndata = sqlite3_column_int( db_playback_stmt, 2 );
+	ndata = sqlite3_column_int( db_playback_stmt, 4 );
 
 	if ( ndata > DB_MAX_NDATA ) {
 
@@ -368,30 +388,61 @@ int database_playback_dorow()
 
 	for ( i = 0; i < ndata; i++ ) {
 
-		data[i] = sqlite3_column_double( db_playback_stmt, i + 3 );
+		data[i] = sqlite3_column_double( db_playback_stmt, i + 5 );
 
 	}	
 
 	/* Send the playback packet */
 
+	dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] sending playback row ts=%lld ndata=%d { %f, %f, %f }", __FILE__, __LINE__ , timestamp, ndata, data[0], data[1], data[2]);
 	return prot_send_playback( sensor, timestamp, ndata, data );
+}
+
+// seq: the sequence of the message in the connection (REVIEW)
+//
+// if statusmsg is not NULL, an error is sent.  this function takes ownership
+// over statusmsg, and will free it.
+//
+// rowcount is the amount of rows that will be sent to the host.
+void send_playback_reply(int seq, int status, char *statusmsg, int64_t rowcount) {
+	int nparam = 0;
+	message_param *param = NULL;
+
+	// if statusmsg is not null we want to send an error.
+	if (statusmsg == NULL) {
+		status = prot_create_param_1l( 
+			&statusmsg, 
+			&nparam, 
+			&param, 
+			rowcount );
+
+		if (statusmsg == NULL) {
+			statusmsg = strdup("NULL STATUS MESSAGE!");
+		}
+	}
+
+	prot_send_reply( seq, status, statusmsg, nparam, param );
+	
+	if ( param )
+		prot_freeparam( nparam, param );
+
+	if ( statusmsg )
+		free( statusmsg );
 }
 
 void cmd_get_playback( int seq, long long time_start, long long time_end )
 {
+	bool first = true;
 	char *statusmsg = NULL;
-	int nparam, status, rowcount = 0;
+	int nparam, status = 0;
 	message_param *param = NULL;
 
 	/* Bind the parameters */
-
-	//TODO: Bind parameters
 	
 	status = sqlite3_bind_int64( 
 		/* stmt */  db_playback_stmt, 
 		/* index */ 1,
 		/* value */ time_start );
-
 	if ( status != SQLITE_OK )
 		goto bind_error;
 	
@@ -399,12 +450,12 @@ void cmd_get_playback( int seq, long long time_start, long long time_end )
 		/* stmt */  db_playback_stmt, 
 		/* index */ 2,
 		/* value */ time_end );
-
 	if ( status != SQLITE_OK )
 		goto bind_error;
 
 	for ( ;; ) {
 		status = sqlite3_step( db_playback_stmt );
+
 		if ( status == SQLITE_DONE ) {
 			/* This was the last result */
 			status = 0;
@@ -415,31 +466,31 @@ void cmd_get_playback( int seq, long long time_start, long long time_end )
 			statusmsg = strdup( "Error during query!" );
 			break;
 		}
-		
-		/* We've got a valid row out of the database, play it back */
-		rowcount++;		
-		database_playback_dorow();
 
+		if (first) {
+			int64_t rowcount = sqlite3_column_int64( db_playback_stmt, 0 );
+			dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] sending rowcount of %lld", __FILE__, __LINE__ , rowcount);
+			send_playback_reply(seq, 0, NULL, rowcount);
+			first = false;
+		}
+
+		/* We've got a valid row out of the database, play it back */
+		database_playback_dorow();
 	}
 
-send_reply:
-
-	status = prot_create_param_1i( 
-		&statusmsg, 
-		&nparam, 
-		&param, 
-		rowcount );
-
-	if ( !statusmsg )
-		statusmsg = strdup("NULL STATUS MESSAGE!");
-
-	prot_send_reply( seq, status, statusmsg, nparam, param );
-	
-	if ( param )
-		prot_freeparam( nparam, param );
-
-	if ( statusmsg )
-		free( statusmsg );
+send_error_reply:
+	if (first) {
+		// this will also be hit when the amount of rows in the given datarange
+		// is zero.
+		// status will be 0, statusmsg will be NULL.
+		// This means that no error will be sent.
+		// We fix the rowcount to 0, this should be ignored by the host if
+		// status is not equal to 0.
+		send_playback_reply(seq, status, statusmsg, 0);
+		dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] sent error (status: %d, statusmsg: %s)", __FILE__, __LINE__ , status, statusmsg);
+	} else if (status != 0) {
+		dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] was going to send an error, but can't because first == false (status: %d, statusmsg: %s)", __FILE__, __LINE__ , status, statusmsg);
+	}
 	
 cleanup:
 	sqlite3_reset( db_playback_stmt );
@@ -450,7 +501,7 @@ cleanup:
 bind_error:
 	status = -1;
 	statusmsg = strdup( "Could not bind parameters!" );
-	goto send_reply;
+	goto send_error_reply;
 
 }
 

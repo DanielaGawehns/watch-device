@@ -27,7 +27,7 @@ void network_init() {
 
     bcast_addr.sin_family = AF_INET;
     bcast_addr.sin_port = (in_port_t)htons(2112);
-    bcast_addr.sin_addr.s_addr = htonl(0x7f000001);//INADDR_BROADCAST);
+    bcast_addr.sin_addr.s_addr = htonl(INADDR_BROADCAST);
 
      any_addr.sin_family = AF_INET;
      any_addr.sin_port = (in_port_t)htons(2113);

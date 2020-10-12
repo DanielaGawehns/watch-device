@@ -143,7 +143,6 @@ Handle_Sensor_Update_Cb(sensor_type_e sensorType, sensor_event_s *ev){	//functio
 			dlog_print(DLOG_ERROR, LOG_TAG, "Sensor Callback handle for %s could not be found", sensor_strings[sensorType]);
 			break;
 	}
-	//database_insert_data(count, ev, sensorType); //insert sensordata into sqlite database
 	double f[32];
 	for ( int i = 0; i < ev->value_count; i++ ) {
 		f[i] = ev->values[i];
@@ -191,8 +190,8 @@ app_create(void *data)
 
 	init_syskv();
 	//ADDED:
+	database_open_database();
 	data_initialize(Handle_Sensor_Update_Cb);	//set sensor data class
-	database_open_database(); //open the database TODO: keep it opened?
 	//-----------------------------
 
 
