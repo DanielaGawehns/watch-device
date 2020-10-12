@@ -481,7 +481,13 @@ void cmd_get_playback( int seq, long long time_start, long long time_end )
 
 send_error_reply:
 	if (first) {
-		send_playback_reply(seq, status, statusmsg, -1);
+		// this will also be hit when the amount of rows in the given datarange
+		// is zero.
+		// status will be 0, statusmsg will be NULL.
+		// This means that no error will be sent.
+		// We fix the rowcount to 0, this should be ignored by the host if
+		// status is not equal to 0.
+		send_playback_reply(seq, status, statusmsg, 0);
 		dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] sent error (status: %d, statusmsg: %s)", __FILE__, __LINE__ , status, statusmsg);
 	} else if (status != 0) {
 		dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] was going to send an error, but can't because first == false (status: %d, statusmsg: %s)", __FILE__, __LINE__ , status, statusmsg);
