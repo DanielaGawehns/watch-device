@@ -470,13 +470,12 @@ void cmd_get_playback( int seq, long long time_start, long long time_end )
 		if (first) {
 			int64_t rowcount = sqlite3_column_int64( db_playback_stmt, 0 );
 			dlog_print( DLOG_ERROR, LOG_TAG, "[%s:%d] sending rowcount of %lld", __FILE__, __LINE__ , rowcount);
-			send_playback_reply(seq, status, NULL, rowcount);
+			send_playback_reply(seq, 0, NULL, rowcount);
 			first = false;
 		}
 
 		/* We've got a valid row out of the database, play it back */
 		database_playback_dorow();
-
 	}
 
 send_error_reply:
