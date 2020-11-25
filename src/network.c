@@ -48,7 +48,7 @@ int ulst_init() {
 		return -1;
 	}
 
-	r = fcntl( ulst_sock, F_SETFL, 0 );
+	r = fcntl( ulst_sock, F_SETFL, O_NONBLOCK );
 
 	if ( r < 0 ) {
 		net_log_err( "Failed to blocking mode: %s (%i)",
